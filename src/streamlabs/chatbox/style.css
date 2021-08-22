@@ -1,0 +1,125 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400);
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    background: {background_color};
+    font-family: 'Roboto';
+    font-size: 1rem;
+    line-height: 1.5em;
+    color: {text_color};
+}
+
+.colon {
+    display: none;
+}
+
+#log {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 0 10px 10px;
+  width: 100%;
+  transition: all .5s ease;
+}
+
+#log.inactive {
+  opacity: .25;
+}
+
+#log>div.deleted {
+    visibility: hidden;
+}
+
+#log .emote {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    padding: 0.4em 0.2em;
+    position: relative;
+}
+
+#log .emote img {
+    display: inline-block;
+    height: 1em;
+    opacity: 0;
+}
+
+#log .message-wrapper {
+  display: flex;
+  margin-bottom: 1rem;
+  animation: slide-in-left .5s cubic-bezier(0.250, 0.460, 0.450, 0.940) forwards;
+}
+
+#log .avatar {
+  display: flex;
+  align-items: flex-end;
+  margin-right: .5rem;
+}
+  
+#log .avatar div {
+  width: 3rem;
+  height: 3rem;
+  background-color: #2c2f33;
+  border-radius: 50%;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+#log .message,
+#log .meta {
+    padding-bottom: 0.1em;
+}
+
+#log .content {
+  display: flex;
+  flex-direction: column;
+  background-color: #2c2f33;
+  border-radius: .5rem;
+  padding: .5rem;
+  border-bottom-left-radius: 0;
+}
+
+#log .badges {
+  background-color: rgba(0, 0, 0, .25);
+  padding: .25rem .3rem .25rem .5rem;
+  border-radius: .5rem;
+}
+
+#log .badges:empty {
+  display: none;
+}
+
+#log .message {
+    word-wrap: break-word;
+}
+
+.badge {
+    display: inline-block;
+    margin-right: 0.2em;
+    position: relative;
+    height: 1em;
+    vertical-align: middle;
+    top: -0.1em;
+}
+
+@keyframes slide-in-left {
+  0% {
+    -webkit-transform: translateX(-10px);
+    transform: translateX(-16px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+    opacity: 1;
+  }
+}

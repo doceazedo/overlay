@@ -1,0 +1,10 @@
+html,
+body,
+#svelte {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  font-family: 'Rubik', sans-serif;
+}
