@@ -76,3 +76,4 @@ typings/
 .fusebox/
 
 .svelte-kit/
+static/assets/json/song.json
