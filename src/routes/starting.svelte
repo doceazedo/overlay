@@ -6,7 +6,9 @@
     'Dando DELETE sem WHERE',
     'Carregando mensagens',
     '[object Object]',
-    'A live começa em NaN segundos'
+    'A live começa em NaN segundos',
+    'Calma, tô no banheiro',
+    'Botando a coquinha pra gelar',
   ];
 
   let currentMessage = messages[0],
