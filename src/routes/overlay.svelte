@@ -28,7 +28,7 @@
 
   #music
     position: absolute
-    left: 1rem
+    right: 1rem
     bottom: 13rem
     height: 6rem
     width: 22.5rem
