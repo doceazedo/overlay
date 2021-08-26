@@ -20,7 +20,15 @@
     'Pensando numa mensagem',
     'Erro 404: mensagem não encontrada',
     'Compilando código',
-    'Evangelizando a palavra do Svelte'
+    'Evangelizando a palavra do Svelte',
+    'Clonando cartões',
+    'Ensaboando os sapos',
+    'Tirando fotos do pé',
+    'Fabricando devs homossexuais',
+    'Treinando com monjes tibetanos',
+    'Provando inocência do Celso Portiolli',
+    'Quem sabe faz ao vivo',
+    'Impedindo macacos de pularem no colchão'
   ];
 
   let currentMessage = messages[0],
