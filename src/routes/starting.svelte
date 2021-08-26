@@ -7,8 +7,20 @@
     'Carregando mensagens',
     '[object Object]',
     'A live começa em NaN segundos',
-    'Calma, tô no banheiro',
     'Botando a coquinha pra gelar',
+    'Acordando os anões programadores',
+    'Enchendo a garrafinha d\'água',
+    'Commitando na main',
+    '{ status: 200, success: false }',
+    'Escolhendo playlist',
+    'Ajeitando a coluna',
+    'Debugando código',
+    'Vazando a senha do banco de dados',
+    'Corrigindo erro em produção',
+    'Pensando numa mensagem',
+    'Erro 404: mensagem não encontrada',
+    'Compilando código',
+    'Evangelizando a palavra do Svelte'
   ];
 
   let currentMessage = messages[0],
