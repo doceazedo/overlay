@@ -28,7 +28,8 @@
     'Treinando com monjes tibetanos',
     'Provando inocência do Celso Portiolli',
     'Quem sabe faz ao vivo',
-    'Impedindo macacos de pularem no colchão'
+    'Impedindo macacos de pularem no colchão',
+    'Arrumando o bigode'
   ];
 
   let currentMessage = messages[0],
