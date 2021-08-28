@@ -65,7 +65,7 @@
         badges.push(badge.image_url_1x);
       }
 
-      messages.unshift({
+      messages.push({
         content: message,
         author: {
           username: tags.username,
@@ -75,6 +75,9 @@
         }
       });
       messages = messages;
+
+      const chatEl = document.querySelector('#chat');
+      setTimeout(() => chatEl.scrollTo(0, chatEl.scrollHeight), 50);
     });
   };
   onMount(initializeChat);
@@ -146,9 +149,10 @@
       background-color: #202020
 
     #music
+      display: flex
+      flex-shrink: 0
       height: 6rem
       width: 100%
-      display: flex
       background-color: #242424
       border-radius: .5rem
       padding: .75rem
@@ -187,14 +191,14 @@
       padding: .75rem
       overflow: hidden
 
-      &::before
-        content: ''
-        position: absolute
-        bottom: 0
-        left: 0
-        height: .75rem
-        width: 100%
-        background-image: linear-gradient(0deg, #242424 25%, rgba(#242424, 0) 100%)
+      // &::before
+      //   content: ''
+      //   position: absolute
+      //   bottom: 0
+      //   left: 0
+      //   height: .75rem
+      //   width: 100%
+      //   background-image: linear-gradient(0deg, #242424 25%, rgba(#242424, 0) 100%)
 
       li
         display: flex
