@@ -29,25 +29,25 @@
   #music
     position: absolute
     right: 1rem
-    bottom: 13rem
-    height: 6rem
-    width: 22.5rem
+    bottom: 17rem
+    height: 8rem
+    width: 30rem
     display: flex
     background-color: #f7f495
     border-top-left-radius: .5rem
     border-top-right-radius: .5rem
-    padding: .5rem
-    padding-bottom: 1.25rem
+    padding: .75rem
+    padding-bottom: 1.5rem
     color: #f27581
     transition: all 1s ease
 
     &:not(.show)
-      bottom: 7rem
+      bottom: 9.5rem
 
     img
       height: 100%
       border-radius: .5rem
-      margin-right: .75rem
+      margin-right: 1rem
 
     div
       display: flex
@@ -62,10 +62,10 @@
         text-overflow: ellipsis
 
       h1
-        font-size: 1.5rem
+        font-size: 2rem
         font-weight: 700
 
       h2
-        font-size: 1.25rem
+        font-size: 1.75rem
 
 </style>
