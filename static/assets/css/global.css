@@ -5,6 +5,23 @@ body,
   width: 100%;
 }
 
+@font-face {
+  font-family: Twemoji;
+  src: url(../fonts/Twemoji.ttf)
+}
+
 body {
-  font-family: 'Rubik', sans-serif;
+  font-family: 'Rubik', sans-serif, Twemoji;
+}
+
+.emote {
+  position: relative;
+  display: inline-block;
+  width: 32px;
+}
+
+.emote img {
+  position: absolute;
+  top: -1.25rem;
+  left: 2px;
 }
