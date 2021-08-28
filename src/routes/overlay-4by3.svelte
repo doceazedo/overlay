@@ -128,15 +128,24 @@
     height: calc(100% - 270px)
     display: flex
     flex-direction: column
-    background-color: #2c2f33
+    background-color: #2d2d2d
     padding: 1rem
     color: #fff
+
+    &::before
+      content: ''
+      position: fixed
+      top: 0
+      right: 480px
+      width: 1px
+      height: 100%
+      background-color: #202020
 
     #music
       height: 6rem
       width: 100%
       display: flex
-      background-color: rgba(0, 0, 0, .25)
+      background-color: #242424
       border-radius: .5rem
       padding: .75rem
       margin-bottom: 1rem
@@ -169,7 +178,7 @@
     #chat
       position: relative
       flex-grow: 1
-      background-color: rgba(0, 0, 0, .25)
+      background-color: #242424
       border-radius: .5rem
       padding: .75rem
       overflow: hidden
@@ -181,7 +190,7 @@
         left: 0
         height: .75rem
         width: 100%
-        background-image: linear-gradient(0deg, rgba(33, 35, 38, 1) 25%, rgba(33, 35, 38, 0) 100%)
+        background-image: linear-gradient(0deg, #242424 25%, rgba(#242424, 0) 100%)
 
       li
         display: flex
@@ -199,7 +208,7 @@
             width: 4rem
             height: 4rem
             border-radius: 50%
-            background-color: rgba(0, 0, 0, .5)
+            background-color: #191919
             background-position: center
             background-repeat: no-repeat
             background-size: cover
@@ -211,7 +220,7 @@
           font-size: 1.25rem
           border-radius: .5rem
           border-bottom-left-radius: 0
-          background-color: rgba(0, 0, 0, .5)
+          background-color: #191919
 
           .meta
             display: flex
@@ -219,14 +228,14 @@
             margin-bottom: .25rem
 
             .name
-              color: coral
+              color: #ffd479
 
             .badges
               display: inline-flex
               padding: .35rem
               margin-left: .5rem
               border-radius: .5rem
-              background-color: #212326
+              background-color: #242424
 
               img:not(:last-child)
                 margin-right: .35rem
