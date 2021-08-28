@@ -1,5 +1,5 @@
 <script>
-  import { onMount } from "svelte";
+  import { onMount } from 'svelte';
 
   let nowPlaying = {};
   setInterval(async () => {
@@ -32,6 +32,9 @@
     console.log('Conectado ao chat!');
     
     client.on('message', (channel, tags, message, self) => {
+      message = DOMPurify.sanitize(message, { USE_PROFILES: { html: false } });
+      console.log(message);
+
       const twitchEmotes = [];
       for (const emoteID in tags.emotes) {
         const pos = tags.emotes[emoteID][0].split('-');
@@ -78,6 +81,7 @@
 </script>
 
 <svelte:head>
+	<script src="../../static/assets/js/purify.min.js"></script>
 	<script src="../../static/assets/js/tmi.min.js" on:load={initializeChat}></script>
 </svelte:head>
 
