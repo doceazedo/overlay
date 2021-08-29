@@ -68,6 +68,10 @@
       setTimeout(() => chatEl.scrollTo(0, chatEl.scrollHeight), 50);
     });
   };
+
+  const fadeInAvatar = event => {
+    event.target.classList.add('show');
+  }
 </script>
 
 <svelte:head>
@@ -78,7 +82,9 @@
   {#each messages as message}
     <li>
       <div class="avatar">
-        <div style="background-image:url(/avatar/{message.author.username})"></div>
+        <div>
+          <img on:load={fadeInAvatar} src="/avatar/{message.author.username}" alt="">
+        </div>
       </div>
       <div class="content">
         <span class="meta">
@@ -117,18 +123,9 @@
     padding: .75rem
     overflow: hidden
 
-    // &::before
-    //   content: ''
-    //   position: absolute
-    //   bottom: 0
-    //   left: 0
-    //   height: .75rem
-    //   width: 100%
-    //   background-image: linear-gradient(0deg, #242424 25%, rgba(#242424, 0) 100%)
-
     li
       display: flex
-      // animation: slide-in-left .5s cubic-bezier(0.250, 0.460, 0.450, 0.940) forwards
+      animation: slide-in-left .5s cubic-bezier(0.250, 0.460, 0.450, 0.940) forwards
 
       &:not(:last-child)
         margin-bottom: .75rem
@@ -139,13 +136,19 @@
         margin-right: .75rem
 
         div
-          width: 4rem
           height: 4rem
+          width: 4rem
           border-radius: 50%
           background-color: #191919
-          background-position: center
-          background-repeat: no-repeat
-          background-size: cover
+
+          img
+            height: 100%
+            width: 100%
+            border-radius: 50%
+            transition: all .2s ease
+
+            &:not(.show)
+              opacity: 0
 
       .content
         display: flex
