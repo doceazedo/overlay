@@ -1,5 +1,7 @@
 <script>
   import { onMount } from 'svelte';
+  import { browser } from '$app/env';
+  import Pomodoro from '../components/pomodoro.svelte';
 
   let nowPlaying = {};
   setInterval(async () => {
@@ -81,6 +83,20 @@
     });
   };
   onMount(initializeChat);
+
+  const GET = param => {
+    if (!browser) return;
+
+    let result = null, tmp = [];
+    location.search
+      .substr(1)
+      .split('&')
+      .forEach(item => {
+        tmp = item.split('=');
+        if (tmp[0] === param) result = decodeURIComponent(tmp[1]);
+      });
+    return result;
+  }
 </script>
 
 <svelte:head>
@@ -96,6 +112,10 @@
       <h2>{nowPlaying.artist}</h2>
     </div>
   </div>
+
+  {#if GET('pomodoro')}
+    <Pomodoro />
+  {/if}
 
   <ul id="chat">
     {#each messages as message}
