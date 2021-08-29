@@ -1,6 +1,4 @@
 <script>
-  import { onMount } from 'svelte';
-
   let chatEl;
   let messages = [];
 
@@ -26,9 +24,6 @@
     console.log('Conectado ao chat!');
     
     client.on('message', (channel, tags, message, self) => {
-      message = DOMPurify.sanitize(message, { USE_PROFILES: { html: false } });
-      console.log(message);
-
       const twitchEmotes = [];
       for (const emoteID in tags.emotes) {
         const pos = tags.emotes[emoteID][0].split('-');
@@ -40,21 +35,21 @@
           name: message.substr(start, end)
         });
       }
-      twitchEmotes.forEach(emote => {
-        message = message.split(emote.name).join(`<span class="emote"><img src="https://static-cdn.jtvnw.net/emoticons/v2/${emote.id}/static/light/1.0"></span>`);
-      });
 
-      message.split(' ').forEach(word => {
-        const emote = bttvEmotes.find(e => e.code == word);
-        if (emote) {
-          message = message.split(emote.code).join(`<span class="emote"><img src="https://cdn.betterttv.net/emote/${emote.id}/1x"></span>`);
-        }
+      message = message.split(' '); // FIXME: não funciona para caso o código do emote esteja colado em "!", "," nem "."
+      message.forEach((word, i) => {
+        const bttvEmote = bttvEmotes.find(e => e.code == word);
+        if (bttvEmote) return message[i] = { emote: `https://cdn.betterttv.net/emote/${bttvEmote.id}/1x` };
+        
+        const twitchEmote = twitchEmotes.find(e => e.name == word);
+        if (twitchEmote) return message[i] = { emote: `https://static-cdn.jtvnw.net/emoticons/v2/${twitchEmote.id}/static/light/1.0` };
+
+        message[i] = { word };
       });
 
       const badges = [];
       for (const key in tags.badges) {
         const badgeTypes = twitchBadges.find(b => b.set_id == key);
-        console.log(badgeTypes);
         const badge = badgeTypes.versions.find(t => t.id == tags.badges[key]);
         badges.push(badge.image_url_1x);
       }
@@ -73,12 +68,10 @@
       setTimeout(() => chatEl.scrollTo(0, chatEl.scrollHeight), 50);
     });
   };
-  onMount(initializeChat);
 </script>
 
 <svelte:head>
-	<script src="../../static/assets/js/purify.min.js"></script>
-	<script src="../../static/assets/js/tmi.min.js" on:load={initializeChat}></script>
+  <script src="../../static/assets/js/tmi.min.js" on:load={initializeChat}></script>
 </svelte:head>
 
 <ul id="chat" bind:this={chatEl}>
@@ -100,7 +93,15 @@
         </span>
 
         <span class="message">
-          {@html message.content}
+          {#each message.content as word}
+            {#if word.emote}
+              <span class="emote">
+                <img src={word.emote} alt="">
+              </span>
+            {:else}
+              {` ${word.word} `}
+            {/if}
+          {/each}
         </span>
       </div>
     </li>
