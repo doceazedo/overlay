@@ -1,4 +1,6 @@
 <script>
+  import { onMount } from "svelte";
+
   let chatEl;
   let messages = [];
 
@@ -72,10 +74,12 @@
   const fadeInAvatar = event => {
     event.target.classList.add('show');
   }
+
+  onMount(initializeChat);
 </script>
 
 <svelte:head>
-  <script src="../../static/assets/js/tmi.min.js" on:load={initializeChat}></script>
+  <script src="../../static/assets/js/tmi.min.js"></script>
 </svelte:head>
 
 <ul id="chat" bind:this={chatEl}>
