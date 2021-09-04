@@ -1,5 +1,6 @@
 <script>
-  import { onMount } from "svelte";
+  import { onMount } from 'svelte';
+  import { emotes } from '../stores';
 
   let chatEl;
   let messages = [];
@@ -38,16 +39,28 @@
         });
       }
 
+      const emotesURLs = [];
+
       message = message.split(' '); // FIXME: não funciona para caso o código do emote esteja colado em "!", "," nem "."
       message.forEach((word, i) => {
         const bttvEmote = bttvEmotes.find(e => e.code == word);
-        if (bttvEmote) return message[i] = { emote: `https://cdn.betterttv.net/emote/${bttvEmote.id}/1x` };
+        if (bttvEmote) {
+          const url = `https://cdn.betterttv.net/emote/${bttvEmote.id}/1x`;
+          emotesURLs.push(url);
+          return message[i] = { emote: url };
+        }
         
         const twitchEmote = twitchEmotes.find(e => e.name == word);
-        if (twitchEmote) return message[i] = { emote: `https://static-cdn.jtvnw.net/emoticons/v2/${twitchEmote.id}/static/light/1.0` };
+        if (twitchEmote) {
+          const url = `https://static-cdn.jtvnw.net/emoticons/v2/${twitchEmote.id}/static/light/1.0`;
+          emotesURLs.push(url);
+          return message[i] = { emote: url };
+        }
 
         message[i] = { word };
       });
+
+      emotes.set(emotesURLs);
 
       const badges = [];
       for (const key in tags.badges) {
