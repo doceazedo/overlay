@@ -2,7 +2,7 @@
   let nowPlaying = {};
   setInterval(async () => {
     try {
-      const song = await(await fetch('/assets/json/song.json')).json();
+      const song = await(await fetch('/song')).json();
       if (nowPlaying.title != song.title) nowPlaying = song;
     } catch (e) { }
   }, 250);
