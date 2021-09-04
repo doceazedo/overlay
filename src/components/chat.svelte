@@ -5,6 +5,7 @@
   import { emotes } from '../stores';
   import { bot } from '../bot';
   import { TWITCH_OAUTH_TOKEN, TWITCH_CLIENT_ID, TWITCH_CHANNEL_ID, TWITCH_BOT_LOGIN, TWITCH_BOT_OAUTH_TOKEN } from '../env';
+  import tinycolor from 'tinycolor2';
 
   let chatEl;
   let messages = [];
@@ -125,7 +126,7 @@
           {/if}
 
           {#if message.bot?.team}
-            <span class="team" style="fill: #{simpleIcons.Get(message.bot.team).hex}">
+            <span class="team" style="fill: #{tinycolor(`#${simpleIcons.Get(message.bot.team).hex}`).getBrightness() > 50 ? simpleIcons.Get(message.bot.team).hex : 'fff'}">
               {@html simpleIcons.Get(message.bot.team).svg}
             </span>
           {/if}
