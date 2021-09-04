@@ -3,8 +3,8 @@ import * as commands from './commands';
 export const bot = client => {
   client.on('message', (channel, tags, message, self) => {
     if (self || !message.startsWith('!')) return;
-    const input = message.substring(1);
-    const args = message.split(' ').shift();
+    const args = message.split(' ');
+    const input = args.shift().substring(1).toLowerCase();
 
     if (input in commands) {
       client.say(channel, `/color SpringGreen`);
@@ -21,6 +21,6 @@ export const bot = client => {
     }
 
     client.say(channel, `/color Red`);
-    client.say(channel, `/me @${tags.username}, não conheço esse comando! 😔`);
+    client.say(channel, `/me @${tags.username}, não conheço esse comando (${input}) []! 😔`);
   });
 }

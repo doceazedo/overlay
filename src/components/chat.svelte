@@ -1,4 +1,5 @@
 <script>
+  import simpleIcons from 'simple-icons';
   import { onMount } from 'svelte';
   import { emotes } from '../stores';
   import { bot } from '../bot';
@@ -22,7 +23,7 @@
     
     const client = new tmi.Client({
       identity: {
-        username: '${import.meta.env.VITE_TWITCH_BOT_LOGIN}',
+        username: `${import.meta.env.VITE_TWITCH_BOT_LOGIN}`,
         password: `oauth:${import.meta.env.VITE_TWITCH_BOT_OAUTH_TOKEN}`
       },
       channels: [ 'doceazedo911' ]
@@ -32,7 +33,7 @@
     console.log('Conectado ao chat!');
     bot(client);
     
-    client.on('message', (channel, tags, message, self) => {
+    client.on('message', async (channel, tags, message, self) => {
       const twitchEmotes = [];
       for (const emoteID in tags.emotes) {
         const pos = tags.emotes[emoteID][0].split('-');
@@ -68,12 +69,15 @@
 
       emotes.set(emotesURLs);
 
-      const badges = [];
+      let badges = [];
       for (const key in tags.badges) {
         const badgeTypes = twitchBadges.find(b => b.set_id == key);
         const badge = badgeTypes.versions.find(t => t.id == tags.badges[key]);
         badges.push(badge.image_url_1x);
       }
+      if (self) badges = [ '/static/assets/img/bot-badge.png' ];
+
+      const bot = await(await fetch(`/users/${tags['user-id']}`)).json();
 
       messages.push({
         content: message,
@@ -81,8 +85,10 @@
           username: tags.username,
           displayName: tags['display-name'],
           color: tags.color,
-          badges
-        }
+          badges,
+          self
+        },
+        bot: bot.user
       });
       messages = messages;
 
@@ -102,7 +108,7 @@
 
 <ul id="chat" bind:this={chatEl}>
   {#each messages as message}
-    <li>
+    <li class:self={message.author.self}>
       <div class="avatar">
         <div>
           <img on:load={fadeInAvatar} src="/avatar/{message.author.username}" alt="">
@@ -111,6 +117,17 @@
       <div class="content">
         <span class="meta">
           <span class="name" style="color: {message.author.color}">{message.author.displayName}</span>
+
+          {#if message.bot?.pronouns}
+            <span class="pronouns">{message.bot.pronouns}</span>
+          {/if}
+
+          {#if message.bot?.team}
+            <span class="team" style="fill: #{simpleIcons.Get(message.bot.team).hex}">
+              {@html simpleIcons.Get(message.bot.team).svg}
+            </span>
+          {/if}
+
           {#if message.author.badges.length}
             <span class="badges">
               {#each message.author.badges as badge}
@@ -155,11 +172,11 @@
       .avatar
         display: flex
         align-items: flex-end
-        margin-right: .75rem
+        margin-right: 1rem
 
         div
-          height: 4rem
-          width: 4rem
+          height: 3rem
+          width: 3rem
           border-radius: 50%
           background-color: #191919
 
@@ -172,22 +189,51 @@
             &:not(.show)
               opacity: 0
 
+      &.self .name
+        color: #ff0000 !important
+        text-shadow: 0 0 5px #ff0000
+        background-image: url('/static/assets/img/glitter.gif')
+
       .content
+        position: relative
         display: flex
         flex-direction: column
-        padding: .75rem
-        font-size: 1.25rem
+        padding: .5rem
         border-radius: .5rem
         border-bottom-left-radius: 0
         background-color: #191919
 
+        &::before
+          content: ''
+          position: absolute
+          left: -.7rem
+          bottom: 0
+          height: 1rem
+          width: .75rem
+          background-image: url('/static/assets/img/chat-bubble.svg')
+          background-position: center right
+          background-repeat: no-repeat
+          background-size: contain
+
         .meta
           display: flex
           align-items: center
-          margin-bottom: .25rem
 
           .name
             color: #ffd479
+
+          .pronouns
+            margin-left: 0.25rem
+            font-style: italic
+            color: rgba(#fff, .75)
+            font-size: .75rem
+
+          .team
+            display: inline-flex
+            padding: .35rem
+            margin-left: .5rem
+            border-radius: .5rem
+            background-color: #242424
 
           .badges
             display: inline-flex

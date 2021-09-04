@@ -25,3 +25,7 @@ body {
   top: -1.25rem;
   left: 2px;
 }
+
+.team svg {
+  height: 1.125rem;
+}

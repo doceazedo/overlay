@@ -77,3 +77,4 @@ typings/
 
 .svelte-kit/
 static/assets/json/song.json
+database.sqlite

@@ -20,7 +20,7 @@
   #music
     display: flex
     flex-shrink: 0
-    height: 6rem
+    height: 5rem
     width: 100%
     background-color: #242424
     border-radius: .5rem
@@ -39,16 +39,13 @@
 
       h1,
       h2
-        max-width: 21rem
+        max-width: 22rem
         line-height: 1.25
         white-space: nowrap
         overflow: hidden
         text-overflow: ellipsis
 
       h1
-        font-size: 1.75rem
+        font-size: 1.5rem
         font-weight: 700
-
-      h2
-        font-size: 1.25rem
 </style>
