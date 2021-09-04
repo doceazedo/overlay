@@ -1,6 +1,7 @@
 <script>
   import { onMount } from 'svelte';
   import { emotes } from '../stores';
+  import { bot } from '../bot';
 
   let chatEl;
   let messages = [];
@@ -20,11 +21,16 @@
     const twitchBadges = [...globalBadges.data, ...channelBadges.data];
     
     const client = new tmi.Client({
+      identity: {
+        username: '${import.meta.env.VITE_TWITCH_BOT_LOGIN}',
+        password: `oauth:${import.meta.env.VITE_TWITCH_BOT_OAUTH_TOKEN}`
+      },
       channels: [ 'doceazedo911' ]
     });
     
     client.connect();
     console.log('Conectado ao chat!');
+    bot(client);
     
     client.on('message', (channel, tags, message, self) => {
       const twitchEmotes = [];
@@ -83,12 +89,11 @@
       setTimeout(() => chatEl.scrollTo(0, chatEl.scrollHeight), 50);
     });
   };
+  onMount(initializeChat);
 
   const fadeInAvatar = event => {
     event.target.classList.add('show');
   }
-
-  onMount(initializeChat);
 </script>
 
 <svelte:head>
