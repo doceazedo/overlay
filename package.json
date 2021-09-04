@@ -7,7 +7,7 @@
     "preview": "svelte-kit preview",
     "lint": "prettier --ignore-path .gitignore  --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
     "format": "prettier --ignore-path .gitignore --write --plugin-search-dir=. .",
-    "start": "svelte-kit build && svelte-kit preview -p 2424"
+    "start": "svelte-kit build && svelte-kit preview -p 2525"
   },
   "devDependencies": {
     "@sveltejs/kit": "next",

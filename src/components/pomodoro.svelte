@@ -36,7 +36,7 @@
 
   const toggleFocus = () => {
     focus = !focus;
-    timerEnding = newTimer(focus ? 1 : 5);
+    timerEnding = newTimer(focus ? 25 : 5);
     pomodoro();
   }
 
