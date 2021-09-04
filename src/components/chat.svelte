@@ -3,6 +3,7 @@
   import { onMount } from 'svelte';
   import { emotes } from '../stores';
   import { bot } from '../bot';
+  import { TWITCH_OAUTH_TOKEN, TWITCH_CLIENT_ID, TWITCH_CHANNEL_ID, TWITCH_BOT_LOGIN, TWITCH_BOT_OAUTH_TOKEN } from '../env';
 
   let chatEl;
   let messages = [];
@@ -13,18 +14,18 @@
     const bttvEmotes = [...bttvGlobals, ...bttvChannel.channelEmotes, ...bttvChannel.sharedEmotes];
 
     const twitchHeaders = new Headers();
-    twitchHeaders.append('Authorization', `Bearer ${import.meta.env.VITE_TWITCH_OAUTH_TOKEN}`);
-    twitchHeaders.append('Client-Id', import.meta.env.VITE_TWITCH_CLIENT_ID);
+    twitchHeaders.append('Authorization', `Bearer ${TWITCH_OAUTH_TOKEN}`);
+    twitchHeaders.append('Client-Id', TWITCH_CLIENT_ID);
 
     const globalBadges = await(await fetch('https://api.twitch.tv/helix/chat/badges/global', { headers: twitchHeaders })).json();
     globalBadges.data = globalBadges.data.filter(badge => badge.set_id != 'subscriber');
-    const channelBadges = await(await fetch(`https://api.twitch.tv/helix/chat/badges?broadcaster_id=${import.meta.env.VITE_TWITCH_CHANNEL_ID}`, { headers: twitchHeaders })).json();
+    const channelBadges = await(await fetch(`https://api.twitch.tv/helix/chat/badges?broadcaster_id=${TWITCH_CHANNEL_ID}`, { headers: twitchHeaders })).json();
     const twitchBadges = [...globalBadges.data, ...channelBadges.data];
     
     const client = new tmi.Client({
       identity: {
-        username: `${import.meta.env.VITE_TWITCH_BOT_LOGIN}`,
-        password: `oauth:${import.meta.env.VITE_TWITCH_BOT_OAUTH_TOKEN}`
+        username: TWITCH_BOT_LOGIN,
+        password: `oauth:${TWITCH_BOT_OAUTH_TOKEN}`
       },
       channels: [ 'doceazedo911' ]
     });
@@ -75,7 +76,7 @@
         const badge = badgeTypes.versions.find(t => t.id == tags.badges[key]);
         badges.push(badge.image_url_1x);
       }
-      if (self) badges = [ '/static/assets/img/bot-badge.png' ];
+      if (self) badges = [ '/assets/img/bot-badge.png' ];
 
       const bot = await(await fetch(`/users/${tags['user-id']}`)).json();
 
@@ -103,7 +104,7 @@
 </script>
 
 <svelte:head>
-  <script src="../../static/assets/js/tmi.min.js"></script>
+  <script src="/assets/js/tmi.min.js"></script>
 </svelte:head>
 
 <ul id="chat" bind:this={chatEl}>
@@ -192,7 +193,7 @@
       &.self .name
         color: #ff0000 !important
         text-shadow: 0 0 5px #ff0000
-        background-image: url('/static/assets/img/glitter.gif')
+        background-image: url('/assets/img/glitter.gif')
 
       .content
         position: relative
@@ -210,7 +211,7 @@
           bottom: 0
           height: 1rem
           width: .75rem
-          background-image: url('/static/assets/img/chat-bubble.svg')
+          background-image: url('/assets/img/chat-bubble.svg')
           background-position: center right
           background-repeat: no-repeat
           background-size: contain
