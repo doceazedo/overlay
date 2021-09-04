@@ -1,4 +1,7 @@
 <script>
+  import { scale } from 'svelte/transition';
+  import { bounceOut } from 'svelte/easing';
+
   let nowPlaying = {};
   setInterval(async () => {
     try {
@@ -9,11 +12,13 @@
 </script>
 
 <div id="music">
-  <img src={nowPlaying.cover} alt="">
-  <div>
-    <h1>{nowPlaying.title}</h1>
-    <h2>{nowPlaying.artist}</h2>
-  </div>
+  {#if nowPlaying.cover }
+    <img in:scale={{duration: 200, opacity: 0, start: .75, easing: bounceOut}} src={nowPlaying.cover} alt="">
+    <div in:scale={{duration: 200, opacity: 0, start: .75, easing: bounceOut}}>
+      <h1>{nowPlaying.title}</h1>
+      <h2>{nowPlaying.artist}</h2>
+    </div>
+  {/if}
 </div>
 
 <style type="text/sass">
