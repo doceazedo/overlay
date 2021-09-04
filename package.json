@@ -2,12 +2,12 @@
   "name": "doceazedo-overlay",
   "version": "0.0.1",
   "scripts": {
-    "dev": "svelte-kit dev -p 2424",
+    "dev": "svelte-kit dev -p 2525",
     "build": "svelte-kit build",
     "preview": "svelte-kit preview",
     "lint": "prettier --ignore-path .gitignore  --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
     "format": "prettier --ignore-path .gitignore --write --plugin-search-dir=. .",
-    "start": "svelte-kit build && svelte-kit preview -p 2525"
+    "start": "svelte-kit build && svelte-kit preview -p 2424"
   },
   "devDependencies": {
     "@sveltejs/kit": "next",

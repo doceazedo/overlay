@@ -1,6 +1,7 @@
 <script>
   import simpleIcons from 'simple-icons';
   import { onMount } from 'svelte';
+  import { fly } from 'svelte/transition';
   import { emotes } from '../stores';
   import { bot } from '../bot';
   import { TWITCH_OAUTH_TOKEN, TWITCH_CLIENT_ID, TWITCH_CHANNEL_ID, TWITCH_BOT_LOGIN, TWITCH_BOT_OAUTH_TOKEN } from '../env';
@@ -109,7 +110,7 @@
 
 <ul id="chat" bind:this={chatEl}>
   {#each messages as message}
-    <li class:self={message.author.self}>
+    <li in:fly={{ x: -16, duration: 500 }} class:self={message.author.self}>
       <div class="avatar">
         <div>
           <img on:load={fadeInAvatar} src="/avatar/{message.author.username}" alt="">
@@ -165,7 +166,6 @@
 
     li
       display: flex
-      animation: slide-in-left .5s cubic-bezier(0.250, 0.460, 0.450, 0.940) forwards
 
       &:not(:last-child)
         margin-bottom: .75rem
@@ -248,13 +248,4 @@
 
         .message
           line-height: 1.5
-
-  @keyframes slide-in-left
-    0%
-      transform: translateX(-1rem)
-      opacity: 0
-
-    100%
-      transform: translateX(0)
-      opacity: 1
 </style>
