@@ -4,11 +4,12 @@
   import { fly } from 'svelte/transition';
   import { emotes } from '../stores';
   import { bot } from '../bot';
-  import { TWITCH_OAUTH_TOKEN, TWITCH_CLIENT_ID, TWITCH_CHANNEL_ID, TWITCH_BOT_LOGIN, TWITCH_BOT_OAUTH_TOKEN } from '../env';
+  import { TWITCH_OAUTH_TOKEN, TWITCH_CLIENT_ID, TWITCH_CHANNEL_ID, TWITCH_BOT_LOGIN, TWITCH_BOT_OAUTH_TOKEN, TWITCH_BOT_ID } from '../env';
   import tinycolor from 'tinycolor2';
 
   let chatEl;
   let messages = [];
+  const userData = {};
 
   const initializeChat = async () => {
     const bttvGlobals = await(await fetch('https://api.betterttv.net/3/cached/emotes/global')).json();
@@ -78,9 +79,18 @@
         const badge = badgeTypes.versions.find(t => t.id == tags.badges[key]);
         badges.push(badge.image_url_1x);
       }
-      if (self) badges = [ '/assets/img/bot-badge.png' ];
+
+      if (self) {
+        badges = [ '/assets/img/bot-badge.png' ];
+        tags['user-id'] = TWITCH_BOT_ID;
+      };
 
       const bot = await(await fetch(`/users/${tags['user-id']}`)).json();
+      if (bot.user?.team && !bot.user.team?.simpleIcon) {
+        bot.user.simpleIcon = simpleIcons.Get(bot.user.team);
+        bot.user.simpleIcon.hex = tinycolor(`#${bot.user.simpleIcon.hex}`).getBrightness() > 50 ? bot.user.simpleIcon.hex : 'fff';
+      } 
+      userData[tags['user-id']] = bot.user;
 
       messages.push({
         content: message,
@@ -89,11 +99,13 @@
           displayName: tags['display-name'],
           color: tags.color,
           badges,
-          self
-        },
-        bot: bot.user
+          self,
+          id: tags['user-id']
+        }
       });
+
       messages = messages;
+      userData = userData;
 
       setTimeout(() => chatEl.scrollTo(0, chatEl.scrollHeight), 50);
     });
@@ -114,20 +126,20 @@
     <li in:fly={{ x: -16, duration: 500 }} class:self={message.author.self}>
       <div class="avatar">
         <div>
-          <img on:load={fadeInAvatar} src="/avatar/{message.author.username}" alt="">
+          <img on:load={fadeInAvatar} src={userData[message.author.id].avatar} alt="">
         </div>
       </div>
       <div class="content">
         <span class="meta">
           <span class="name" style="color: {message.author.color}">{message.author.displayName}</span>
 
-          {#if message.bot?.pronouns}
-            <span class="pronouns">{message.bot.pronouns}</span>
+          {#if userData[message.author.id]?.pronouns}
+            <span class="pronouns">{userData[message.author.id].pronouns}</span>
           {/if}
 
-          {#if message.bot?.team}
-            <span class="team" style="fill: #{tinycolor(`#${simpleIcons.Get(message.bot.team).hex}`).getBrightness() > 50 ? simpleIcons.Get(message.bot.team).hex : 'fff'}">
-              {@html simpleIcons.Get(message.bot.team).svg}
+          {#if userData[message.author.id]?.simpleIcon}
+            <span class="team" style="fill: #{userData[message.author.id].simpleIcon.hex}">
+              {@html userData[message.author.id].simpleIcon.svg}
             </span>
           {/if}
 

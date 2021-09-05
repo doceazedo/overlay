@@ -1,12 +1,26 @@
 import { User } from '../../models';
+import 'dotenv/config';
 
 export async function get({ params }) {
   await User.sync();
-  const user = await User.findByPk(params.id);
+  const user = await User.findOrCreate({
+    where: { id: params.id },
+    defaults: { id: params.id },
+    raw: true
+  });
+
+  const res = await fetch(`https://api.twitch.tv/helix/users?id=${params.id}`, {
+    headers: {
+      'Authorization': `Bearer ${process.env['TWITCH_OAUTH_TOKEN']}`,
+      'Client-Id': process.env['TWITCH_CLIENT_ID']
+    }
+  });
+  const twitch = await res.json();
+  const avatar = twitch.data[0].profile_image_url;
 
   return {
     body: {
-      user
+      user: { ...user[0], avatar },
     }
   }
 }
