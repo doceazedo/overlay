@@ -1,5 +1,4 @@
 export const projeto = {
-  aliases: ['dc', 'disc'],
   exec: async (client, channel, tags, args) => {
     if (tags['user-id'] == '98776633' && args.length) {
       const value = args.join(' ');

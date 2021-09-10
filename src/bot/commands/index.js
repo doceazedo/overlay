@@ -1,7 +1,7 @@
 export { ping } from './ping';
-export { pronouns } from './pronouns';
-export { team } from './team';
-export { music } from './music';
+export { pronomes } from './pronomes';
+export { icone } from './icone';
+export { musica } from './musica';
 export { social } from './social';
 export { discord } from './discord';
 export { pomodoro } from './pomodoro';

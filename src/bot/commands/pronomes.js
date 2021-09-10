@@ -1,5 +1,5 @@
-export const pronouns = {
-  aliases: ['pronoun', 'pronomes', 'pronome'],
+export const pronomes = {
+  aliases: ['pronome', 'pronoun', 'pronouns'],
   exec: async (client, channel, tags, args) => {
     let [ primary, secondary ] = args;
 

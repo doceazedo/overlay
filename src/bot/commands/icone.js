@@ -1,7 +1,7 @@
 import simpleIcons from 'simple-icons';
 
-export const team = {
-  aliases: ['badge', 'icon', 'time', 'equipe', 'icone'],
+export const icone = {
+  aliases: ['icon', 'badge', 'team', 'time', 'equipe'],
   exec: async (client, channel, tags, args) => {
     const iconInput = args.join(' ');
     const icon = iconInput && simpleIcons.Get(iconInput);
