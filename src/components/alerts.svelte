@@ -56,7 +56,7 @@
           title  = `<b>${alertInfo.name}</b> está fazendo uma raid!`;
           message = `${alertInfo.raiders} pessoas vieram no grupo!`;
           timeout = 7000;
-          volume = .25;
+          volume = .35;
           break;
         case 'bits':
           title = `<b>${alertInfo.name}</b> mandou ${alertInfo.amount} bits!`;
@@ -73,7 +73,7 @@
         volume,
       });
 
-      if (!hasActiveAlert) nextAlert(); 
+      if (alertsQueue.length == 1) nextAlert();
     });
   }, 1000);
 
@@ -132,8 +132,8 @@
       display: flex
       justify-content: center
       background-color: #2d2d2d
-      width: 800px
-      padding: 1.75rem
+      width: 600px
+      padding: 1rem
       border-radius: .5rem
       color: #fff
 
@@ -144,8 +144,8 @@
           display: none
 
       .avatar-wrapper .avatar
-        height: 6rem
-        width: 6rem
+        height: 4rem
+        width: 4rem
         margin-right: 1rem
         border-radius: 50%
         background-color: #191919
@@ -163,12 +163,11 @@
         justify-content: center
 
         h1
-          font-size: 2rem
+          font-size: 1.5rem
 
           //:global(b)
           //  color: #ffd479
 
         p
-          font-size: 1.5rem
           margin-top: .5rem
 </style>
