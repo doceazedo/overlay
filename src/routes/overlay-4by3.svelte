@@ -1,6 +1,6 @@
 <script>
   import { browser } from '$app/env';
-  import { Chat, Emotes, Pomodoro, NowPlaying } from '../components';
+  import { Alerts, Chat, Emotes, Pomodoro, NowPlaying } from '../components';
 
   const GET = param => {
     if (!browser) return;
@@ -16,6 +16,8 @@
     return result;
   }
 </script>
+
+<Alerts />
 
 <Emotes />
 

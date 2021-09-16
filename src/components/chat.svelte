@@ -9,7 +9,7 @@
 
   let chatEl;
   let messages = [];
-  const userData = {};
+  let userData = {};
 
   const initializeChat = async () => {
     const bttvGlobals = await(await fetch('https://api.betterttv.net/3/cached/emotes/global')).json();
@@ -114,9 +114,7 @@
   };
   onMount(initializeChat);
 
-  const fadeInAvatar = event => {
-    event.target.classList.add('show');
-  }
+  const fadeInAvatar = event => event.target.classList.add('show');
 </script>
 
 <svelte:head>

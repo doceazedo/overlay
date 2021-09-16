@@ -2,14 +2,10 @@ import { User } from '../../models';
 import 'dotenv/config';
 
 export async function get({ params }) {
-  await User.sync();
-  const user = await User.findOrCreate({
-    where: { id: params.id },
-    defaults: { id: params.id },
-    raw: true
-  });
+  const getByLogin = isNaN(params.id);
 
-  const res = await fetch(`https://api.twitch.tv/helix/users?id=${params.id}`, {
+  const getParams = getByLogin ? `?login=${params.id}` : `?id=${params.id}`;
+  const res = await fetch(`https://api.twitch.tv/helix/users${getParams}`, {
     headers: {
       'Authorization': `Bearer ${process.env['TWITCH_OAUTH_TOKEN']}`,
       'Client-Id': process.env['TWITCH_CLIENT_ID']
@@ -17,6 +13,13 @@ export async function get({ params }) {
   });
   const twitch = await res.json();
   const avatar = twitch.data[0].profile_image_url;
+
+  await User.sync();
+  const user = await User.findOrCreate({
+    where: { id: getByLogin ? twitch.data[0].id : params.id },
+    defaults: { id: getByLogin ? twitch.data[0].id : params.id },
+    raw: true
+  });
 
   return {
     body: {
