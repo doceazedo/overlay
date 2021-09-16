@@ -16,6 +16,8 @@
     const bttvChannel = await(await fetch('https://api.betterttv.net/3/cached/users/twitch/98776633')).json();
     const bttvEmotes = [...bttvGlobals, ...bttvChannel.channelEmotes, ...bttvChannel.sharedEmotes];
 
+    const ffzEmotes = await(await fetch('https://api.betterttv.net/3/cached/frankerfacez/users/twitch/98776633')).json();
+
     const twitchHeaders = new Headers();
     twitchHeaders.append('Authorization', `Bearer ${TWITCH_OAUTH_TOKEN}`);
     twitchHeaders.append('Client-Id', TWITCH_CLIENT_ID);
@@ -64,6 +66,13 @@
         const twitchEmote = twitchEmotes.find(e => e.name == word);
         if (twitchEmote) {
           const url = `https://static-cdn.jtvnw.net/emoticons/v2/${twitchEmote.id}/static/light/1.0`;
+          emotesURLs.push(url);
+          return message[i] = { emote: url };
+        }
+        
+        const ffzEmote = ffzEmotes.find(e => e.code == word);
+        if (ffzEmote) {
+          const url = ffzEmote.images['1x'];
           emotesURLs.push(url);
           return message[i] = { emote: url };
         }
