@@ -7,4 +7,3 @@ export { discord } from './discord';
 export { pomodoro } from './pomodoro';
 export { overlay } from './overlay';
 export { projeto } from './projeto';
-export { minecraft } from './minecraft';
