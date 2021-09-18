@@ -2,7 +2,7 @@
   import { browser } from '$app/env';
 	import { fly } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
-  import { STREAMLABS_KEY } from '../env';
+import { onMount } from 'svelte';
 
   const alertsQueue = [];
   let alert = {
@@ -14,14 +14,29 @@
     volume: 1
   };
   let hasActiveAlert = false;
+  export let alertsWS;
 
-  setTimeout(() => {
-    if (!browser) return;
+  const nextAlert = () => {
+    alert = alertsQueue[0];
+    hasActiveAlert = true;
 
-    const streamlabs = io(`https://sockets.streamlabs.com?token=${STREAMLABS_KEY}`, {transports: ['websocket']});
-    console.log('Socket goes brrrrrr');
-  
-    streamlabs.on('event', async data => {
+    const alertAudio = new Audio(`/assets/audio/alert-${alert.type}.mp3`);
+    alertAudio.volume = alert.volume;
+    alertAudio.play();
+
+    setTimeout(() => {
+      hasActiveAlert = false;
+      setTimeout(() => {
+        alertsQueue.shift();
+        if (alertsQueue.length) nextAlert();
+      }, 1000);
+    }, alert.timeout);
+  };
+
+  const fadeInAvatar = event => event.target.classList.add('show');
+
+  onMount(() => {
+    alertsWS.on('event', async data => {
       const alertInfo = data.message[0];
       let title, message, timeout = 5000, volume = 1;
 
@@ -75,99 +90,66 @@
 
       if (alertsQueue.length == 1) nextAlert();
     });
-  }, 1000);
-
-  const nextAlert = () => {
-    alert = alertsQueue[0];
-    hasActiveAlert = true;
-
-    const alertAudio = new Audio(`/assets/audio/alert-${alert.type}.mp3`);
-    alertAudio.volume = alert.volume;
-    alertAudio.play();
-
-    setTimeout(() => {
-      hasActiveAlert = false;
-      setTimeout(() => {
-        alertsQueue.shift();
-        if (alertsQueue.length) nextAlert();
-      }, 1000);
-    }, alert.timeout);
-  };
-
-  const fadeInAvatar = event => event.target.classList.add('show');
+  });
 </script>
 
-<svelte:head>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
-</svelte:head>
-
 {#if hasActiveAlert}
-  <div class="alert-wrapper">
-    <div class="alert" class:no-message={!alert.message} transition:fly={{duration: 800, y: -128, opacity: 0, easing: quintOut}}>
-      <div class="avatar-wrapper">
-        <div class="avatar">
-          <img on:load={fadeInAvatar} src={alert.avatar} alt="">
-        </div>
+  <div class="alert" class:no-message={!alert.message} transition:fly={{duration: 800, y: -128, opacity: 0, easing: quintOut}}>
+    <div class="avatar-wrapper">
+      <div class="avatar">
+        <img on:load={fadeInAvatar} src={alert.avatar} alt="">
       </div>
-      <div class="message">
-        <h1>{@html alert.title}</h1>
-        {#if alert.message}
-          <p>{alert.message}</p>
-        {/if}
-      </div>
+    </div>
+    <div class="message">
+      <h1>{@html alert.title}</h1>
+      {#if alert.message}
+        <p>{alert.message}</p>
+      {/if}
     </div>
   </div>
 {/if}
 
 <style type="text/sass">
-  .alert-wrapper
-    position: absolute
+  .alert
     display: flex
     justify-content: center
-    width: 1440px
-    padding-top: 1rem
-    z-index: 10
+    background-color: #2d2d2d
+    width: 600px
+    padding: 1rem
+    border-radius: .5rem
+    color: #fff
 
-    .alert
+    &.no-message
+      align-items: center
+
+      p
+        display: none
+
+    .avatar-wrapper .avatar
+      height: 4rem
+      width: 4rem
+      margin-right: 1rem
+      border-radius: 50%
+      background-color: #191919
+      overflow: hidden
+
+      img
+        transition: all .2s ease
+
+        &:not(.show)
+          opacity: 0
+
+    .message
       display: flex
+      flex-direction: column
       justify-content: center
-      background-color: #2d2d2d
-      width: 600px
-      padding: 1rem
-      border-radius: .5rem
-      color: #fff
 
-      &.no-message
-        align-items: center
+      h1
+        font-size: 1.5rem
 
-        p
-          display: none
+        //:global(b)
+        //  color: #ffd479
 
-      .avatar-wrapper .avatar
-        height: 4rem
-        width: 4rem
-        margin-right: 1rem
-        border-radius: 50%
-        background-color: #191919
-        overflow: hidden
-
-        img
-          transition: all .2s ease
-
-          &:not(.show)
-            opacity: 0
-
-      .message
-        display: flex
-        flex-direction: column
-        justify-content: center
-
-        h1
-          font-size: 1.5rem
-
-          //:global(b)
-          //  color: #ffd479
-
-        p
-          margin-top: .5rem
+      p
+        margin-top: .5rem
 </style>

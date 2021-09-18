@@ -5,3 +5,4 @@ export const TWITCH_BOT_LOGIN = import.meta.env.VITE_TWITCH_BOT_LOGIN;
 export const TWITCH_BOT_OAUTH_TOKEN = import.meta.env.VITE_TWITCH_BOT_OAUTH_TOKEN;
 export const TWITCH_BOT_ID = import.meta.env.VITE_TWITCH_BOT_ID;
 export const STREAMLABS_KEY = import.meta.env.VITE_STREAMLABS_KEY;
+export const TWITCH_CHANNEL = import.meta.env.VITE_TWITCH_CHANNEL;

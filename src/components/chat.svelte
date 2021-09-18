@@ -4,9 +4,10 @@
   import { fly } from 'svelte/transition';
   import { emotes } from '../stores';
   import { bot } from '../bot';
-  import { TWITCH_OAUTH_TOKEN, TWITCH_CLIENT_ID, TWITCH_CHANNEL_ID, TWITCH_BOT_LOGIN, TWITCH_BOT_OAUTH_TOKEN, TWITCH_BOT_ID } from '../env';
+  import { TWITCH_OAUTH_TOKEN, TWITCH_CLIENT_ID, TWITCH_CHANNEL_ID, TWITCH_BOT_ID } from '../env';
   import tinycolor from 'tinycolor2';
 
+  export let tmiClient;
   let chatEl;
   let messages = [];
   let userData = {};
@@ -27,19 +28,11 @@
     const channelBadges = await(await fetch(`https://api.twitch.tv/helix/chat/badges?broadcaster_id=${TWITCH_CHANNEL_ID}`, { headers: twitchHeaders })).json();
     const twitchBadges = [...globalBadges.data, ...channelBadges.data];
     
-    const client = new tmi.Client({
-      identity: {
-        username: TWITCH_BOT_LOGIN,
-        password: `oauth:${TWITCH_BOT_OAUTH_TOKEN}`
-      },
-      channels: [ 'doceazedo911' ]
-    });
-    
-    client.connect();
+    tmiClient.connect();
     console.log('Conectado ao chat!');
-    bot(client);
+    bot(tmiClient);
     
-    client.on('message', async (channel, tags, message, self) => {
+    tmiClient.on('message', async (channel, tags, message, self) => {
       const twitchEmotes = [];
       for (const emoteID in tags.emotes) {
         const pos = tags.emotes[emoteID][0].split('-');
@@ -130,7 +123,7 @@
   <script src="/assets/js/tmi.min.js"></script>
 </svelte:head>
 
-<ul id="chat" bind:this={chatEl}>
+<ul class="chat" bind:this={chatEl}>
   {#each messages as message}
     <li in:fly={{ x: -16, duration: 500 }} class:self={message.author.self}>
       <div class="avatar">
@@ -178,12 +171,8 @@
 </ul>
 
 <style type="text/sass">
-  #chat
-    position: relative
-    flex-grow: 1
-    background-color: #242424
-    border-radius: .5rem
-    padding: .75rem
+  .chat
+    height: 100%
     overflow: hidden
 
     li
@@ -269,5 +258,6 @@
               margin-right: .35rem
 
         .message
+          color: #fff
           line-height: 1.5
 </style>

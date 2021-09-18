@@ -1,25 +1,13 @@
 <script>
-  import { browser } from '$app/env';
-  import { Alerts, Chat, Emotes, Pomodoro, NowPlaying } from '../components';
-
-  const GET = param => {
-    if (!browser) return;
-
-    let result = null, tmp = [];
-    location.search
-      .substr(1)
-      .split('&')
-      .forEach(item => {
-        tmp = item.split('=');
-        if (tmp[0] === param) result = decodeURIComponent(tmp[1]);
-      });
-    return result;
-  }
+  import { Alerts, Chat, EmotesWall, Pomodoro, NowPlaying } from '../components';
+  import { GET, tmiClient, alertsWS } from '../utils';
 </script>
 
-<Alerts />
+<div class="alert-wrapper">
+  <Alerts {alertsWS} />
+</div>
 
-<Emotes />
+<EmotesWall />
 
 <aside>
   <NowPlaying />
@@ -28,11 +16,21 @@
     <Pomodoro />
   {/if}
 
-  <Chat />
+  <div class="chat-wrapper">
+    <Chat {tmiClient} />
+  </div>
 </aside>
 
 <style type="text/sass">
   @import '../sass/vars.sass'
+
+  .alert-wrapper
+    position: absolute
+    display: flex
+    justify-content: center
+    width: 1440px
+    margin-top: 1rem
+    z-index: 10
 
   aside
     position: absolute
@@ -54,4 +52,11 @@
       width: 1px
       height: 100%
       background-color: #202020
+
+    .chat-wrapper
+      flex-grow: 1
+      padding: .75rem
+      background-color: #242424
+      border-radius: .5rem
+      overflow: hidden
 </style>
