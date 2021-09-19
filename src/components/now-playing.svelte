@@ -6,15 +6,20 @@
   setInterval(async () => {
     try {
       const song = await(await fetch('/song')).json();
-      if (nowPlaying.title != song.title) nowPlaying = song;
+      if (nowPlaying.title != song.title) {
+        nowPlaying = {};
+        setTimeout(() => nowPlaying = song, 500);
+      }
     } catch (e) { }
   }, 250);
+
+  const fadeInCover = event => event.target.classList.add('show');
 </script>
 
 <div id="music">
-  {#if nowPlaying.cover }
-    <img in:scale={{duration: 200, opacity: 0, start: .75, easing: bounceOut}} src={nowPlaying.cover} alt="">
-    <div in:scale={{duration: 200, opacity: 0, start: .75, easing: bounceOut}}>
+  {#if nowPlaying.cover}
+    <img on:load={fadeInCover} transition:scale={{duration: 200, opacity: 0, start: .75, easing: bounceOut}} src={nowPlaying.cover} alt="">
+    <div transition:scale={{duration: 200, opacity: 0, start: .75, easing: bounceOut}}>
       <h1>{nowPlaying.title}</h1>
       <h2>{nowPlaying.artist}</h2>
     </div>
@@ -33,9 +38,14 @@
     margin-bottom: 1rem
 
     img
-      height: 100%
+      height: 3.5rem
+      width: 3.5rem
       border-radius: .5rem
       margin-right: .75rem
+      transition: all .2s ease
+
+      &:not(.show)
+        opacity: 0
 
     div
       display: flex
