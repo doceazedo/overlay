@@ -4,7 +4,7 @@
 </script>
 
 <div class="alerts-wrapper">
-  <Alerts {alertsWS} />
+  <Alerts {alertsWS} mute={true} />
 </div>
 
 <div class="chat-wrapper">
@@ -15,12 +15,13 @@
   .alerts-wrapper
     position: absolute
     display: flex
-    justify-content: center
+    justify-content: flex-end
     width: 100%
-    margin-top: 1rem
+    padding: 1rem
 
   .chat-wrapper
     position: absolute
     height: 100%
+    width: 500px
     padding: 1rem
 </style>

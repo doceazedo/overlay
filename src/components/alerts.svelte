@@ -2,7 +2,7 @@
   import { browser } from '$app/env';
 	import { fly } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
-import { onMount } from 'svelte';
+  import { onMount } from 'svelte';
 
   const alertsQueue = [];
   let alert = {
@@ -14,15 +14,17 @@ import { onMount } from 'svelte';
     volume: 1
   };
   let hasActiveAlert = false;
-  export let alertsWS;
+  export let alertsWS, mute = false;
 
   const nextAlert = () => {
     alert = alertsQueue[0];
     hasActiveAlert = true;
 
-    const alertAudio = new Audio(`/assets/audio/alert-${alert.type}.mp3`);
-    alertAudio.volume = alert.volume;
-    alertAudio.play();
+    if (!mute) {
+      const alertAudio = new Audio(`/assets/audio/alert-${alert.type}.mp3`);
+      alertAudio.volume = alert.volume;
+      alertAudio.play();
+    }
 
     setTimeout(() => {
       hasActiveAlert = false;
@@ -36,6 +38,9 @@ import { onMount } from 'svelte';
   const fadeInAvatar = event => event.target.classList.add('show');
 
   onMount(() => {
+    if (!browser) return;
+
+    alertsWS = alertsWS();
     alertsWS.on('event', async data => {
       const alertInfo = data.message[0];
       let title, message, timeout = 5000, volume = 1;

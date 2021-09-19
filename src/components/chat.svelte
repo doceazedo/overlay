@@ -1,4 +1,5 @@
 <script>
+  import { browser } from '$app/env';
   import simpleIcons from 'simple-icons';
   import { onMount } from 'svelte';
   import { fly } from 'svelte/transition';
@@ -28,6 +29,9 @@
     const channelBadges = await(await fetch(`https://api.twitch.tv/helix/chat/badges?broadcaster_id=${TWITCH_CHANNEL_ID}`, { headers: twitchHeaders })).json();
     const twitchBadges = [...globalBadges.data, ...channelBadges.data];
     
+    if (!browser) return;
+
+    tmiClient = tmiClient();
     tmiClient.connect();
     console.log('Conectado ao chat!');
     bot(tmiClient);
