@@ -1,19 +1,29 @@
-import textToSpeech from '@google-cloud/text-to-speech';
-import 'dotenv/config';
+import { generateGCPAudio, generatePollyAudio } from '../utils';
 
 export async function get({ query }) {
-  const client = new textToSpeech.TextToSpeechClient();
-  const request = {
-    input: {text: query.get('text')},
-    voice: {languageCode: 'pt-BR'},
-    audioConfig: {audioEncoding: 'MP3'},
-  };
-  const [ response ] = await client.synthesizeSpeech(request);
+  let audio;
+
+  switch (query.get('provider')) {
+    case 'gcp':
+      audio = await generateGCPAudio(query.get('text'), 'pt-BR');
+      break;
+
+    case 'aws':
+      audio = await generatePollyAudio(query.get('text'), query.get('voiceID') || 'Ricardo');
+      break;
+  }
+
+  if (!audio) {
+    return {
+			status: 500,
+			error: new Error('Could not generate audio')
+		}
+  }
 
   return {
     headers: {
       'content-type': 'audio/mpeg'
     },
-    body: response.audioContent
-  }
+    body: audio
+  };
 }
