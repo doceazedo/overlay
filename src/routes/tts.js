@@ -1,4 +1,5 @@
-import { generateGCPAudio, generatePollyAudio } from '../utils';
+import generateGCPAudio from '../utils/generate-gcp-audio';
+import generatePollyAudio from '../utils/generate-polly-audio';
 
 export async function get({ query }) {
   let audio;
