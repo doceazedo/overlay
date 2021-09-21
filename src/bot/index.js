@@ -1,9 +1,10 @@
 import * as commands from './commands';
-import tts from './tts';
+import playTTS from './play-tts';
 
 export const bot = client => {
   client.on('message', (channel, tags, message, self) => {
-    if (tags['custom-reward-id'] && tags['custom-reward-id'] == '0d3a213a-1af8-4c47-a0ba-cadfea2300c0') return tts(message);
+    if (tags['custom-reward-id'] && tags['custom-reward-id'] == '0d3a213a-1af8-4c47-a0ba-cadfea2300c0') return playTTS('gcp', message);
+    if (tags['custom-reward-id'] && tags['custom-reward-id'] == 'f2eab451-e128-4889-b367-61b83c002dbc') return playTTS('aws', message);
 
     if (self || !message.startsWith('!')) return;
     const args = message.split(' ');
