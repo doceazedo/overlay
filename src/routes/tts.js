@@ -15,9 +15,9 @@ export async function get({ query }) {
 
   if (!audio) {
     return {
-			status: 500,
-			error: new Error('Could not generate audio')
-		}
+      status: 500,
+      error: new Error('Could not generate audio')
+    }
   }
 
   return {

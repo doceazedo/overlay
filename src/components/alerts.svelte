@@ -1,7 +1,7 @@
 <script>
   import { browser } from '$app/env';
-	import { fly } from 'svelte/transition';
-	import { quintOut } from 'svelte/easing';
+  import { fly } from 'svelte/transition';
+  import { quintOut } from 'svelte/easing';
   import { onMount } from 'svelte';
 
   const alertsQueue = [];
