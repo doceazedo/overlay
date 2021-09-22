@@ -1,103 +1,94 @@
 <script>
-  import { browser } from '$app/env';
-  import { onMount } from 'svelte';
-  import { emotes } from '../stores';
+  import { emotes as emotesStore } from '../stores';
 
-  const timeToIdle = 10000;
+  export let wallWidth = 1440, wallHeight = 1080;
 
-  let canvas,
-      ctx,
-      size = 64,
-      gravity = 0.1,
-      damping = 0.9,
-      traction = 0.8,
-      hideCanvas = false,
-      isHidingCanvas = false,
-      positions = [];
-
-  const init = () => {
-    if (!browser) return;
-
-    ctx = canvas.getContext("2d");
-    canvas.width = 1440;
-    canvas.height = 1080;
-    renderEmote();
-  }
-  onMount(() => init());
+  let size = 64,
+      gravity = .1,
+      damping = .9,
+      traction = .8,
+      emotes = [],
+      idleTimeout = setTimeout(() => emotes = [], 11000);
 
   const renderEmote = () => {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    positions.forEach((pos, i) => {
-      if (pos.cx + size >= canvas.width) {
-        positions[i].vx = - pos.vx * damping;
-        positions[i].cx = canvas.width - size;
+    emotes.forEach((pos, i) => {
+      if (pos.cx + size >= wallWidth) {
+        emotes[i].vx = - pos.vx * damping;
+        emotes[i].cx = wallWidth - size;
       } else if (pos.cx <= 0) {
-        positions[i].vx = - pos.vx * damping;
-        positions[i].cx = 0;
+        emotes[i].vx = - pos.vx * damping;
+        emotes[i].cx = 0;
       }
-      if (pos.cy + size >= canvas.height) {
-        positions[i].vy = - pos.vy * damping;
-        positions[i].cy = canvas.height - size;
-        positions[i].vx *= traction;
+      if (pos.cy + size >= wallHeight) {
+        emotes[i].vy = - pos.vy * damping;
+        emotes[i].cy = wallHeight - size;
+        emotes[i].vx *= traction;
       } else if (pos.cy <= 0) {
-        positions[i].vy = - pos.vy * damping;
-        positions[i].cy = 0;
+        emotes[i].vy = - pos.vy * damping;
+        emotes[i].cy = 0;
       }
 
-      positions[i].vy += gravity;
-      positions[i].cx += pos.vx;
-      positions[i].cy += pos.vy;
-
-      const img = new Image();
-      img.src = pos.url;
-      ctx.drawImage(img, pos.cx, pos.cy, size, size);
+      emotes[i].vy += gravity;
+      emotes[i].cx += pos.vx;
+      emotes[i].cy += pos.vy;
     });
-    requestAnimationFrame(renderEmote);
+
+    emotes = emotes;
   }
+  setInterval(renderEmote, 1000 / 75);
 
   const randomInt = (min, max) => Math.random() * (max - min) + min;
+  const randomHash = () => (Math.random() + 1).toString(36).substring(7);
 
   const pushEmote = url => {
-    positions.push({
+    const id = randomHash();
+    emotes.push({
       cx: randomInt(0, 1440),
       cy: randomInt(820, 1080),
       vx: randomInt(10, 15),
       vy: randomInt(-15, -10),
-      url
+      show: false,
+      url,
+      id,
     });
 
-    hideCanvas = false;
+    setTimeout(() => emotes[emotes.findIndex(emote => emote.id == id)].show = true, 100);
+    setTimeout(() => emotes[emotes.findIndex(emote => emote.id == id)].show = false, 10000);
+
     clearTimeout(idleTimeout);
-    idleTimeout = setTimeout(destroyEmotes, timeToIdle);
+    idleTimeout = setTimeout(() => emotes = [], 20000);
   }
 
-  const destroyEmotes = () => {
-    hideCanvas = true;
-    isHidingCanvas = true;
-    setTimeout(() => {
-      positions = [];
-      isHidingCanvas = false;
-    }, 800);
-  }
-
-  let idleTimeout = setTimeout(destroyEmotes, timeToIdle);
-
-  emotes.subscribe(emotesArr => {
-    if (isHidingCanvas) {
-      setTimeout(() => emotesArr.forEach(emoteURL => pushEmote(emoteURL)), 800);
-    } else {
-      emotesArr.forEach(emoteURL => pushEmote(emoteURL));
-    }
+  emotesStore.subscribe(emotesArr => {
+    emotesArr.forEach(emoteURL => pushEmote(emoteURL));
   });
 </script>
 
-<canvas bind:this={canvas} class:hidden={hideCanvas}></canvas>
+<ul style="width:{wallWidth}px; height:{wallHeight}px">
+  {#each emotes as emote}
+    <li style="left:{emote.cx}px;top:{emote.cy}px">
+      <div style="background-image:url({emote.url})" class:show={emote.show}></div>
+    </li>
+  {/each}
+</ul>
 
 <style type="text/sass">
-  canvas
-    transition: all .8s ease
+  ul
+    position: relative
 
-    &.hidden
-      opacity: 0
+    li
+      position: absolute
+      height: 4rem
+      width: 4rem
+
+      div
+        height: 100%
+        width: 100%
+        background-position: center
+        background-repeat: no-repeat
+        background-size: contain
+        transition: all .5s ease
+        
+        &:not(.show)
+          opacity: 0
 </style>
