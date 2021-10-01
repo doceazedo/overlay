@@ -13,6 +13,11 @@ export const tts = {
       provider = 'aws';
     };
 
+    if (voiceID == 'Perola') {
+      args.shift();
+      provider = 'cybervox';
+    }
+
     playTTS(provider, args.join(' '), voiceID);
   }
 }

@@ -1,6 +1,11 @@
 export default function playTTS(provider = '', text = '', voiceID = 'Ricardo') {
   if (text.length > 280) return;
+
   const params = new URLSearchParams({ provider, text, voiceID });
-  const audio = new Audio(`/tts?${params.toString()}`);
+  let audioURL = `/tts?${params.toString()}`;
+  if (provider == 'cybervox') audioURL = `/cybervox?${params.toString()}`;
+
+  const audio = new Audio(audioURL);
+  if (provider == 'cybervox') audio.volume = .5;
   audio.play();
 }
