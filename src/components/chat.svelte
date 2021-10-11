@@ -86,8 +86,6 @@
         badges.push(badge.image_url_1x);
       }
 
-      if (tags['user-id'] == '560873561') badges.push('https://static-cdn.jtvnw.net/badges/v1/2b879fd6-8fc4-49a1-9861-ff5cd5153eaf/1');
-
       if (self) {
         badges = [ '/assets/img/bot-badge.png' ];
         tags['user-id'] = TWITCH_BOT_ID;
