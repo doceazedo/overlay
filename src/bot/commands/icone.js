@@ -8,7 +8,7 @@ export const icone = {
 
     if (!iconInput || !icon) {
       client.say(channel, `/color Red`);
-      client.say(channel, `/me @${tags.username}, mande um de ícone que você achar em https://simpleicons.org, tipo "/team svelte"`);
+      client.say(channel, `/me @${tags.username}, clique em qualquer ícone do site https://doceazedo.com/icones e coloque o comando aqui!`);
       return;
     }
 
