@@ -12,6 +12,7 @@ body,
 
 body {
   font-family: 'Rubik', sans-serif, Twemoji;
+  overflow: hidden;
 }
 
 .emote {

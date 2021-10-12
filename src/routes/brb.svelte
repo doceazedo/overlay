@@ -1,10 +1,13 @@
 <script>
   import { onMount } from 'svelte';
   import { tsParticles } from 'tsparticles';
+  import { GET } from '../utils';
+
+  const halloween = GET('halloween') ? true : false;
 
   onMount(() => {
     tsParticles
-      .loadJSON('particles', '/assets/json/particlesjs-config.json')
+      .loadJSON('particles', `/assets/json/particlesjs-config${halloween ? '-halloween' : ''}.json`)
       .then((container) => {
           console.log("callback - tsparticles config loaded");
       })
@@ -14,11 +17,11 @@
   });
 </script>
 
-<div id="particles"></div>
+<div id="particles" class:halloween></div>
 
-<main>
+<main class:halloween>
   <figure>
-    <img src="/assets/img/logo.svg" alt="">
+    <img src="/assets/img/logo{halloween ? '-halloween' : ''}.svg" alt="">
   </figure>
   <h1>Só um minuto, já volto!</h1>
 </main>
@@ -30,6 +33,9 @@
     height: 100%
     width: 100%
     background-color: rgba($primary, .75)
+
+    &.halloween
+      background-color: rgba(#f97904, .75)
 
   main
     position: absolute
@@ -84,6 +90,13 @@
         height: 12rem
         width: 12rem
         animation: float 6s ease-in-out infinite
+
+    &.halloween
+      h1
+        text-shadow: 0 0 .5rem rgba(#f97904, .25)
+
+      figure::after
+        background-color: rgba(#f97904, .25)
 
   :global(body)
     // background-image: url('/assets/img/webcam-placeholder.png')

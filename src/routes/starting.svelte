@@ -1,4 +1,8 @@
 <script>
+  import { GET } from '../utils';
+
+  const halloween = GET('halloween') ? true : false;
+
   const messages = [
     'Conectando cabos',
     'Abrindo latinha de energético',
@@ -64,17 +68,17 @@
   setInterval(changeMessage, 5000);
 </script>
 
-<main class:translucid={translucidBackground}>
+<main class:translucid={translucidBackground} class:halloween>
   <div>
     <figure on:click={() => translucidBackground = !translucidBackground}>
-      <img src="/assets/img/logo.svg" alt="">
+      <img src="/assets/img/logo{halloween ? '-halloween' : ''}.svg" alt="">
     </figure>
     <h1>A live está começando!</h1>
     <h2 bind:this={h2}>{currentMessage}...</h2>
   </div>
   
   <div>
-    <lottie-player src="/assets/json/pendulum.json" speed="1" loop autoplay></lottie-player>
+    <lottie-player src="/assets/json/cauldron.json" speed="1" loop autoplay></lottie-player>
   </div>
 </main>
 
@@ -140,6 +144,12 @@
 
         lottie-player
           width: 40rem
+
+    &.halloween
+      background-color: rgba(#f97904, .75)
+
+      &:not(.translucid)
+        background-color: #f97904
 
   :global(body)
     // background-image: url('/assets/img/webcam-placeholder.png')

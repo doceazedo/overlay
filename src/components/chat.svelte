@@ -179,6 +179,8 @@
 
     li
       display: flex
+      position: relative
+      z-index: 1
 
       &:not(:last-child)
         margin-bottom: .75rem

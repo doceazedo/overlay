@@ -21,6 +21,10 @@
   </div>
 </aside>
 
+{#if GET('halloween')}
+  <lottie-player class="halloween" src="/assets/json/cobweb.json" speed="1" loop autoplay></lottie-player>
+{/if}
+
 <style type="text/sass">
   @import '../sass/vars.sass'
 
@@ -59,4 +63,13 @@
       background-color: #242424
       border-radius: .5rem
       overflow: hidden
+
+  .halloween
+    position: absolute
+    top: 328px
+    right: -14px
+    width: 530px
+    height: auto
+    filter: invert(1)
+    opacity: .05
 </style>
