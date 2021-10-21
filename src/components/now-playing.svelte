@@ -1,25 +1,25 @@
 <script>
   import { scale } from 'svelte/transition';
-  import { bounceOut } from 'svelte/easing';
+  import { quintOut } from 'svelte/easing';
 
   let nowPlaying = {};
   setInterval(async () => {
     try {
-      const song = await(await fetch('/song')).json();
+      const song = await(await fetch('/spotify')).json();
       if (nowPlaying.title != song.title) {
         nowPlaying = {};
         setTimeout(() => nowPlaying = song, 500);
       }
     } catch (e) { }
-  }, 250);
+  }, 2500);
 
   const fadeInCover = event => event.target.classList.add('show');
 </script>
 
 <div id="music">
   {#if nowPlaying.cover}
-    <img on:load={fadeInCover} transition:scale={{duration: 200, opacity: 0, start: .75, easing: bounceOut}} src={nowPlaying.cover} alt="">
-    <div transition:scale={{duration: 200, opacity: 0, start: .75, easing: bounceOut}}>
+    <img on:load={fadeInCover} transition:scale={{duration: 200, opacity: 0, start: .75, easing: quintOut}} src={nowPlaying.cover} alt="">
+    <div transition:scale={{duration: 200, opacity: 0, start: .75, easing: quintOut}}>
       <h1>{nowPlaying.title}</h1>
       <h2>{nowPlaying.artist}</h2>
     </div>
