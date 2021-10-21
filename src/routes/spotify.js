@@ -10,7 +10,7 @@ export async function get() {
     }
   });
 
-  if (!resp.data) return {
+  if (!resp.data?.is_playing) return {
     body: {
       title: 'Nada tocando :(',
       artist: '',
