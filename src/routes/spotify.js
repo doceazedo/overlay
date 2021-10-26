@@ -1,16 +1,26 @@
-import axios from 'axios';
+import SpotifyWebApi from 'spotify-web-api-node';
 import 'dotenv/config';
 
 export async function get() {
-  const spotifyToken = process.env['SPOTIFY_TOKEN'];
+  const refreshToken = process.env['SPOTIFY_REFRESH_TOKEN'];
+  const clientId = process.env['SPOTIFY_CLIENT_ID'];
+  const clientSecret = process.env['SPOTIFY_CLIENT_SECRET'];
 
-  const resp = await axios.get('https://api.spotify.com/v1/me/player/currently-playing', {
-    headers: {
-      Authorization: `Bearer ${spotifyToken}`
-    }
+  const spotifyApi = new SpotifyWebApi();
+  spotifyApi.setCredentials({
+    refreshToken,
+    clientId,
+    clientSecret,
   });
 
-  if (!resp.data?.item) return {
+  // TODO: Cachear access token
+  const spotifyTokens = await spotifyApi.refreshAccessToken();
+  spotifyApi.setAccessToken(spotifyTokens.body.access_token);
+
+  const currentlyPlaying = await spotifyApi.getMyCurrentPlayingTrack();
+
+
+  if (!currentlyPlaying.body?.item) return {
     body: {
       title: 'Nada tocando :(',
       artist: '',
@@ -18,7 +28,7 @@ export async function get() {
     }
   }
 
-  const item = resp.data.item;
+  const item = currentlyPlaying.body.item;
 
   return {
     body: {
