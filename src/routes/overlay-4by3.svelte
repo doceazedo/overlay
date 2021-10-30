@@ -1,6 +1,7 @@
 <script>
-  import { Alerts, Chat, EmotesWall, Pomodoro, NowPlaying } from '../components';
+  import { Alerts, Chat, EmotesWall, Pomodoro, NowPlaying, Shoutout } from '../components';
   import { GET, tmiClient, alertsWS } from '../utils';
+  import { showShoutout } from '../stores';
 </script>
 
 <div class="alert-wrapper">
@@ -20,6 +21,10 @@
     <Chat {tmiClient} />
   </div>
 </aside>
+
+{#if $showShoutout}
+  <Shoutout />
+{/if}
 
 {#if GET('halloween')}
   <lottie-player class="halloween" src="/assets/json/cobweb.json" speed="1" loop autoplay></lottie-player>

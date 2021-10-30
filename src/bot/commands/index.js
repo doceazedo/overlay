@@ -8,3 +8,4 @@ export { pomodoro } from './pomodoro';
 export { overlay } from './overlay';
 export { projeto } from './projeto';
 export { tts } from './tts';
+export { sh } from './sh';
