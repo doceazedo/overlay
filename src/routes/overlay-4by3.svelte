@@ -1,7 +1,7 @@
 <script>
-  import { Alerts, Chat, EmotesWall, Pomodoro, NowPlaying, Shoutout } from '../components';
+  import { Alerts, Chat, EmotesWall, Pomodoro, NowPlaying, Shoutout, Confetti } from '../components';
   import { GET, tmiClient, alertsWS } from '../utils';
-  import { showShoutout } from '../stores';
+  import { showShoutout, showConfetti } from '../stores';
 </script>
 
 <div class="alert-wrapper">
@@ -24,6 +24,10 @@
 
 {#if $showShoutout}
   <Shoutout />
+{/if}
+
+{#if $showConfetti}
+  <Confetti />
 {/if}
 
 {#if GET('halloween')}

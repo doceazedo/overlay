@@ -3,6 +3,7 @@
   import { fly } from 'svelte/transition';
   import { quintOut } from 'svelte/easing';
   import { onMount } from 'svelte';
+  import { showConfetti } from '../stores';
 
   const alertsQueue = [];
   let alert = {
@@ -75,8 +76,11 @@
         case 'raid':
           title  = `<b>${alertInfo.name}</b> está fazendo uma raid!`;
           message = `${alertInfo.raiders} pessoas vieram no grupo!`;
-          timeout = 7000;
+          timeout = 10000;
           volume = .35;
+
+          $showConfetti = true;
+          setTimeout(() => $showConfetti = false, 10000);
           break;
         case 'bits':
           title = `<b>${alertInfo.name}</b> mandou ${alertInfo.amount} bits!`;
