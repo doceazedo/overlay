@@ -77,5 +77,6 @@ typings/
 
 .svelte-kit/
 static/assets/json/song.json
+static/assets/json/cybervox.json
 database.sqlite
 google-application-credentials.json

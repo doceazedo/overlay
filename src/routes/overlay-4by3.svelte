@@ -1,7 +1,18 @@
 <script>
-  import { Alerts, Chat, EmotesWall, Pomodoro, NowPlaying, Shoutout, Confetti } from '../components';
+  import { onMount } from 'svelte';
+  import {
+    Alerts,
+    Chat,
+    EmotesWall,
+    Pomodoro,
+    NowPlaying,
+    Shoutout,
+    Confetti
+  } from '../components';
   import { GET, tmiClient, alertsWS } from '../utils';
   import { showShoutout, showConfetti } from '../stores';
+
+  onMount(async () => await fetch('/cybervox/listen'));
 </script>
 
 <div class="alert-wrapper">
