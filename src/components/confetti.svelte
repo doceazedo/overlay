@@ -3,7 +3,7 @@
   import confetti from 'canvas-confetti';
 
   let canvas;
-  const duration = 5000;
+  const duration = 10000;
   const animationEnd = Date.now() + duration;
   const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
 
