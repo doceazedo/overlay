@@ -30,15 +30,17 @@ export async function get({ query }) {
   const data = new FormData();
   data.append('text', query.get('text'));
 
-  await axios({
-    method: 'post',
-    url: 'https://vox-twitch.monique.dev/tts/',
-    headers: { 
-      'Authorization': `Bearer ${cybervoxKey}`, 
-      ...data.getHeaders()
-    },
-    data
-  });
+  try {
+    await axios({
+      method: 'post',
+      url: 'https://vox-twitch.monique.dev/tts/',
+      headers: { 
+        'Authorization': `Bearer ${cybervoxKey}`, 
+        ...data.getHeaders()
+      },
+      data
+    });
+  } catch (error) {}
 
   const audioUrl = await fetchLatestAudio(lastAudio);
 
