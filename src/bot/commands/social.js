@@ -12,5 +12,8 @@ export const social = {
 
     client.say(channel, `/color BlueViolet`);
     client.say(channel, `/me 💬 Discord: https://discord.gg/vEGRe2kq8B`);
+
+    client.say(channel, `/color DodgerBlue`);
+    client.say(channel, `/me 🎵 Lastfm: https://last.fm/user/doceazedo911`);
   }
 }
