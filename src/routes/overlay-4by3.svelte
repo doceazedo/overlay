@@ -45,6 +45,10 @@
   <lottie-player class="halloween" src="/assets/json/cobweb.json" speed="1" loop autoplay></lottie-player>
 {/if}
 
+{#if GET('christmas')}
+  <lottie-player class="christmas" src="/assets/json/snow.json" speed=".75" loop autoplay></lottie-player>
+{/if}
+
 <style type="text/sass">
   @import '../sass/vars.sass'
 
@@ -92,4 +96,13 @@
     height: auto
     filter: invert(1)
     opacity: .05
+
+  .christmas
+    position: absolute
+    top: 380px
+    right: 20px
+    width: 450px
+    height: auto
+    opacity: .25
+    filter: brightness(10)
 </style>

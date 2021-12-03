@@ -4,10 +4,11 @@
   import { GET } from '../utils';
 
   const halloween = GET('halloween') ? true : false;
+  const christmas = GET('christmas') ? true : false;
 
   onMount(() => {
     tsParticles
-      .loadJSON('particles', `/assets/json/particlesjs-config${halloween ? '-halloween' : ''}.json`)
+      .loadJSON('particles', `/assets/json/particlesjs-config${halloween ? '-halloween' : ''}${christmas ? '-christmas' : ''}.json`)
       .then((container) => {
           console.log("callback - tsparticles config loaded");
       })
@@ -17,11 +18,11 @@
   });
 </script>
 
-<div id="particles" class:halloween></div>
+<div id="particles" class:halloween class:christmas></div>
 
-<main class:halloween>
+<main class:halloween class:christmas>
   <figure>
-    <img src="/assets/img/logo{halloween ? '-halloween' : ''}.svg" alt="">
+    <img src="/assets/img/logo{halloween ? '-halloween' : ''}{christmas ? '-christmas' : ''}.svg" alt="">
   </figure>
   <h1>Só um minuto, já volto!</h1>
 </main>
@@ -36,6 +37,9 @@
 
     &.halloween
       background-color: rgba(#f97904, .75)
+
+    &.christmas
+      background-color: rgba(#2E5A1C, .75)
 
   main
     position: absolute
@@ -97,6 +101,14 @@
 
       figure::after
         background-color: rgba(#f97904, .25)
+
+    &.christmas
+      h1
+        color: #FCD47D
+        text-shadow: none
+
+      figure::after
+        background-color: rgba(#a20a0a, .25)
 
   :global(body)
     // background-image: url('/assets/img/webcam-placeholder.png')

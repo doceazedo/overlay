@@ -1,7 +1,10 @@
 <script>
+  import { onMount } from 'svelte';
+  import { tsParticles } from 'tsparticles';
   import { GET } from '../utils';
 
   const halloween = GET('halloween') ? true : false;
+  const christmas = GET('christmas') ? true : false;
 
   const messages = [
     'Conectando cabos',
@@ -66,19 +69,32 @@
   }
 
   setInterval(changeMessage, 5000);
+
+  onMount(() => {
+    tsParticles
+      .loadJSON('particles', '/assets/json/particlesjs-config-christmas.json')
+      .then((container) => {
+        console.log("callback - tsparticles config loaded");
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  });
 </script>
 
-<main class:translucid={translucidBackground} class:halloween>
+<div id="particles"></div>
+
+<main class:translucid={translucidBackground} class:halloween class:christmas>
   <div>
     <figure on:click={() => translucidBackground = !translucidBackground}>
-      <img src="/assets/img/logo{halloween ? '-halloween' : ''}.svg" alt="">
+      <img src="/assets/img/logo{halloween ? '-halloween' : ''}{christmas ? '-christmas' : ''}.svg" alt="">
     </figure>
     <h1>A live está começando!</h1>
     <h2 bind:this={h2}>{currentMessage}...</h2>
   </div>
   
   <div>
-    <lottie-player src="/assets/json/pendulum.json" speed="1" loop autoplay></lottie-player>
+    <lottie-player src="/assets/json/christmas.json" speed=".5" loop autoplay></lottie-player>
   </div>
 </main>
 
@@ -151,6 +167,16 @@
       &:not(.translucid)
         background-color: #f97904
 
+    &.christmas
+      background-color: rgba(#2E5A1C, .75)
+
+      &:not(.translucid)
+        background-color: #2E5A1C
+
+      h1,
+      h2
+        color: #FCD47D !important
+
   :global(body)
     // background-image: url('/assets/img/webcam-placeholder.png')
     background-position: center
@@ -166,4 +192,10 @@
 
     100%
       transform: translatey(0px)
+
+  #particles
+    position: absolute
+    height: 100%
+    width: 100%
+    opacity: .5
 </style>
