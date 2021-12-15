@@ -37,7 +37,7 @@ export async function get({ query }) {
         song: {
           title: item.name,
           cover: item.album.images[1].url,
-          uri: item.uri
+          id: item.id
         },
         artist: {
           name: artist.body.name,

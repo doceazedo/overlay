@@ -264,4 +264,5 @@
         .message
           color: #fff
           line-height: 1.5
+          word-break: break-word
 </style>

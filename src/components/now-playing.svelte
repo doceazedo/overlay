@@ -27,9 +27,9 @@
 
     {#if $songDetails}
       <div class="artist" class:show={$showArtist}>
-        <figure class="artist-image">
-          <img src={$songDetails?.artist?.image} alt="">
-        </figure>
+        <div class="artist-image">
+          <figure style="background-image:url({$songDetails?.artist?.image})"></figure>
+        </div>
       </div>
     {/if}
   {/if}
@@ -47,6 +47,7 @@
     padding: .75rem
     margin-bottom: 1rem
     transition: all .2s ease
+    z-index: 1
 
     .cover
       height: 3.5rem
@@ -87,13 +88,16 @@
         border-radius: .5rem
         overflow: hidden
 
-        img
+        figure
           height: 16rem
           width: 16rem
           margin-left: 16rem
-          transition: all .5s ease
+          background-position: center
+          background-repeat: no-repeat
+          background-size: cover
+          transition: all .4s ease
 
-      &.show img
+      &.show figure
         margin-left: 0
 
     &.details
