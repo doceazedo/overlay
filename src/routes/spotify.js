@@ -1,7 +1,7 @@
 import SpotifyWebApi from 'spotify-web-api-node';
 import 'dotenv/config';
 
-export async function get() {
+export async function get({ query }) {
   const refreshToken = process.env['SPOTIFY_REFRESH_TOKEN'];
   const clientId = process.env['SPOTIFY_CLIENT_ID'];
   const clientSecret = process.env['SPOTIFY_CLIENT_SECRET'];
@@ -19,7 +19,6 @@ export async function get() {
 
   const currentlyPlaying = await spotifyApi.getMyCurrentPlayingTrack();
 
-
   if (!currentlyPlaying.body?.item) return {
     body: {
       title: 'Nada tocando :(',
@@ -29,6 +28,24 @@ export async function get() {
   }
 
   const item = currentlyPlaying.body.item;
+
+  if (query.get('details') != null) {
+    const artist = await spotifyApi.getArtist(item.artists[0].id);
+
+    return {
+      body: {
+        song: {
+          title: item.name,
+          cover: item.album.images[1].url,
+          uri: item.uri
+        },
+        artist: {
+          name: artist.body.name,
+          image: artist.body.images[0].url
+        }
+      }
+    }
+  }
 
   return {
     body: {
