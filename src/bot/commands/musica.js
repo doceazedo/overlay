@@ -1,8 +1,11 @@
+import { get } from 'svelte/store';
 import { songDetails, showSongDetails, showArtist } from '../../stores';
 
 export const musica = {
   aliases: ['music', 'song', 'stream'],
   exec: async (client, channel) => {
+    if (get(showSongDetails)) return;
+
     const data = await(await fetch('/spotify?details')).json();
     songDetails.set(data);
     showSongDetails.set(true);
