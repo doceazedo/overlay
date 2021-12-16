@@ -1,5 +1,5 @@
 export const social = {
-  aliases: ['socials', 'redes'],
+  aliases: ['socials', 'redes', 'github'],
   exec: async (client, channel) => {
     client.say(channel, `/color DodgerBlue`);
     client.say(channel, `/me 🐙 GitHub: https://github.com/doceazedo`);
@@ -15,5 +15,8 @@ export const social = {
 
     client.say(channel, `/color DodgerBlue`);
     client.say(channel, `/me 🎵 Lastfm: https://last.fm/user/doceazedo911`);
+
+    client.say(channel, `/color BlueViolet`);
+    client.say(channel, `/me 💼 Polywork: https://polywork.com/doceazedo`);
   }
 }
