@@ -13,7 +13,7 @@
 
   const nextStream = () => {
     const date = new Date();
-    return date.getDay() == 6 && date.getHours() >= 19 ? 'terça' : 'amanhã';
+    return date.getDay() == 5 && date.getHours() >= 19 ? 'terça' : 'amanhã';
   }
 
   onMount(() => {
