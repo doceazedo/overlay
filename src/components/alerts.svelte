@@ -55,7 +55,7 @@
       switch (data.type) {
         case 'follow':
           title = `<b>${alertInfo.name}</b> te seguiu!`;
-          volume = .5;
+          volume = .3;
           break;
         case 'subscription':
           if (alertInfo.streak_months) {
@@ -66,18 +66,19 @@
             title = `<b>${alertInfo.name}</b> se inscreveu por ${alertInfo.months} ${alertInfo.months == 1 ? 'mês' : 'meses'}!`;
           }
           timeout = 10000;
-          volume = .5;
+          volume = .4;
           break;
         case 'donation':
           title = `<b>${alertInfo.from}</b> doou ${alertInfo.formatted_amount}!`;
           if (alertInfo.message) message = `"${alertInfo.message}"`;
           timeout = 10000;
+          volume = .4;
           break;
         case 'raid':
           title  = `<b>${alertInfo.name}</b> está fazendo uma raid!`;
           message = `${alertInfo.raiders} pessoas vieram no grupo!`;
           timeout = 10000;
-          volume = .35;
+          volume = .2;
 
           $showConfetti = true;
           setTimeout(() => $showConfetti = false, 10000);
