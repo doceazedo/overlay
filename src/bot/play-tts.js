@@ -6,6 +6,6 @@ export default function playTTS(provider = '', text = '', voiceID = 'Ricardo') {
   if (provider == 'cybervox') audioURL = `/cybervox/audio?${params.toString()}`;
 
   const audio = new Audio(audioURL);
-  if (provider == 'cybervox') audio.volume = .5;
+  if (provider == 'cybervox') audio.volume = .25;
   audio.play();
 }
