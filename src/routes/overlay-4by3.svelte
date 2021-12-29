@@ -5,10 +5,10 @@
     Chat,
     EmotesWall,
     Pomodoro,
-    NowPlaying,
     Shoutout,
     Confetti
   } from '../components';
+  import { NowPlaying } from '../modules';
   import { GET, tmiClient, alertsWS } from '../utils';
   import { showShoutout, showConfetti } from '../stores';
 
