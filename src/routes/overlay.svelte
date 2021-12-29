@@ -1,71 +1,108 @@
 <script>
-  let nowPlaying = {};
-  let show = false;
+  import { onMount } from 'svelte';
+  import {
+    Alerts,
+    Chat,
+    EmotesWall,
+    Pomodoro,
+    Shoutout,
+    Confetti
+  } from '../components';
+  import { NowPlaying } from '../modules';
+  import { GET, tmiClient, alertsWS } from '../utils';
+  import { showShoutout, showConfetti } from '../stores';
 
-  setInterval(async () => {
-    try {
-      const res = await fetch('/assets/json/song.json');
-      const song = await res.json();
-      if (nowPlaying.title != song.title) {
-        nowPlaying = song;
-        show = true;
-        setTimeout(() => show = false, 10000);
-      }
-    } catch (e) { }
-  }, 250);
+  onMount(async () => await fetch('/cybervox/listen'));
 </script>
 
-<div id="music" class:show={show}>
-  <img src={nowPlaying.cover} alt="">
-  <div>
-    <h1>{nowPlaying.title}</h1>
-    <h2>{nowPlaying.artist}</h2>
-  </div>
+<div class="alert-wrapper">
+  <Alerts {alertsWS} />
 </div>
+
+<EmotesWall />
+
+<aside>
+  <NowPlaying />
+
+  {#if GET('pomodoro')}
+    <Pomodoro />
+  {/if}
+
+  <div class="chat-wrapper">
+    <Chat {tmiClient} />
+  </div>
+</aside>
+
+{#if $showShoutout}
+  <Shoutout />
+{/if}
+
+{#if $showConfetti}
+  <Confetti />
+{/if}
+
+{#if GET('halloween')}
+  <lottie-player class="halloween" src="/assets/json/cobweb.json" speed="1" loop autoplay></lottie-player>
+{/if}
+
+{#if GET('christmas')}
+  <lottie-player class="christmas" src="/assets/json/snow.json" speed=".75" loop autoplay></lottie-player>
+{/if}
 
 <style type="text/sass">
   @import '../sass/vars.sass'
 
-  #music
+  .alert-wrapper
     position: absolute
-    right: 1rem
-    bottom: 17rem
-    height: 8rem
-    width: 30rem
     display: flex
-    background-color: #f7f495
-    border-top-left-radius: .5rem
-    border-top-right-radius: .5rem
-    padding: .75rem
-    padding-bottom: 1.5rem
-    color: #f27581
-    transition: all 1s ease
+    justify-content: center
+    width: 1440px
+    margin-top: 1rem
+    z-index: 10
 
-    &:not(.show)
-      bottom: 9.5rem
+  aside
+    position: absolute
+    bottom: 0
+    right: 0
+    width: 480px
+    height: calc(100% - 270px)
+    display: flex
+    flex-direction: column
+    background-color: #2d2d2d
+    padding: 1rem
+    color: #fff
 
-    img
+    &::before
+      content: ''
+      position: fixed
+      top: 0
+      right: 480px
+      width: 1px
       height: 100%
+      background-color: #202020
+
+    .chat-wrapper
+      flex-grow: 1
+      padding: .75rem
+      background-color: #242424
       border-radius: .5rem
-      margin-right: 1rem
+      overflow: hidden
 
-    div
-      display: flex
-      flex-direction: column
-      justify-content: center
+  .halloween
+    position: absolute
+    top: 328px
+    right: -14px
+    width: 530px
+    height: auto
+    filter: invert(1)
+    opacity: .05
 
-      h1,
-      h2
-        max-width: 17rem
-        white-space: nowrap
-        overflow: hidden
-        text-overflow: ellipsis
-
-      h1
-        font-size: 2rem
-        font-weight: 700
-
-      h2
-        font-size: 1.75rem
-
+  .christmas
+    position: absolute
+    top: 380px
+    right: 20px
+    width: 450px
+    height: auto
+    opacity: .25
+    filter: brightness(10)
 </style>
