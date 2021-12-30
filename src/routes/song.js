@@ -2,6 +2,39 @@ import SpotifyWebApi from 'spotify-web-api-node';
 import 'dotenv/config';
 
 export async function get({ query }) {
+  if (query.get('osu') != null) {
+    let data = await(await fetch('http://localhost:2626/osuSong.txt')).text();
+    data = data.split(';;');
+    const beatmap = {
+      title: data[0],
+      artist: `${data[1]}`,
+      cover: `http://localhost:20727/backgroundImage?width=600&height=600&crop=1&ts=${Date.now()}`,
+      suffix: data[2],
+      dl: data[3],
+      pp: data[4],
+    }
+
+    if (query.get('details') != null) {
+      return {
+        body: {
+          song: {
+            title: beatmap.title,
+            cover: beatmap.cover,
+            link: beatmap.dl
+          },
+          artist: {
+            name: beatmap.artist,
+            image: ''
+          }
+        }
+      }
+    } else {
+      return {
+        body: beatmap
+      }
+    }
+  }
+
   const refreshToken = process.env['SPOTIFY_REFRESH_TOKEN'];
   const clientId = process.env['SPOTIFY_CLIENT_ID'];
   const clientSecret = process.env['SPOTIFY_CLIENT_SECRET'];

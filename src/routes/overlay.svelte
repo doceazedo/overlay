@@ -8,7 +8,7 @@
     Shoutout,
     Confetti
   } from '../components';
-  import { NowPlaying } from '../modules';
+  import { NowPlaying, OsuInfo } from '../modules';
   import { GET, tmiClient, alertsWS } from '../utils';
   import { showShoutout, showConfetti } from '../stores';
 
@@ -23,6 +23,10 @@
 
 <aside>
   <NowPlaying />
+  
+  {#if GET('osu')}
+    <OsuInfo />
+  {/if}
 
   {#if GET('pomodoro')}
     <Pomodoro />

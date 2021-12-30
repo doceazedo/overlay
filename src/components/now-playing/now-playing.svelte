@@ -15,7 +15,12 @@
     <img class="cover" on:load={fadeInCover} transition:scale={{duration: 200, opacity: 0, start: .75, easing: quintOut}} src={song?.cover} alt="">
     <div transition:scale={{duration: 200, opacity: 0, start: .75, easing: quintOut}}>
       <h1>{song?.title}</h1>
-      <h2>{song?.artist}</h2>
+      <h2>
+        {song?.artist}
+        {#if song?.suffix}
+          <span>{song?.suffix}</span>
+        {/if}
+      </h2>
     </div>
 
     {#if songDetails}
@@ -69,6 +74,9 @@
       h1
         font-size: 1.5rem
         font-weight: 700
+
+      h2 span
+        opacity: .5
 
     .artist
       position: absolute
