@@ -10,7 +10,7 @@
   } from '../components';
   import { NowPlaying, OsuInfo } from '../modules';
   import { GET, tmiClient, alertsWS } from '../utils';
-  import { showShoutout, showConfetti } from '../stores';
+  import { showShoutout, showConfetti, showSongDetails } from '../stores';
 
   onMount(async () => await fetch('/cybervox/listen'));
 </script>
@@ -21,9 +21,9 @@
 
 <EmotesWall />
 
-<aside>
+<aside class:handcam={GET('handcam') && !$showSongDetails}>
   <NowPlaying />
-  
+
   {#if GET('osu')}
     <OsuInfo />
   {/if}
@@ -75,6 +75,10 @@
     background-color: #2d2d2d
     padding: 1rem
     color: #fff
+    transition: all .4s ease
+
+    &.handcam
+      height: calc(100% - 540px)
 
     &::before
       content: ''
