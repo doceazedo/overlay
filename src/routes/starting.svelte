@@ -94,7 +94,7 @@
   </div>
   
   <div>
-    <lottie-player src="/assets/json/christmas.json" speed=".5" loop autoplay></lottie-player>
+    <lottie-player src="/assets/json/pendulum.json" speed=".5" loop autoplay></lottie-player>
   </div>
 </main>
 
