@@ -3,7 +3,7 @@ import simpleIcons from 'simple-icons';
 export const icone = {
   aliases: ['icon', 'badge', 'team', 'time', 'equipe'],
   exec: async (client, channel, tags, args) => {
-    const iconInput = args.join(' ');
+    const iconInput = args.join(' ').toLowerCase();
     const icon = iconInput && simpleIcons.Get(iconInput);
 
     if (!iconInput || !icon) {
