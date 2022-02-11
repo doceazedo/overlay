@@ -28,10 +28,10 @@ export async function get({ params }) {
   }
 }
 
-export async function post({ params, body }) {
+export async function post({ params, request }) {
   await User.sync();
   const { id } = params;
-  const { pronouns, team } = body;
+  const { pronouns, team } = await request.json();
 
   const [user, created] = await User.findOrCreate({
     where: { id },

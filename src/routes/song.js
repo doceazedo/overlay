@@ -1,8 +1,8 @@
 import SpotifyWebApi from 'spotify-web-api-node';
 import 'dotenv/config';
 
-export async function get({ query }) {
-  if (query.get('osu') != null) {
+export async function get({ url }) {
+  if (url.searchParams.get('osu') != null) {
     let data = await(await fetch('http://localhost:2626/osuSong.txt')).text();
     data = data.split(';;');
     const beatmap = {
@@ -14,7 +14,7 @@ export async function get({ query }) {
       pp: data[4],
     }
 
-    if (query.get('details') != null) {
+    if (url.searchParams.get('details') != null) {
       return {
         body: {
           song: {
@@ -62,7 +62,7 @@ export async function get({ query }) {
 
   const item = currentlyPlaying.body.item;
 
-  if (query.get('details') != null) {
+  if (url.searchParams.get('details') != null) {
     const artist = await spotifyApi.getArtist(item.artists[0].id);
 
     return {

@@ -1,15 +1,15 @@
 import { generateGCPAudio, generatePollyAudio } from '../utils/api';
 
-export async function get({ query }) {
+export async function get({ url }) {
   let audio;
 
-  switch (query.get('provider')) {
+  switch (url.searchParams.get('provider')) {
     case 'gcp':
-      audio = await generateGCPAudio(query.get('text'), 'pt-BR');
+      audio = await generateGCPAudio(url.searchParams.get('text'), 'pt-BR');
       break;
 
     case 'aws':
-      audio = await generatePollyAudio(query.get('text'), query.get('voiceID') || 'Ricardo');
+      audio = await generatePollyAudio(url.searchParams.get('text'), url.searchParams.get('voiceID') || 'Ricardo');
       break;
   }
 

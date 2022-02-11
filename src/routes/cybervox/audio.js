@@ -22,13 +22,13 @@ const fetchLatestAudio = lastAudio => {
   });
 }
 
-export async function get({ query }) {
+export async function get({ url }) {
   const lastAudio = JSON.parse(fs.readFileSync('./static/assets/json/cybervox.json', 'utf8'));
 
   const cybervoxKey = process.env['VITE_CYBERVOX_KEY'];
 
   const data = new FormData();
-  data.append('text', query.get('text'));
+  data.append('text', url.searchParams.get('text'));
 
   try {
     await axios({

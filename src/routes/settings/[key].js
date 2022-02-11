@@ -17,10 +17,10 @@ export async function get({ params }) {
   }
 }
 
-export async function post({ params, body }) {
+export async function post({ params, request }) {
   await Setting.sync();
   const { key } = params;
-  const { value } = body;
+  const { value } = await request.json();
 
   const [setting, created] = await Setting.findOrCreate({
     where: { key },
