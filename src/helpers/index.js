@@ -1,1 +1,0 @@
-export { default as pollyVoices } from './polly-voices';
