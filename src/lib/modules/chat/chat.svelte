@@ -8,15 +8,12 @@
       avatar: 'https://picsum.photos/200',
       pronouns: 'ele/dele',
       badges: [],
-    }
-  }
+    },
+  };
 </script>
 
 <Chat>
   {#each Array(3) as _}
-    <ChatMessage
-      message={dummyMessage.message}
-      author={dummyMessage.author}
-    />
+    <ChatMessage message={dummyMessage.message} author={dummyMessage.author} />
   {/each}
 </Chat>

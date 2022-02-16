@@ -20,15 +20,15 @@
   <div class="message">
     <div class="info">
       <span class="name" style="color: {author?.color}">{author.name}</span>
-        <span class="pronouns">{author?.pronouns}</span>
-        <span class="badges" class:has-none={author?.team == null}>
-          {author?.team}
-        </span>
-        <span class="badges" class:has-none={author?.badges == null}>
-          {#each author.badges as badge}
-            <img src={badge} alt="">
-          {/each}
-        </span>
+      <span class="pronouns">{author?.pronouns}</span>
+      <span class="badges" class:has-none={author?.team == null}>
+        {author?.team}
+      </span>
+      <span class="badges" class:has-none={author?.badges == null}>
+        {#each author.badges as badge}
+          <img src={badge} alt="" />
+        {/each}
+      </span>
     </div>
     <div class="content">{@html message}</div>
   </div>

@@ -1,5 +1,8 @@
 <script lang="ts">
-  export let title: string, artist: string, difficulty = '', image: string;
+  export let title: string,
+    artist: string,
+    difficulty = '',
+    image: string;
 </script>
 
 <div class="music-player">

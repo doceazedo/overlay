@@ -1,10 +1,11 @@
 <script lang="ts">
-  export let src: string, alt = '';
+  export let src: string,
+    alt = '';
   let loaded = false;
 </script>
 
 <figure class="avatar">
-  <img {src} {alt} class:is-loaded={loaded} on:load={() => loaded = true}>
+  <img {src} {alt} class:is-loaded={loaded} on:load={() => (loaded = true)} />
 </figure>
 
 <style lang="sass">
