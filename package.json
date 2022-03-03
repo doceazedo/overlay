@@ -25,6 +25,7 @@
     "eslint-plugin-svelte3": "^3.2.1",
     "prettier": "^2.5.1",
     "prettier-plugin-svelte": "^2.5.0",
+    "prisma": "^3.10.0",
     "sass": "^1.49.7",
     "svelte": "^3.44.0",
     "svelte-check": "^2.2.6",
@@ -35,6 +36,7 @@
   "type": "module",
   "dependencies": {
     "@coldino/tmi.js-clientonly-fork": "^1.8.1-clientonly",
+    "@prisma/client": "^3.10.0",
     "canvas-confetti": "^1.5.1",
     "emotettv": "^0.0.6",
     "simple-icons": "^6.12.0",

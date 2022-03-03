@@ -8,3 +8,5 @@ node_modules
 !.env.example
 package.lock
 yarn.lock
+/prisma/*.db
+/prisma/*.db-journal

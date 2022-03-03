@@ -1,5 +1,5 @@
-import { SHOUTOUT_INFO, SHOUTOUT_SHOW } from '$lib/modules';
-import type { ShoutoutInfo } from '$lib/modules';
+import { SHOUTOUT_INFO, SHOUTOUT_SHOW } from '.';
+import type { ShoutoutInfo } from '.';
 import { get } from 'svelte/store';
 
 const shoutoutDuration = 10000;
