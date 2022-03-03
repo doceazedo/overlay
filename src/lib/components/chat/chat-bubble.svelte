@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 11.76 16">
+  <path d="M11.76,0,.88,10.88A3,3,0,0,0,3,16h8.75Z" style="fill:#191919" />
+</svg>
+
+<style lang="sass">
+  svg
+    position: absolute
+    left: -.7rem
+    bottom: 0
+    height: 1rem
+    width: .75rem
+</style>

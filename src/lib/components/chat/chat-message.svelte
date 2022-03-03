@@ -1,16 +1,9 @@
 <script lang="ts">
-  import { Avatar } from '$lib/components';
+  import { Avatar, ChatBubble } from '$lib/components';
+  import type { MessageAuthor } from '$lib/modules';
+  import type { Word } from 'emotettv';
 
-  type MessageAuthor = {
-    name: string;
-    avatar: string;
-    color?: string;
-    pronouns?: string;
-    team?: SVGElement;
-    badges: string[];
-  };
-
-  export let message: string, author: MessageAuthor;
+  export let message: Word[], author: MessageAuthor;
 </script>
 
 <div class="message-wrapper">
@@ -19,18 +12,29 @@
   </div>
   <div class="message">
     <div class="info">
-      <span class="name" style="color: {author?.color}">{author.name}</span>
+      <span class="name" style="color: {author?.color}">
+        {author.displayName}
+      </span>
       <span class="pronouns">{author?.pronouns}</span>
       <span class="badges" class:has-none={author?.team == null}>
         {author?.team}
       </span>
-      <span class="badges" class:has-none={author?.badges == null}>
+      <span class="badges" class:has-none={!author.badges.length}>
         {#each author.badges as badge}
           <img src={badge} alt="" />
         {/each}
       </span>
     </div>
-    <div class="content">{@html message}</div>
+    <div class="content">
+      {#each message as word}
+        {#if word.emote}
+          <img src={word.emote.url[0]} alt={word.text} class="emote" />
+        {:else}
+          {` ${word.text} `}
+        {/if}
+      {/each}
+    </div>
+    <ChatBubble />
   </div>
 </div>
 
@@ -53,18 +57,6 @@
       border-radius: .5rem
       border-bottom-left-radius: 0
       background-color: #191919
-
-      &::before
-        content: ''
-        position: absolute
-        left: -.7rem
-        bottom: 0
-        height: 1rem
-        width: .75rem
-        background-image: url('/assets/img/chat-bubble.svg')
-        background-position: center right
-        background-repeat: no-repeat
-        background-size: contain
 
       .info
         display: flex
@@ -93,4 +85,10 @@
         color: #fff
         line-height: 1.5
         word-break: break-word
+
+        .emote
+          transform: translateY(.5rem)
+
+          + .emote
+            margin-left: .25rem
 </style>

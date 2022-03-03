@@ -1,6 +1,9 @@
 <script lang="ts">
   import '../sass/global.sass';
-  import { Sidebar } from '$lib/modules';
+  import { Alerts, Confetti, Shoutout, Sidebar } from '$lib/modules';
 </script>
 
+<Alerts />
+<Confetti />
+<Shoutout />
 <Sidebar />
