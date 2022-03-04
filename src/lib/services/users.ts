@@ -1,12 +1,12 @@
 import type { User } from '@prisma/client';
 
-type ApiUserRequest = {
+type UserRequest = {
   pronouns?: string;
   team?: string;
   messages?: number;
 };
 
-type ApiUserResponse = User & {
+type UserResponse = User & {
   avatar: string;
 };
 
@@ -14,11 +14,11 @@ const baseUrl = '/api';
 
 export const getUser = async (id: string) => {
   const resp = await fetch(`${baseUrl}/users/${id}`);
-  const data: ApiUserResponse = await resp.json();
+  const data: UserResponse = await resp.json();
   return data;
 };
 
-export const updateUser = async (id: string, body: ApiUserRequest) => {
+export const updateUser = async (id: string, body: UserRequest) => {
   const resp = await fetch(`${baseUrl}/users/${id}`, {
     method: 'POST',
     headers: {
@@ -26,7 +26,7 @@ export const updateUser = async (id: string, body: ApiUserRequest) => {
     },
     body: JSON.stringify(body),
   });
-  const data: ApiUserResponse = await resp.json();
+  const data: UserResponse = await resp.json();
   return data;
 };
 
