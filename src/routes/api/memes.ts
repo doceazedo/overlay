@@ -1,5 +1,5 @@
 import { getRedditHotPosts } from '$lib/services/reddit';
-import { shuffleArray } from '$lib/utils';
+import { matchYoutubeUrl, shuffleArray } from '$lib/utils';
 import type { RequestHandler } from '@sveltejs/kit';
 import type { RedditPost } from '$lib/services/reddit';
 
@@ -29,10 +29,10 @@ export const get: RequestHandler = async ({ url }) => {
     if (!post?.data?.media_embed) return;
     if (post?.data?.secure_media?.reddit_video?.duration > 120) return;
     if (!post?.data?.preview?.images.length) return;
+    if (matchYoutubeUrl(post?.data?.url_overridden_by_dest)) return;
+
     return true;
   });
-
-  console.log(filteredPosts.length);
 
   return {
     body: shuffleArray(filteredPosts),

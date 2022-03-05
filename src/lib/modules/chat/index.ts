@@ -27,4 +27,5 @@ export type Message = {
 };
 
 export * from './chat.store';
+export { default as ChatMessages } from './chat-messages.svelte';
 export { default as Chat } from './chat.svelte';

@@ -1,6 +1,7 @@
 export * from './alerts';
 export * from './chat';
 export * from './confetti';
+export * from './conveyor-belt';
 export * from './emote-wall';
 export * from './media-player';
 export * from './music-player';
