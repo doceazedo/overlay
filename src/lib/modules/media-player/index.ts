@@ -14,4 +14,5 @@ export type Media = {
 
 export const mediaImageDuration = 10000;
 
+export * from './media-player.store';
 export { default as MediaPlayer } from './media-player.svelte';

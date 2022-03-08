@@ -3,6 +3,7 @@ export * from './chat';
 export * from './confetti';
 export * from './conveyor-belt';
 export * from './emote-wall';
+export * from './loading-messages';
 export * from './media-player';
 export * from './music-player';
 export * from './shoutout';

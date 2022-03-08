@@ -3,7 +3,7 @@
   import { decodeHtml } from '$lib/utils';
   import { MediaPlayer } from '$lib/components';
   import { getMemes } from '$lib/services/memes';
-  import { mediaImageDuration } from '.';
+  import { MEDIAPLAYER_PLAYBACK, mediaImageDuration } from '.';
   import type { RedditPost } from '$lib/services/reddit';
   import type { Media } from '.';
 
@@ -92,6 +92,21 @@
     setTimeout(() => (progressBars = [true]), 100);
     setTimeout(getNextMedia, mediaImageDuration);
   };
+
+  const play = () => {
+    video.play();
+    if (!media.isGif) audio.play();
+  };
+
+  const pause = () => {
+    video.pause();
+    if (!media.isGif) audio.pause();
+  };
+
+  MEDIAPLAYER_PLAYBACK.subscribe((playback) => {
+    if (playback === null) return;
+    playback ? play() : pause();
+  });
 
   onMount(async () => {
     posts = await getMemes(subreddits);

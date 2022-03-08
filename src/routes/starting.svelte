@@ -1,11 +1,58 @@
 <script lang="ts">
-  import { ConveyorBeltLogo, MediaPlayer } from '$lib/modules';
+  import { fly } from 'svelte/transition';
+  import { quintOut } from 'svelte/easing';
+  import {
+    ConveyorBeltLogo,
+    getRandomMessage,
+    MediaPlayer,
+  } from '$lib/modules';
+  import { MEDIAPLAYER_PLAYBACK } from '$lib/modules';
+
+  const flyOut = {
+    duration: 200,
+    y: -16,
+    opacity: 0,
+    easing: quintOut,
+  };
+  const flyIn = { ...flyOut, delay: 400, y: 16 };
+
+  const soonTitle = 'A live já vai começar!';
+  const startingTitle = 'A live está começando...';
+  const brbTitle = 'Só um minuto, eu já volto!';
+
+  let title = soonTitle;
+  let loadingMessage = getRandomMessage();
+  let showLoadingMessage = true;
+
+  setInterval(() => {
+    loadingMessage = getRandomMessage();
+  }, 5000);
+
+  const playPause = () => {
+    $MEDIAPLAYER_PLAYBACK = !$MEDIAPLAYER_PLAYBACK;
+  };
+
+  const startStream = () => {
+    $MEDIAPLAYER_PLAYBACK = false;
+    showLoadingMessage = false;
+    title = startingTitle;
+    setTimeout(() => (title = brbTitle), 10000);
+  };
 </script>
 
 <main class="main">
   <header class="header">
-    <h1 class="title">A live já vai começar!</h1>
-    <p class="message">Carregando...</p>
+    {#key title}
+      <h1 class="title" in:fly={flyIn} out:fly={flyOut}>
+        {title}
+      </h1>
+    {/key}
+
+    {#if showLoadingMessage}
+      {#key loadingMessage}
+        <p class="message" in:fly={flyIn} out:fly={flyOut}>{loadingMessage}</p>
+      {/key}
+    {/if}
   </header>
 
   <div class="content">
@@ -22,6 +69,9 @@
     <ConveyorBeltLogo direction="right" />
   {/each}
 </div>
+
+<button class="hidden-button left" on:click={playPause} />
+<button class="hidden-button right" on:click={startStream} />
 
 <style lang="sass">
   :global(body)
@@ -41,9 +91,9 @@
     z-index: 10
 
   .header
+    position: relative
     display: flex
     align-items: center
-    justify-content: space-between
     width: 1532px
     margin: 0 auto
 
@@ -53,6 +103,8 @@
       letter-spacing: 1px
 
     .message
+      position: absolute
+      right: 0
       font-size: 1.5rem
       color: rgba(#fff, .75)
 
@@ -80,4 +132,19 @@
     width: 100%
     height: 100%
     overflow: hidden
+
+  .hidden-button
+    position: fixed
+    bottom: 0
+    z-index: 10
+    display: flex
+    width: 8rem
+    height: 8rem
+    opacity: 0
+
+    &.left
+      left: 0
+
+    &.right
+      right: 0
 </style>
