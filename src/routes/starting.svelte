@@ -122,7 +122,7 @@
 
     .chat
       display: flex
-      height: 100%
+      height: 915px
       width: 450px
 
   .background
