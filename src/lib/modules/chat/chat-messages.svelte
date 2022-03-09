@@ -1,25 +1,17 @@
 <script lang="ts">
-  import { ChatMessage } from '$lib/components';
-  import { chatMessageListener } from '$lib/modules';
-  import { CHANNEL_ID } from '$lib/env';
   import { parseEmotes } from 'emotettv';
+  import { ChatMessage } from '$lib/components';
+  import { getUser } from '$lib/services/users';
+  import { CHANNEL_ID } from '$lib/env';
+  import { chatMessageListener, getTeam } from '.';
   import type { ChatTheme, MessageAuthor, Message } from '.';
 
   export let theme: ChatTheme = 'dark';
 
   let messages: Message[] = [];
-  // let users: UserResponse[] = [];
-
-  const dummyUser = {
-    pronouns: 'elu/delu',
-    team: 'svelte',
-    avatar:
-      'https://static-cdn.jtvnw.net/jtv_user_pictures/142da919-780b-4d38-adb3-436f425ac339-profile_image-300x300.png',
-  };
 
   chatMessageListener.subscribe(async (message) => {
     if (!message) return;
-    console.log(message); // TODO: delete this
 
     const content = await parseEmotes(
       message.message,
@@ -28,11 +20,14 @@
     );
 
     const id = message.tags['user-id'];
-    // if (!users[id]) users[id] = await getUser(id);
+    const user = await getUser(id);
+    const team = getTeam(user.team);
 
     const author: MessageAuthor = {
-      ...dummyUser,
       id,
+      team,
+      pronouns: user?.pronouns,
+      avatar: user?.avatar,
       username: message.tags.username,
       displayName: message.tags['display-name'],
       color: message.tags?.color,

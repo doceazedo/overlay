@@ -1,11 +1,12 @@
 <script lang="ts">
   import type { ChatTheme } from '$lib/modules';
 
-  export let theme: ChatTheme = 'dark';
+  export let chatEl: HTMLDivElement,
+    theme: ChatTheme = 'dark';
 </script>
 
 <div class="chat-wrapper theme-{theme}">
-  <div class="chat">
+  <div class="chat" bind:this={chatEl}>
     <slot />
   </div>
 </div>

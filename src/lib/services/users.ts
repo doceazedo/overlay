@@ -7,10 +7,18 @@ type UserRequest = {
 };
 
 type UserResponse = User & {
+  id: string;
   avatar: string;
+  messages: string;
+  createdAt: Date;
+  updatedAt: Date;
 };
 
 const baseUrl = '/api';
+
+// TODO: guardar usuários
+// TODO: só puxar info da twitch, quando ainda nao tiver avatar
+//       ex: caso ainda não tenha, passar "?avatar"
 
 export const getUser = async (id: string) => {
   const resp = await fetch(`${baseUrl}/users/${id}`);

@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
+  import { fly } from 'svelte/transition';
   import { Avatar, ChatBubble } from '$lib/components';
   import type { MessageAuthor } from '$lib/modules';
   import type { Word } from 'emotettv';
@@ -7,9 +9,11 @@
   export let message: Word[],
     author: MessageAuthor,
     theme: ChatTheme = 'dark';
+
+  onMount(() => console.log(author?.team));
 </script>
 
-<div class="message-wrapper theme-{theme}">
+<div class="message-wrapper theme-{theme}" in:fly={{ x: -16, duration: 500 }}>
   <div class="avatar-wrapper">
     <Avatar src={author.avatar} />
   </div>
@@ -18,11 +22,17 @@
       <span class="name" style="color: {author?.color}">
         {author.displayName}
       </span>
-      <span class="pronouns">{author?.pronouns}</span>
-      <span class="badges" class:has-none={author?.team == null}>
-        {author?.team}
+      <span class="pronouns" class:hide={!author?.pronouns}>
+        {author?.pronouns}
       </span>
-      <span class="badges" class:has-none={!author.badges.length}>
+      <span
+        class="badges"
+        style="fill: #{author?.team?.hex}"
+        class:hide={!author?.team}
+      >
+        {@html author?.team?.svg}
+      </span>
+      <span class="badges" class:hide={!author.badges.length}>
         {#each author.badges as badge}
           <img src={badge} alt="" />
         {/each}
@@ -81,8 +91,11 @@
           padding: .35rem
           border-radius: .5rem
 
-          &.has-none
-            display: none
+          :global(svg)
+            height: 1.125rem
+
+        .hide
+          display: none
 
       .content
         color: #fff
