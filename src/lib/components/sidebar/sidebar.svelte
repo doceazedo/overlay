@@ -1,4 +1,8 @@
-<div>
+<script lang="ts">
+  export let showHandcam = false;
+</script>
+
+<div class:handcam={showHandcam}>
   <slot />
 </div>
 
@@ -14,4 +18,7 @@
     height: 810px
     padding: 1rem
     background-color: #2d2d2d
+
+    &.handcam
+      height: 540px
 </style>
