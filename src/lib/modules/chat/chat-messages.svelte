@@ -3,7 +3,7 @@
   import { ChatMessage } from '$lib/components';
   import { getUser } from '$lib/services/users';
   import { CHANNEL_ID } from '$lib/env';
-  import { chatMessageListener, getTeam } from '.';
+  import { chatMessageListener, getBadges, getTeam } from '.';
   import type { ChatTheme, MessageAuthor, Message } from '.';
 
   export let theme: ChatTheme = 'dark';
@@ -22,6 +22,7 @@
     const id = message.tags['user-id'];
     const user = await getUser(id);
     const team = getTeam(user.team);
+    const badges = await getBadges(message.tags.badges);
 
     const author: MessageAuthor = {
       id,
@@ -31,7 +32,7 @@
       username: message.tags.username,
       displayName: message.tags['display-name'],
       color: message.tags?.color,
-      badges: [],
+      badges,
       self: message.self,
     };
 

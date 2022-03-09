@@ -16,7 +16,6 @@ export type MessageAuthor = {
   badges: string[];
   self: boolean;
   id: string;
-  // TODO: get these from the UserResponse type:
   pronouns?: string;
   team?: SimpleIcon;
   avatar: string;
@@ -30,6 +29,7 @@ export type Message = {
 export type ChatTheme = 'dark' | 'light';
 
 export * from './chat.store';
+export * from './get-badges';
 export * from './get-team';
 export { default as ChatMessages } from './chat-messages.svelte';
 export { default as Chat } from './chat.svelte';
