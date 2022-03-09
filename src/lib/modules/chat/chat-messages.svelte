@@ -3,7 +3,9 @@
   import { chatMessageListener } from '$lib/modules';
   import { CHANNEL_ID } from '$lib/env';
   import { parseEmotes } from 'emotettv';
-  import type { MessageAuthor, Message } from '.';
+  import type { ChatTheme, MessageAuthor, Message } from '.';
+
+  export let theme: ChatTheme = 'dark';
 
   let messages: Message[] = [];
   // let users: UserResponse[] = [];
@@ -47,5 +49,5 @@
 </script>
 
 {#each messages as message}
-  <ChatMessage message={message.content} author={message.author} />
+  <ChatMessage message={message.content} author={message.author} {theme} />
 {/each}

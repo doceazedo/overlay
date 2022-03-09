@@ -26,6 +26,8 @@ export type Message = {
   author: MessageAuthor;
 };
 
+export type ChatTheme = 'dark' | 'light';
+
 export * from './chat.store';
 export { default as ChatMessages } from './chat-messages.svelte';
 export { default as Chat } from './chat.svelte';

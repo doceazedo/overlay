@@ -2,11 +2,14 @@
   import { Avatar, ChatBubble } from '$lib/components';
   import type { MessageAuthor } from '$lib/modules';
   import type { Word } from 'emotettv';
+  import type { ChatTheme } from '$lib/modules';
 
-  export let message: Word[], author: MessageAuthor;
+  export let message: Word[],
+    author: MessageAuthor,
+    theme: ChatTheme = 'dark';
 </script>
 
-<div class="message-wrapper">
+<div class="message-wrapper theme-{theme}">
   <div class="avatar-wrapper">
     <Avatar src={author.avatar} />
   </div>
@@ -34,11 +37,13 @@
         {/if}
       {/each}
     </div>
-    <ChatBubble />
+    <ChatBubble {theme} />
   </div>
 </div>
 
 <style lang="sass">
+  @import './themes'
+
   .message-wrapper
     position: relative
     display: flex
@@ -56,7 +61,6 @@
       padding: .5rem
       border-radius: .5rem
       border-bottom-left-radius: 0
-      background-color: #191919
 
       .info
         display: flex
@@ -76,7 +80,6 @@
           gap: .35rem
           padding: .35rem
           border-radius: .5rem
-          background-color: #242424
 
           &.has-none
             display: none
@@ -91,4 +94,16 @@
 
           + .emote
             margin-left: .25rem
+
+    &.theme-dark .message
+      background-color: $dark-message
+
+      .badges
+          background-color: $dark-background
+
+    &.theme-light .message
+      background-color: $light-message
+
+      .badges
+          background-color: $light-message
 </style>

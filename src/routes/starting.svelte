@@ -6,7 +6,7 @@
     getRandomMessage,
     MediaPlayer,
   } from '$lib/modules';
-  import { MEDIAPLAYER_PLAYBACK } from '$lib/modules';
+  import { Chat, MEDIAPLAYER_PLAYBACK } from '$lib/modules';
 
   const flyOut = {
     duration: 200,
@@ -59,7 +59,9 @@
     <div class="memes">
       <MediaPlayer />
     </div>
-    <div class="chat" />
+    <div class="chat">
+      <Chat theme="light" />
+    </div>
   </div>
 </main>
 
@@ -119,11 +121,9 @@
       height: 915px
 
     .chat
-      background-color: rgba(#fff, .1)
+      display: flex
       height: 100%
       width: 450px
-      border-radius: .5rem
-      backdrop-filter: blur(.5rem)
 
   .background
     display: flex
