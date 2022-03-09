@@ -1,16 +1,37 @@
 <script lang="ts">
-  export let title: string,
-    artist: string,
+  import { scale } from 'svelte/transition';
+  import { quintOut } from 'svelte/easing';
+  import { MusicPlayerCover } from '.';
+
+  const transition = {
+    duration: 200,
+    opacity: 0,
+    start: 0.75,
+    easing: quintOut,
+  };
+
+  export let title = 'Nada tocando :(',
+    artist = '',
     difficulty = '',
-    image: string;
+    cover: string;
 </script>
 
 <div class="music-player">
-  <figure class="cover" style="background-image: url({image})" />
-  <div class="info">
-    <h1>{title}</h1>
-    <h2>{artist} <span>{difficulty}</span></h2>
-  </div>
+  <figure class="cover" transition:scale={transition}>
+    {#key cover}
+      <MusicPlayerCover {cover} />
+    {/key}
+  </figure>
+  {#key title}
+    <div
+      class="info"
+      in:scale={{ ...transition, delay: 300 }}
+      out:scale={transition}
+    >
+      <h1>{title}</h1>
+      <h2>{artist} <span>{difficulty}</span></h2>
+    </div>
+  {/key}
 </div>
 
 <style lang="sass">
@@ -24,12 +45,11 @@
     padding: .75rem
 
     .cover
+      flex-shrink: 0
       height: 3.5rem
       width: 3.5rem
       border-radius: .5rem
-      background-position: center
-      background-repeat: no-repeat
-      background-size: cover
+      background-color: #2d2d2d
       transition: all .2s ease
 
     .info
