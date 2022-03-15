@@ -1,7 +1,8 @@
-import { PrismaClient } from '@prisma/client';
+import pkg from '@prisma/client';
 import { getTwitchUser } from '$lib/services/twitch';
 import type { RequestHandler } from '@sveltejs/kit';
 
+const { PrismaClient } = pkg;
 const prisma = new PrismaClient();
 
 export const get: RequestHandler = async ({ params }) => {

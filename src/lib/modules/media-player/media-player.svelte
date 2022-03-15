@@ -10,7 +10,6 @@
   const subreddits = [
     'ShitpostBR',
     'botecodoreddit',
-    'ItHadToBeBrazil',
     'AgiotasClub',
     'MemesBrasil',
     'eu_nvr',
