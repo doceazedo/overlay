@@ -1,12 +1,12 @@
 import io from 'socket.io-client';
 import { browser } from '$app/env';
 import { writable } from 'svelte/store';
-import { STREAMLABS_KEY } from '$lib/env';
+import { STREAMLABS_SOCKET_API_TOKEN } from '$lib/env';
 
 if (browser) {
   console.log('Starting streamlabs...');
   const streamlabs = io(
-    `https://sockets.streamlabs.com?token=${STREAMLABS_KEY}`,
+    `https://sockets.streamlabs.com?token=${STREAMLABS_SOCKET_API_TOKEN}`,
     {
       transports: ['websocket'],
     },
