@@ -2,7 +2,6 @@
   import { parseEmotes } from 'emotettv';
   import { ChatMessage } from '$lib/components';
   import { getUser } from '$lib/services/users';
-  import { CHANNEL_ID } from '$lib/env';
   import { chatMessageListener, getBadges, getTeam } from '.';
   import type { ChatTheme, MessageAuthor, Message } from '.';
 
@@ -12,12 +11,6 @@
 
   chatMessageListener.subscribe(async (message) => {
     if (!message) return;
-
-    const content = await parseEmotes(
-      message.message,
-      message.tags.emotes,
-      CHANNEL_ID,
-    );
 
     const id = message.tags['user-id'];
     const user = await getUser(id);
@@ -37,7 +30,7 @@
     };
 
     messages.push({
-      content,
+      content: message.words,
       author,
     });
     messages = messages;

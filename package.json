@@ -19,6 +19,7 @@
     "@types/spotify-web-api-node": "^5.0.7",
     "@types/tinycolor2": "^1.4.3",
     "@types/tmi.js": "^1.8.1",
+    "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.10.1",
     "@typescript-eslint/parser": "^5.10.1",
     "eslint": "^7.32.0",
@@ -39,10 +40,12 @@
     "@coldino/tmi.js-clientonly-fork": "^1.8.1-clientonly",
     "@prisma/client": "^3.10.0",
     "canvas-confetti": "^1.5.1",
-    "emotettv": "^0.0.8",
+    "dotenv": "^16.0.0",
+    "emotettv": "^0.0.12",
     "simple-icons": "^6.12.0",
     "spotify-web-api-node": "^5.0.2",
     "tinycolor2": "^1.4.2",
-    "tmi.js": "^1.8.5"
+    "tmi.js": "^1.8.5",
+    "uuid": "^8.3.2"
   }
 }

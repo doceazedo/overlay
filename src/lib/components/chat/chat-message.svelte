@@ -9,8 +9,6 @@
   export let message: Word[],
     author: MessageAuthor,
     theme: ChatTheme = 'dark';
-
-  onMount(() => console.log(author?.team));
 </script>
 
 <div class="message-wrapper theme-{theme}" in:fly={{ x: -16, duration: 500 }}>

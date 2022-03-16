@@ -55,7 +55,6 @@
 
   const getNextMedia = () => {
     !isFirstMedia ? posts.shift() : (isFirstMedia = false);
-    console.log(posts);
     const nextPost = posts[0].data;
 
     media = {

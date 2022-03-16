@@ -1,5 +1,6 @@
 import SpotifyWebApi from 'spotify-web-api-node';
 import { hasPassedAnHour } from '$lib/utils';
+import 'dotenv/config';
 
 const { SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, SPOTIFY_REFRESH_TOKEN } =
   process.env;

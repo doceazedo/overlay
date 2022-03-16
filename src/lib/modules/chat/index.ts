@@ -9,6 +9,10 @@ export type TmiMessage = {
   self: boolean;
 };
 
+export type ParsedTmiMessage = {
+  words: Word[];
+} & TmiMessage;
+
 export type MessageAuthor = {
   username: string;
   displayName: string;
