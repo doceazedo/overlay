@@ -17,7 +17,7 @@
   ];
   const secondsToTwice = 20;
   const secondsToThrice = 6;
-  const mediaImageDuration = 5000;
+  const mediaImageDuration = 10000;
 
   let posts: RedditPost[] = [];
   let media: Media;
@@ -134,6 +134,7 @@
       on:loadeddata={handleOnLoaded}
       on:ended={handleOnEnded}
       on:click={getNextMedia}
+      debug={true}
     />
   {/key}
 {/if}
