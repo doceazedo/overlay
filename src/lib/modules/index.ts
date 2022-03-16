@@ -8,3 +8,4 @@ export * from './media-player';
 export * from './music-player';
 export * from './shoutout';
 export * from './sidebar';
+export * from './streamlabs';
