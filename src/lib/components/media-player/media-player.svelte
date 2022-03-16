@@ -1,22 +1,19 @@
 <script lang="ts">
-  import { mediaImageDuration } from '$lib/modules';
   import type { Media } from '$lib/modules';
 
   let iconIsLoaded = false;
 
   export let media: Media,
-    progressBars = [false],
+    progressBars = [0],
     audio: HTMLAudioElement,
     video: HTMLVideoElement,
     debug = false;
-
-  const duration = media.duration ? media.duration * 1000 : mediaImageDuration;
 </script>
 
 <main>
   <ul class="progress">
-    {#each progressBars as load}
-      <li style="--duration: all {duration}ms linear" class:load>
+    {#each progressBars as progress}
+      <li style="--width:{progress}%">
         {progressBars}
       </li>
     {/each}
@@ -117,14 +114,10 @@
       &::before
         content: ''
         display: block
-        width: 0
+        width: var(--width)
         height: 100%
         background-color: #fff
         border-radius: .5rem
-        transition: var(--duration)
-
-      &.load::before
-        width: 100%
 
   .header
     display: flex

@@ -3,10 +3,11 @@
   import { decodeHtml } from '$lib/utils';
   import { MediaPlayer } from '$lib/components';
   import { getMemes } from '$lib/services/memes';
-  import { MEDIAPLAYER_PLAYBACK, mediaImageDuration } from '.';
+  import { MEDIAPLAYER_PLAYBACK } from '.';
   import type { RedditPost } from '$lib/services/reddit';
   import type { Media } from '.';
 
+  const fps = 60;
   const subreddits = [
     'ShitpostBR',
     'botecodoreddit',
@@ -16,18 +17,17 @@
   ];
   const secondsToTwice = 20;
   const secondsToThrice = 6;
+  const mediaImageDuration = 5000;
 
   let posts: RedditPost[] = [];
   let media: Media;
   let isFirstMedia = true;
-  let progressBars = [false];
+  let progressBars = [0];
 
   let audio: HTMLAudioElement;
   let video: HTMLVideoElement;
 
   const playMedia = () => {
-    progressBars[media.totalPlays - media.plays] = true;
-
     video.currentTime = 0;
     video.play();
 
@@ -81,15 +81,27 @@
       media.plays = duration <= secondsToThrice ? 3 : media.plays;
       media.totalPlays = media.plays;
 
-      progressBars = Array(media.plays).fill(false);
+      progressBars = Array(media.plays).fill(0);
 
       return;
     }
 
-    progressBars = [false];
-    setTimeout(() => (progressBars = [true]), 100);
-    setTimeout(getNextMedia, mediaImageDuration);
+    progressBars = [0];
   };
+
+  const updateProgressBar = () => {
+    if (media == null) return;
+
+    if (video != null) {
+      const i = media.totalPlays - media.plays - 1;
+      progressBars[i] = (video.currentTime / video.duration) * 100;
+      return;
+    }
+
+    if (progressBars[0] >= 100) return getNextMedia();
+    progressBars[0] += 1000 / fps / (mediaImageDuration / 100);
+  };
+  setInterval(updateProgressBar, 1000 / fps);
 
   const play = () => {
     video.play();
