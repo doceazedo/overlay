@@ -6,10 +6,13 @@ const { PrismaClient } = pkg;
 const prisma = new PrismaClient();
 
 export const get: RequestHandler = async ({ params }) => {
-  const { id } = params;
+  let { id } = params;
+  const useLogin = isNaN(parseInt(id));
 
-  const twitchUser = await getTwitchUser(id);
+  const twitchUser = await getTwitchUser(id, useLogin);
   const avatar = twitchUser.profile_image_url;
+
+  id = useLogin ? twitchUser.id : id;
 
   const user = await prisma.user.upsert({
     where: { id },

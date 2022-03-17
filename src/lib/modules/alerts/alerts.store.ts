@@ -1,4 +1,9 @@
 import { writable } from 'svelte/store';
+import { streamlabsAlertListener } from '$lib/modules/streamlabs';
+import type { StreamlabsAlert } from '$lib/modules/streamlabs';
 
-export const CONFETTI_TRIGGER = writable(0);
-export const CONFETTI_DURATION = writable(0);
+// streamlabsAlertListener.subscribe((alert) => {
+//   if (alertsQueue.length == 1) nextAlert();
+// });
+
+// export const alertsQueue = writable<StreamlabsAlert[]>([]);

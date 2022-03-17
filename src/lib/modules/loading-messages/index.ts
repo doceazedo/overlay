@@ -1,2 +1,2 @@
-export * from './messages.helper';
+export * from './messages.helpers';
 export * from './loading-messages';
