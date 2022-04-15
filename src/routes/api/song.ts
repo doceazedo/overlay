@@ -5,6 +5,8 @@ export const get: RequestHandler = async ({ url }) => {
   const showDetails = url.searchParams.get('details') != null;
   const track = await getCurrentPlayingTrack();
 
+  if (track == null) return { body: {} };
+
   if (showDetails) {
     const artist = await getArtist(track.artists[0].id);
     return {

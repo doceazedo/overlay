@@ -1,10 +1,13 @@
 <script lang="ts">
   import type { CurrentlyPlayingDetailsResponse } from '$lib/services/song';
 
-  export let title = 'Nada tocando :(',
-    artist = '',
-    cover: string,
-    details: CurrentlyPlayingDetailsResponse,
+  const fallbackTitle = 'Nada tocando 😭';
+  const fallbackArtist = '';
+
+  export let title: string = null,
+    artist: string = null,
+    cover: string = null,
+    details: CurrentlyPlayingDetailsResponse = null,
     showArtist = false;
 </script>
 
@@ -13,9 +16,9 @@
     <figure class="cover-sm">
       <img src={cover} alt="" />
     </figure>
-    <div class="info">
-      <h1>{title}</h1>
-      <h2>{artist}</h2>
+    <div class="info" class:paused={!title && !artist}>
+      <h1>{title || fallbackTitle}</h1>
+      <h2>{artist || fallbackArtist}</h2>
     </div>
   </div>
   <div class="background">
@@ -55,7 +58,7 @@
       .cover-sm
         flex-shrink: 0
         height: 76px
-        width: 76px
+        max-width: 76px
         transition: all .8s ease
 
         img
@@ -96,6 +99,11 @@
       gap: 4px
       margin-top: 8px
       transition: all .8s ease
+
+      &.paused
+        width: 100%
+        justify-content: center
+        align-items: center
 
       h1,
       h2
