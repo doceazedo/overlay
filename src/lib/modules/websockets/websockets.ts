@@ -1,5 +1,6 @@
 import io from 'socket.io-client';
+import { WEBSOCKETS_URL } from '$lib/env';
 
-export const socket = io('http://localhost:2626', {
+export const socket = io(WEBSOCKETS_URL, {
   transports: ['websocket'],
 });

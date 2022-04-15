@@ -2,7 +2,6 @@ import { getArtist, getCurrentPlayingTrack } from '$lib/services/spotify';
 import type { RequestHandler } from '@sveltejs/kit';
 
 export const get: RequestHandler = async ({ url }) => {
-  // url.searchParams.get('osu');
   const showDetails = url.searchParams.get('details') != null;
   const track = await getCurrentPlayingTrack();
 

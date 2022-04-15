@@ -1,33 +1,55 @@
-<script lang="ts">
-  export let showHandcam = false;
-</script>
-
-<div class="sidebar-wrapper">
-  <div class="sidebar" class:handcam={showHandcam}>
+<aside class="sidebar">
+  <div class="sidebar-inner">
+    <div class="camera">
+      <div class="camera-placeholder" />
+    </div>
     <slot />
   </div>
-</div>
+</aside>
 
 <style lang="sass">
-  .sidebar-wrapper
-    position: absolute
+  .sidebar
+    position: fixed
     top: 0
     right: 0
-    display: flex
-    flex-direction: column
-    justify-content: flex-end
-    width: 480px
+    flex-shrink: 0
     height: 100%
+    padding: 14px
+    background-color: #070212
+    border-top-left-radius: 24px
+    border-bottom-left-radius: 24px
 
-  .sidebar
-    display: flex
-    flex-direction: column
-    gap: 1rem
-    width: 100%
-    height: calc(100% - 270px)
-    padding: 1rem
-    background-color: #2d2d2d
+    &-inner
+      display: flex
+      flex-direction: column
+      gap: 14px
+      height: 100%
+      width: 480px
 
-    &.handcam
-      height: calc(100% - 540px)
+    .camera
+      position: relative
+      flex-shrink: 0
+      width: 100%
+      margin-bottom: 24px
+      aspect-ratio: 16/9
+      border-radius: 24px
+
+      &-placeholder
+        position: relative
+        width: 100%
+        height: 100%
+        background-color: rgba(#fff, .1)
+        border-radius: 24px
+        z-index: 10
+
+      &::before
+        content: ''
+        position: absolute
+        left: 40px
+        top: 24px
+        width: 100%
+        height: 100%
+        border: 2px solid #6930c3
+        border-radius: 24px
+        z-index: 5
 </style>

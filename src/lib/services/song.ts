@@ -1,3 +1,5 @@
+import { browser } from '$app/env';
+
 export type CurrentlyPlayingResponse = {
   title: string;
   artist: string;
@@ -19,12 +21,16 @@ export type CurrentlyPlayingDetailsResponse = {
 const baseUrl = '/api';
 
 export const getCurrentlyPlaying = async () => {
+  if (!browser) return;
+
   const resp = await fetch(`${baseUrl}/song`);
   const data: CurrentlyPlayingResponse = await resp.json();
   return data;
 };
 
 export const getCurrentlyPlayingDetails = async () => {
+  if (!browser) return;
+
   const resp = await fetch(`${baseUrl}/song?details`);
   const data: CurrentlyPlayingDetailsResponse = await resp.json();
   return data;
