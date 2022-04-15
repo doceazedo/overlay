@@ -1,8 +1,6 @@
 <script lang="ts">
-  import { parseEmotes } from 'emotettv';
-  import { ChatMessage } from '$lib/components';
   import { getUser } from '$lib/services/users';
-  import { chatMessageListener, getBadges, getTeam } from '.';
+  import { ChatMessage, chatMessageListener, getBadges, getTeam } from '.';
   import type { ChatTheme, MessageAuthor, Message } from '.';
 
   export let theme: ChatTheme = 'dark';
@@ -38,5 +36,5 @@
 </script>
 
 {#each messages as message}
-  <ChatMessage message={message.content} author={message.author} {theme} />
+  <ChatMessage {message} {theme} />
 {/each}

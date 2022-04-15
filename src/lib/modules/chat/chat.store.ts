@@ -27,3 +27,4 @@ if (browser) {
 }
 
 export const chatMessageListener = writable<ParsedTmiMessage>();
+export const chatEl = writable<HTMLDivElement>();

@@ -15,6 +15,7 @@
 <style lang="sass">
   ul
     position: relative
+    pointer-events: none
 
     li
       position: absolute

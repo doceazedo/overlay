@@ -35,5 +35,6 @@ export type ChatTheme = 'dark' | 'light';
 export * from './chat.store';
 export * from './get-badges';
 export * from './get-team';
+export { default as ChatMessage } from './chat-message.svelte';
 export { default as ChatMessages } from './chat-messages.svelte';
 export { default as Chat } from './chat.svelte';
