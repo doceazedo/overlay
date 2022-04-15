@@ -1,6 +1,12 @@
 <script lang="ts">
+  import { socket } from '$lib/modules';
   import { Shoutout } from '$lib/components';
-  import { SHOUTOUT_INFO, SHOUTOUT_SHOW } from '.';
+  import { shoutout, SHOUTOUT_INFO, SHOUTOUT_SHOW } from '.';
+  import type { UserResponse } from '$lib/services/users';
+
+  socket.on('cmd:sh', (user: UserResponse) => {
+    shoutout({ avatar: user.avatar, name: user.displayName });
+  });
 </script>
 
 {#if $SHOUTOUT_SHOW}

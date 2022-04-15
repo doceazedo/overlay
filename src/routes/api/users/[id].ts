@@ -11,6 +11,7 @@ export const get: RequestHandler = async ({ params }) => {
 
   const twitchUser = await getTwitchUser(id, useLogin);
   const avatar = twitchUser.profile_image_url;
+  const displayName = twitchUser.display_name;
 
   id = useLogin ? twitchUser.id : id;
 
@@ -21,7 +22,7 @@ export const get: RequestHandler = async ({ params }) => {
   });
 
   return {
-    body: { ...user, avatar },
+    body: { ...user, avatar, displayName },
   };
 };
 

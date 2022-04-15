@@ -1,13 +1,14 @@
 import type { User } from '@prisma/client';
 
-type UserRequest = {
+export type UserRequest = {
   pronouns?: string;
   team?: string;
   messages?: number;
 };
 
-type UserResponse = User & {
+export type UserResponse = User & {
   id: string;
+  displayName: string;
   avatar: string;
   messages: string;
   createdAt: Date;

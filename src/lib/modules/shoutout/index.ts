@@ -4,4 +4,5 @@ export type ShoutoutInfo = {
 };
 
 export * from './shoutout.store';
+export * from './shoutout';
 export { default as Shoutout } from './shoutout.svelte';

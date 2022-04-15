@@ -7,10 +7,7 @@
 
   export let message: Message, theme: ChatTheme;
 
-  onMount(() => {
-    console.log('msg nova!');
-    $chatEl?.scrollTo(0, $chatEl.scrollHeight);
-  });
+  onMount(() => $chatEl?.scrollTo(0, $chatEl.scrollHeight));
 </script>
 
 <ChatMessage message={message.content} author={message.author} {theme} />
