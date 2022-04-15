@@ -53,6 +53,7 @@
       padding: 12px
 
       .cover-sm
+        flex-shrink: 0
         height: 76px
         width: 76px
         transition: all .8s ease
@@ -99,6 +100,10 @@
       h1,
       h2
         width: fit-content
+        max-width: 368px
+        white-space: nowrap
+        overflow: hidden
+        text-overflow: ellipsis
         transition: all .3s ease
 
       h1
@@ -122,6 +127,7 @@
 
           h1,
           h2
+            max-width: 444px
             background-color: rgba(0, 0, 0, .5)
             padding: 0 .5rem
 
