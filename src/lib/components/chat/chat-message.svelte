@@ -8,7 +8,8 @@
 
   export let message: Word[],
     author: MessageAuthor,
-    theme: ChatTheme = 'dark';
+    theme: ChatTheme = 'dark',
+    scrollToBottom: () => void = null;
 </script>
 
 <div class="message-wrapper theme-{theme}" in:fly={{ x: -16, duration: 500 }}>
@@ -39,7 +40,12 @@
     <div class="content">
       {#each message as word}
         {#if word.emote}
-          <img src={word.emote.url[0]} alt={word.text} class="emote" />
+          <img
+            src={word.emote.url[0]}
+            alt={word.text}
+            class="emote"
+            on:load={scrollToBottom}
+          />
         {:else}
           {` ${word.text} `}
         {/if}

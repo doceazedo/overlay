@@ -7,7 +7,14 @@
 
   export let message: Message, theme: ChatTheme;
 
-  onMount(() => $chatEl?.scrollTo(0, $chatEl.scrollHeight));
+  const scrollToBottom = () => $chatEl?.scrollTo(0, $chatEl.scrollHeight);
+
+  onMount(scrollToBottom);
 </script>
 
-<ChatMessage message={message.content} author={message.author} {theme} />
+<ChatMessage
+  message={message.content}
+  author={message.author}
+  {theme}
+  {scrollToBottom}
+/>

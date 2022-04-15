@@ -6,7 +6,7 @@
   import type { Emote } from './emote-wall.types';
 
   const fps = 60;
-  const wallWidth = 1440;
+  const wallWidth = 1412;
   const wallHeight = 1080;
   const size = 64;
   const gravity = 0.1;
