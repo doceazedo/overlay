@@ -37,12 +37,3 @@ export const updateUser = async (id: string, body: UserRequest) => {
   const data: UserResponse = await resp.json();
   return data;
 };
-
-// Melhor fazer isso no back pra salvar uma requisição
-export const incrementUserMessages = async (id: string) => {
-  const user = await getUser(id);
-  const updatedUser = await updateUser(id, {
-    messages: user.messages + 1,
-  });
-  return updatedUser;
-};
