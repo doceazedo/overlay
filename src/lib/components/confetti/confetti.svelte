@@ -11,6 +11,6 @@
     left: 0
     z-index: 10
     height: 1080px
-    width: 1440px
+    width: 1412px
     pointer-events: none
 </style>
