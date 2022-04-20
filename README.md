@@ -4,7 +4,10 @@
   A set of highly interactive scenes for my <a href="https://twitch.tv/doceazedo911">live coding streams</a>, including a Spotify now playing widget, Reddit memes while I'm away, custom icons and chat commands integration with <a href="https://github.com/doceazedo/suco-bot">SucoBOT</a>.
 </p>
 
-![Overlay screenshot](static/assets/img/screenshot.png)
+<p align="center">
+  <img src="static/assets/img/screenshot.png" />
+  <sup>Cute wallpaper made by the outstanding <a href="https://twitter.com/saroliro/status/1417469066604859393">@saroliro</a> ✨</sup>
+</p>
 
 ## 📝 Notes
 
