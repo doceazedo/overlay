@@ -1,1 +1,0 @@
-export { default as OsuInfo } from './osu-info.svelte';
