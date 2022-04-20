@@ -4,29 +4,25 @@
   const fallbackTitle = 'Nada tocando 😭';
   const fallbackArtist = '';
 
-  export let title: string = null,
-    artist: string = null,
-    cover: string = null,
-    details: CurrentlyPlayingDetailsResponse = null,
-    showArtist = false;
+  export let song: CurrentlyPlayingDetailsResponse = null,
+    showDetails = false;
 </script>
 
-<div class="now-playing" class:details={details != null}>
+<div class="now-playing" class:details={showDetails}>
   <div class="content">
     <figure class="cover-sm">
-      <img src={cover} alt="" />
+      <img src={song?.song?.cover} alt="" />
     </figure>
-    <div class="info" class:paused={!title && !artist}>
-      <h1>{title || fallbackTitle}</h1>
-      <h2>{artist || fallbackArtist}</h2>
+    <div class="info" class:paused={!song}>
+      <h1>{song?.song?.title || fallbackTitle}</h1>
+      <h2>{song?.artist?.name || fallbackArtist}</h2>
     </div>
   </div>
   <div class="background">
-    <img class="cover-xl" src={cover} alt="" />
+    <img class="cover-xl" src={song?.song?.cover} alt="" />
     <figure
       class="artist"
-      class:show={showArtist}
-      style="background-image: url({details?.artist?.image})"
+      style="background-image: url({song?.artist?.image})"
     />
   </div>
 </div>
@@ -80,18 +76,12 @@
         transition: all .3s ease
 
       .artist
-        position: absolute
-        top: 0
-        left: 480px
-        width: 480px
-        height: 480px
+        width: 240px
+        height: 240px
         background-position: center
         background-repeat: no-repeat
         background-size: cover
         transition: all .5s ease
-
-        &.show
-          left: 0
 
     .info
       display: flex
@@ -107,6 +97,7 @@
 
       h1,
       h2
+        flex-shrink: 0
         width: fit-content
         max-width: 368px
         white-space: nowrap
@@ -123,7 +114,11 @@
         font-weight: 300
 
     &.details
-      height: 480px
+      height: 240px
+
+      .cover-xl
+        width: 240px
+        height: 240px
 
       .content
         figure
@@ -131,13 +126,20 @@
           opacity: 0
 
         .info
-          margin-top: calc(100% - 72px)
+          margin-top: calc(100% - 277px)
+          margin-left: -16px
 
           h1,
           h2
             max-width: 444px
             background-color: rgba(0, 0, 0, .5)
-            padding: 0 .5rem
+            padding: 0 .25rem
+
+          h1
+            font-size: 1rem
+
+          h2
+            font-size: .75rem
 
       .background
         opacity: 1
