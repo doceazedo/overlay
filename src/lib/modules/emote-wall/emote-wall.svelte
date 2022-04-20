@@ -5,7 +5,6 @@
   import { socket } from '$lib/modules';
   import { randomInRange } from '$lib/utils';
   import type { Emote } from './emote-wall.types';
-  import { onMount } from 'svelte';
 
   const fps = 60;
   const wallWidth = 1412;

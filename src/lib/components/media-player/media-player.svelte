@@ -6,8 +6,7 @@
   export let media: Media,
     progressBars = [0],
     audio: HTMLAudioElement,
-    video: HTMLVideoElement,
-    debug = false;
+    video: HTMLVideoElement;
 </script>
 
 <main>
@@ -61,10 +60,6 @@
       <img class="media" src={media.src} alt="" />
     {/if}
   </div>
-
-  {#if debug}
-    <button on:click>Next</button>
-  {/if}
 </main>
 
 <style lang="sass">
@@ -84,7 +79,7 @@
     align-items: center
     width: 1066px
     height: 800px
-    border-radius: .5rem
+    border-radius: 1.5rem
     overflow: hidden
 
     .background

@@ -72,8 +72,10 @@
   {/each}
 </div>
 
-<button class="hidden-button left" on:click={playPause} />
-<button class="hidden-button right" on:click={startStream} />
+<div class="hidden-buttons">
+  <button on:click={playPause}>Pausar</button>
+  <button on:click={startStream}>Começar stream</button>
+</div>
 
 <style lang="sass">
   :global(body)
@@ -133,18 +135,28 @@
     height: 100%
     overflow: hidden
 
-  .hidden-button
+  .hidden-buttons
     position: fixed
-    bottom: 0
-    z-index: 10
+    bottom: 1rem
+    right: 0
     display: flex
-    width: 8rem
-    height: 8rem
-    opacity: 0
+    flex-direction: column
+    gap: .25rem
+    z-index: 10
 
-    &.left
-      left: 0
+    button
+      display: flex
+      width: 16rem
+      padding: 1rem
+      border: none
+      border-top-left-radius: 1rem
+      border-bottom-left-radius: 1rem
+      background-color: rgba(#fff, .25)
+      font-size: 1.5rem
+      cursor: pointer
+      transition: all .2s ease
 
-    &.right
-      right: 0
+      &:not(:hover)
+        opacity: 0
+        transform: translateX(1rem)
 </style>

@@ -127,8 +127,6 @@
       bind:video
       on:loadeddata={handleOnLoaded}
       on:ended={handleOnEnded}
-      on:click={getNextMedia}
-      debug={true}
     />
   {/key}
 {/if}
