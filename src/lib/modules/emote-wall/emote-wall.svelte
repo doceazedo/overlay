@@ -2,8 +2,10 @@
   import { v4 as uuidv4 } from 'uuid';
   import { EmoteWall } from '$lib/components/emote-wall';
   import { chatMessageListener } from '$lib/modules/chat';
+  import { socket } from '$lib/modules';
   import { randomInRange } from '$lib/utils';
   import type { Emote } from './emote-wall.types';
+  import { onMount } from 'svelte';
 
   const fps = 60;
   const wallWidth = 1412;
@@ -72,6 +74,14 @@
     message.words.forEach(
       (word) => word?.emote && pushEmote(word.emote.url[2]),
     );
+  });
+
+  socket.on('cmd:alan', async () => {
+    const alan = Array(8).fill('/assets/img/alan-uwu.png');
+    const pray = Array(4).fill('/assets/img/pray.png');
+    const lgbtFlag = Array(4).fill('/assets/img/lgbt-flag.png');
+    const emotes = [...alan, ...pray, ...lgbtFlag];
+    emotes.forEach((emote) => pushEmote(emote));
   });
 </script>
 
