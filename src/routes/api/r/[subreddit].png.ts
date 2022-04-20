@@ -1,4 +1,4 @@
-import { getRedditIcon } from '$lib/services/reddit';
+import { getRedditIcon } from '$lib/clients/reddit';
 import { decodeHtml } from '$lib/utils';
 import type { RequestHandler } from '@sveltejs/kit';
 

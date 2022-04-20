@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { CurrentlyPlayingDetailsResponse } from '$lib/services/song';
+  import type { CurrentlyPlayingDetailsResponse } from '$lib/clients/song';
 
   const fallbackTitle = 'Nada tocando 😭';
   const fallbackArtist = '';

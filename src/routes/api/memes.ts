@@ -1,7 +1,7 @@
-import { getRedditHotPosts } from '$lib/services/reddit';
+import { getRedditHotPosts } from '$lib/clients/reddit';
 import { matchYoutubeUrl, shuffleArray } from '$lib/utils';
 import type { RequestHandler } from '@sveltejs/kit';
-import type { RedditPost } from '$lib/services/reddit';
+import type { RedditPost } from '$lib/clients/reddit';
 
 export const get: RequestHandler = async ({ url }) => {
   const subreddits = url.searchParams.get('subreddits').split(',');

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { getUser } from '$lib/services/users';
+  import { getUser } from '$lib/clients/users';
   import { ChatMessage, chatMessageListener, getBadges, getTeam } from '.';
   import type { ChatTheme, MessageAuthor, Message } from '.';
 

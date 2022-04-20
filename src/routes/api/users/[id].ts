@@ -1,5 +1,5 @@
 import pkg from '@prisma/client';
-import { getTwitchUser } from '$lib/services/twitch';
+import { getTwitchUser } from '$lib/clients/twitch';
 import type { RequestHandler } from '@sveltejs/kit';
 
 const { PrismaClient } = pkg;

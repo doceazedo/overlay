@@ -1,4 +1,4 @@
-import { getArtist, getCurrentPlayingTrack } from '$lib/services/spotify';
+import { getArtist, getCurrentPlayingTrack } from '$lib/clients/spotify';
 import type { RequestHandler } from '@sveltejs/kit';
 
 export const get: RequestHandler = async ({ url }) => {

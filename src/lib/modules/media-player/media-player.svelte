@@ -2,19 +2,13 @@
   import { onMount } from 'svelte';
   import { decodeHtml } from '$lib/utils';
   import { MediaPlayer } from '$lib/components';
-  import { getMemes } from '$lib/services/memes';
+  import { getMemes } from '$lib/clients/memes';
   import { MEDIAPLAYER_PLAYBACK } from '.';
-  import type { RedditPost } from '$lib/services/reddit';
+  import type { RedditPost } from '$lib/clients/reddit';
   import type { Media } from '.';
 
   const fps = 60;
-  const subreddits = [
-    'ShitpostBR',
-    'botecodoreddit',
-    'AgiotasClub',
-    'MemesBrasil',
-    'eu_nvr',
-  ];
+  const subreddits = ['ShitpostBR', 'botecodoreddit', 'AgiotasClub', 'eu_nvr'];
   const secondsToTwice = 20;
   const secondsToThrice = 6;
   const mediaImageDuration = 10000;

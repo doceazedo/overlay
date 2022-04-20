@@ -1,9 +1,9 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { getCurrentlyPlayingDetails } from '$lib/services/song';
+  import { getCurrentlyPlayingDetails } from '$lib/clients/song';
   import { MusicPlayer } from '$lib/components';
   import { socket } from '$lib/modules';
-  import type { CurrentlyPlayingDetailsResponse } from '$lib/services/song';
+  import type { CurrentlyPlayingDetailsResponse } from '$lib/clients/song';
 
   let song: CurrentlyPlayingDetailsResponse;
   let showDetails = false;

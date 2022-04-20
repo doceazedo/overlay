@@ -7,7 +7,7 @@ import type {
   StreamlabsAlert,
   StreamlabsEvent,
 } from './streamlabs.types';
-import { getUser } from '$lib/services/users';
+import { getUser } from '$lib/clients/users';
 
 export const parseStreamlabsEvent = async (
   event: StreamlabsEvent,
