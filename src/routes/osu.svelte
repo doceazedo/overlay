@@ -25,5 +25,5 @@
     position: absolute
     left: 1155px
     top: 700px
-    opacity: .25
+    opacity: .5
 </style>
