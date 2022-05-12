@@ -6,7 +6,7 @@ export * from './confetti';
 export * from './conveyor-belt';
 export * from './cutout';
 export * from './emote-wall';
-export * from './media-player';
+export * from './memes-viewer';
 export * from './osu-sc';
 export * from './music-player';
 export * from './shoutout';

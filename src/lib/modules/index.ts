@@ -4,7 +4,7 @@ export * from './confetti';
 export * from './conveyor-belt';
 export * from './emote-wall';
 export * from './loading-messages';
-export * from './media-player';
+export * from './memes';
 export * from './music-player';
 export * from './shoutout';
 export * from './sidebar';
