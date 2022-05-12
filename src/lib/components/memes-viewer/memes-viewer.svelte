@@ -12,9 +12,7 @@
 <main>
   <ul class="progress">
     {#each progressBars as progress}
-      <li style="--width:{progress}%">
-        {progressBars}
-      </li>
+      <li style="--width:{progress}%" />
     {/each}
   </ul>
 
