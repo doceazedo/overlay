@@ -1,12 +1,12 @@
 <script lang="ts">
-  import type { Media } from '$lib/modules';
+  import type { Meme } from '$lib/modules/memes';
 
   let iconIsLoaded = false;
 
-  export let media: Media,
+  export let meme: Meme,
     progressBars = [0],
-    audio: HTMLAudioElement,
-    video: HTMLVideoElement;
+    videoEl: HTMLVideoElement,
+    audioEl: HTMLAudioElement;
 </script>
 
 <main>
@@ -21,43 +21,46 @@
   <header class="header">
     <figure>
       <img
-        src={media.icon}
+        src="api/{meme.subreddit}.png"
         alt=""
         on:load={() => (iconIsLoaded = true)}
         class:show={iconIsLoaded}
       />
     </figure>
     <div class="meta">
-      <p class="author">{media.author} em <span>r/{media.subreddit}</span></p>
-      <p class="description">{media.title}</p>
+      <p class="author">{meme.author} em <span>{meme.subreddit}</span></p>
+      <p class="description">{meme.title}</p>
     </div>
   </header>
 
   <div class="card">
-    <img class="background" src={media.background} alt="" />
+    <!-- FIXME: add background -->
+    <img
+      class="background"
+      src={meme?.video?.thumbnailUrl || meme?.image?.url}
+      alt=""
+    />
 
-    {#if media.isVideo}
+    {#if !!meme.video}
       <!-- svelte-ignore a11y-media-has-caption -->
       <video
         class="media"
         width="800"
         height="800"
-        bind:this={video}
+        bind:this={videoEl}
         on:loadeddata
         on:ended
       >
-        <source src={media.src} type="video/mp4" />
-        <audio bind:this={audio} on:loadeddata>
-          {#if !media.isGif}
-            <source
-              src={media.src.replace(/(?<=DASH_)(.*)(?=.mp4)/gm, 'audio')}
-              type="audio/mpeg"
-            />
-          {/if}
+        <source src={meme.video.videoUrl} type="video/mp4" />
+        <audio bind:this={audioEl}>
+          <source src={meme.video.audioUrl} type="audio/mpeg" />
         </audio>
       </video>
+    {:else if !!meme.image}
+      <img class="media" src={meme.image.url} alt="" />
     {:else}
-      <img class="media" src={media.src} alt="" />
+      <p>Error: No media found.</p>
+      <pre>{JSON.stringify(meme, null, 2)}</pre>
     {/if}
   </div>
 </main>
@@ -91,8 +94,13 @@
 
     img.media,
     video.media
+      width: 100%
+      height: 100%
       max-width: 1066px
       max-height: 800px
+
+    img.media
+      object-fit: contain
 
   .progress
     display: flex

@@ -1,12 +1,8 @@
 <script lang="ts">
   import { fly } from 'svelte/transition';
   import { quintOut } from 'svelte/easing';
-  import {
-    ConveyorBeltLogo,
-    getRandomMessage,
-    MediaPlayer,
-  } from '$lib/modules';
-  import { Chat, MEDIAPLAYER_PLAYBACK } from '$lib/modules';
+  import { ConveyorBeltLogo, getRandomMessage, Memes } from '$lib/modules';
+  import { Chat } from '$lib/modules';
 
   const flyOut = {
     duration: 200,
@@ -23,17 +19,13 @@
   let title = soonTitle;
   let loadingMessage = getRandomMessage();
   let showLoadingMessage = true;
+  let playPause: () => void;
+  let getNextMeme: () => void;
 
-  setInterval(() => {
-    loadingMessage = getRandomMessage();
-  }, 5000);
-
-  const playPause = () => {
-    $MEDIAPLAYER_PLAYBACK = !$MEDIAPLAYER_PLAYBACK;
-  };
+  setInterval(() => (loadingMessage = getRandomMessage()), 5000);
 
   const startStream = () => {
-    $MEDIAPLAYER_PLAYBACK = false;
+    playPause();
     showLoadingMessage = false;
     title = startingTitle;
     setTimeout(() => (title = brbTitle), 10000);
@@ -57,7 +49,7 @@
 
   <div class="content">
     <div class="memes">
-      <MediaPlayer />
+      <Memes bind:playPause bind:getNextMeme />
     </div>
     <div class="chat">
       <Chat theme="light" />
@@ -73,6 +65,7 @@
 </div>
 
 <div class="hidden-buttons">
+  <button on:click={getNextMeme}>Próximo</button>
   <button on:click={playPause}>Pausar</button>
   <button on:click={startStream}>Começar stream</button>
 </div>
