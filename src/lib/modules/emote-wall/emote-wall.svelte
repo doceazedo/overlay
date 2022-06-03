@@ -6,9 +6,10 @@
   import { randomInRange } from '$lib/utils';
   import type { Emote } from './emote-wall.types';
 
+  export let wallWidth = 1412,
+    wallHeight = 1080;
+
   const fps = 60;
-  const wallWidth = 1412;
-  const wallHeight = 1080;
   const size = 64;
   const gravity = 0.1;
   const damping = 0.9;
