@@ -6,3 +6,4 @@
 <Shoutout />
 <Sidebar />
 <EmoteWall />
+<Alerts />
