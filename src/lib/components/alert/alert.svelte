@@ -6,14 +6,15 @@
   import { sleep } from '$lib/utils';
   import { UserAddIcon } from '$lib/components/icons/animated';
 
-  export let title = '',
+  export let
+    showAlert = false,
+    title = '',
     detailsTile = '',
     description = '',
     message = '',
     iconDuration = 1700,
     duration = 5000;
 
-  let showAlert = false;
   let showAlertIcon = false;
   let showAlertAction = false;
   let showAlertDetails = false;

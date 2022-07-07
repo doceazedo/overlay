@@ -28,6 +28,7 @@
 
 {#if showAlert}
   <Alert
+    bind:showAlert
     {title}
     {detailsTile}
     {description}
