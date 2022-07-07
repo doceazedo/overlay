@@ -1,4 +1,5 @@
 export * from './alerts';
+export * from './audio-player';
 export * from './chat';
 export * from './confetti';
 export * from './conveyor-belt';

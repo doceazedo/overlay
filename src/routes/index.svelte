@@ -1,6 +1,7 @@
 <script lang="ts">
   import {
     Alerts,
+    AudioPlayer,
     EmoteWall,
     Confetti,
     Shoutout,
@@ -15,3 +16,4 @@
 <EmoteWall />
 <Alerts />
 <VideoPlayer />
+<AudioPlayer />
