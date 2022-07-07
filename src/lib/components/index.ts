@@ -11,3 +11,4 @@ export * from './osu-sc';
 export * from './music-player';
 export * from './shoutout';
 export * from './sidebar';
+export * from './video-player';
