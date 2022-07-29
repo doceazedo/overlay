@@ -5,15 +5,13 @@
   import { scaleVector } from '$lib/transitions';
   import { sleep } from '$lib/utils';
   import { UserAddIcon } from '$lib/components/icons/animated';
+  import type { AlertData } from './alert.types';
 
-  export let
-    showAlert = false,
-    title = '',
-    detailsTile = '',
-    description = '',
-    message = '',
-    iconDuration = 1700,
-    duration = 5000;
+  export let showAlert = false,
+    data: AlertData,
+    showNextAlert: () => void;
+
+  const transitionDuration = 400;
 
   let showAlertIcon = false;
   let showAlertAction = false;
@@ -24,31 +22,33 @@
     showAlert = true;
     await sleep(500);
     showAlertIcon = true;
-    await sleep(iconDuration);
+    await sleep(data.iconDuration);
     showAlertIcon = false;
     showAlertAction = true;
     await sleep(1000);
-    title = detailsTile;
+    data.title = data.detailsTile;
     showAlertDetails = true;
     showAlertAvatar = true;
-    await sleep(duration);
+    await sleep(data.duration);
     showAlert = false;
+    await sleep(transitionDuration);
+    showNextAlert();
   });
 </script>
 
 <div class="alert-wrapper">
-  {#if showAlert}
+  {#if data && showAlert}
     <div
       class="alert"
       class:show-details={showAlertDetails}
-      class:tall={!!message.length}
+      class:tall={!!data.message.length}
       in:scaleVector={{
-        duration: 400,
+        duration: transitionDuration,
         vector: 'Y',
         easing: quintOut,
       }}
       out:fly={{
-        duration: 400,
+        duration: transitionDuration,
         x: -128,
         opacity: 0,
         easing: quintOut,
@@ -63,7 +63,7 @@
       <figure
         class="alert-avatar"
         class:show={showAlertAvatar}
-        style="background-image:url(https://static-cdn.jtvnw.net/jtv_user_pictures/2d432062-baa6-47f4-bc13-ca84ea73ed9a-profile_image-300x300.png)"
+        style="background-image:url({data?.avatar})"
       />
 
       {#if showAlertAction}
@@ -75,7 +75,7 @@
             easing: quintOut,
           }}
         >
-          {title}
+          {data.title}
         </div>
 
         {#if showAlertDetails}
@@ -87,10 +87,10 @@
               easing: quintOut,
             }}
           >
-            {description}
+            {data.description}
           </p>
 
-          {#if !!message.length}
+          {#if !!data.message.length}
             <div
               class="alert-message"
               transition:fly={{
@@ -100,7 +100,7 @@
               }}
             >
               <p>
-                {message}
+                {data.message}
               </p>
             </div>
           {/if}
@@ -124,6 +124,7 @@
     flex-direction: column
     justify-content: center
     align-items: center
+    text-align: center
     width: 24rem
     height: 6rem
     padding: 1rem
@@ -147,6 +148,7 @@
     &-action
       font-size: 2.25rem
       font-weight: 700
+      line-height: 1
 
     &-description
       font-size: 1.25rem
