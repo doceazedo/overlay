@@ -1,3 +1,4 @@
+import { json as json$1 } from '@sveltejs/kit';
 import pkg from '@prisma/client';
 import { getTwitchUser } from '$lib/clients/twitch';
 import type { RequestHandler } from '@sveltejs/kit';
@@ -5,7 +6,7 @@ import type { RequestHandler } from '@sveltejs/kit';
 const { PrismaClient } = pkg;
 const prisma = new PrismaClient();
 
-export const get: RequestHandler = async ({ params }) => {
+export const GET: RequestHandler = async ({ params }) => {
   let { id } = params;
   const useLogin = isNaN(parseInt(id));
 
@@ -21,9 +22,7 @@ export const get: RequestHandler = async ({ params }) => {
     update: {},
   });
 
-  return {
-    body: { ...user, avatar, displayName },
-  };
+  return json$1({ ...user, avatar, displayName });
 };
 
 export const post: RequestHandler = async ({ params, request }) => {
