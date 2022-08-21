@@ -25,7 +25,7 @@ export const GET: RequestHandler = async ({ params }) => {
   return json$1({ ...user, avatar, displayName });
 };
 
-export const post: RequestHandler = async ({ params, request }) => {
+export const POST: RequestHandler = async ({ params, request }) => {
   const { id } = params;
   const data = await request.json();
 
