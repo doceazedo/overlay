@@ -28,7 +28,7 @@ const baseUrl = 'https://api.twitch.tv/helix';
 const { TWITCH_CLIENT_ID, TWITCH_OAUTH_TOKEN } = process.env;
 const headers = {
   Authorization: `Bearer ${TWITCH_OAUTH_TOKEN}`,
-  'Client-Id': TWITCH_CLIENT_ID,
+  'Client-Id': `${TWITCH_CLIENT_ID}`,
 };
 
 export const getTwitchUser = async (id: string, useLogin: boolean) => {
@@ -48,5 +48,5 @@ export const getTwitchFollows = async (from: string, to: string) => {
     },
   );
   const data: TwitchFollowsResponse = await resp.json();
-  return data.data[0];
+  return data.data[0] || null;
 };
