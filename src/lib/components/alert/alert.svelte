@@ -1,18 +1,21 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { fly } from 'svelte/transition';
-  import { quintOut } from 'svelte/easing';
+  import { elasticOut, elasticIn } from 'svelte/easing';
 
   export let title: string,
     message = '',
     image: string;
+
+  const transition = { duration: 1200, x: -400 };
 
   onMount(async () => {});
 </script>
 
 <div
   class="alert-wrapper"
-  transition:fly={{ duration: 300, x: -64, opacity: 0, easing: quintOut }}
+  in:fly={{ ...transition, easing: elasticOut }}
+  out:fly={{ ...transition, easing: elasticIn }}
 >
   <div class="image" style="background-image:url({image})" />
   <div class="alert">

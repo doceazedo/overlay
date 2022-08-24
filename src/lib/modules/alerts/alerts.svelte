@@ -17,7 +17,7 @@
 
   const defaultDuration = 7500;
   const defaultImage = '';
-  const delay = 750;
+  const delay = 1500;
 
   let alertData: AlertEventData;
   let alertsQueue: AlertEventData[] = [];
