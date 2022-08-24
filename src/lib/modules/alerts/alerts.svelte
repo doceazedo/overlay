@@ -6,6 +6,7 @@
   import { sleep } from '$lib/utils';
 
   type AlertEventData = {
+    type: string;
     title: string;
     message?: string;
     image?: string;
@@ -37,6 +38,7 @@
       audio.src = alertData.audio;
       audio.play();
     }
+    if (alertData.type == 'raid') throwConfetti(15000);
 
     // Await for alert duration
     await sleep(alertData.duration || defaultDuration);
@@ -48,7 +50,6 @@
     showNextAlert();
   };
 
-  socket.on('event:raid', () => throwConfetti(15000));
   socket.on('event:alert', handleAlertEvent);
 </script>
 
