@@ -1,16 +1,16 @@
 <script lang="ts">
+  import { browser } from '$app/env';
   import { socket } from '$lib/modules';
   import { throwConfetti } from '$lib/modules/confetti';
   import { Alert } from '$lib/components';
   import { sleep } from '$lib/utils';
-
-  // TODO: Áudio de notificação
 
   type AlertEventData = {
     title: string;
     message?: string;
     image?: string;
     duration?: number;
+    audio?: string;
     // TODO: tts?: string;
   };
 
@@ -28,9 +28,15 @@
   };
 
   const showNextAlert = async () => {
-    if (!alertsQueue.length) return;
+    if (!browser || !alertsQueue.length) return;
+
     alertData = alertsQueue[0];
     showAlert = true;
+    if (alertData.audio) {
+      const audio = new Audio();
+      audio.src = alertData.audio;
+      audio.play();
+    }
 
     // Await for alert duration
     await sleep(alertData.duration || defaultDuration);
