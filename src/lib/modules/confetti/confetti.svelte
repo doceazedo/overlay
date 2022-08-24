@@ -3,7 +3,12 @@
   import confetti from 'canvas-confetti';
   import { randomInRange } from '$lib/utils';
   import { Confetti } from '$lib/components';
-  import { CONFETTI_DURATION, CONFETTI_TRIGGER } from '.';
+  import { socket } from '$lib/modules';
+  import {
+    CONFETTI_DURATION,
+    CONFETTI_TRIGGER,
+    throwConfetti as triggerThrowConfetti,
+  } from '.';
 
   let canvas = null;
   const config = {
@@ -42,6 +47,10 @@
   };
 
   $: $CONFETTI_TRIGGER, throwConfetti($CONFETTI_DURATION);
+
+  socket.on('cmd:confetti', (duration: number) =>
+    triggerThrowConfetti(duration),
+  );
 </script>
 
 <Confetti bind:canvas />
