@@ -34,6 +34,7 @@
     width: 1412px
     height: 1080px
     padding: 3rem
+    pointer-events: none
 
     video
       height: 24rem
