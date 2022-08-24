@@ -2,8 +2,8 @@
   import { socket } from '$lib/modules';
   import { throwConfetti } from '$lib/modules/confetti';
   import { Alert } from '$lib/components';
+  import { sleep } from '$lib/utils';
 
-  // TODO: Fila
   // TODO: Áudio de notificação
 
   type AlertEventData = {
@@ -16,21 +16,34 @@
 
   const defaultDuration = 7500;
   const defaultImage = '';
+  const delay = 750;
 
-  let showAlert = false;
   let alertData: AlertEventData;
+  let alertsQueue: AlertEventData[] = [];
+  let showAlert = false;
 
-  const handleFollowEvent = async (data: AlertEventData) => {
-    alertData = data;
+  const handleAlertEvent = async (data: AlertEventData) => {
+    alertsQueue.push(data);
+    if (alertsQueue.length == 1) showNextAlert();
+  };
+
+  const showNextAlert = async () => {
+    if (!alertsQueue.length) return;
+    alertData = alertsQueue[0];
     showAlert = true;
 
-    setTimeout(() => {
-      showAlert = false;
-    }, data.duration || defaultDuration);
+    // Await for alert duration
+    await sleep(alertData.duration || defaultDuration);
+    showAlert = false;
+
+    // Await for delay/transition
+    await sleep(delay);
+    alertsQueue.shift();
+    showNextAlert();
   };
 
   socket.on('event:raid', () => throwConfetti(15000));
-  socket.on('event:alert', handleFollowEvent);
+  socket.on('event:alert', handleAlertEvent);
 </script>
 
 {#if showAlert}
