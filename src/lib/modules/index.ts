@@ -9,6 +9,5 @@ export * from './memes';
 export * from './music-player';
 export * from './shoutout';
 export * from './sidebar';
-export * from './streamlabs';
 export * from './video-player';
 export * from './websockets';
