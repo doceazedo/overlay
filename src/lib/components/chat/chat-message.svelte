@@ -9,7 +9,7 @@
   export let message: Word[],
     author: MessageAuthor,
     theme: ChatTheme = 'dark',
-    scrollToBottom: () => void = null;
+    scrollToBottom: () => void;
 </script>
 
 <div class="message-wrapper theme-{theme}" in:fly={{ x: -16, duration: 500 }}>
@@ -87,7 +87,7 @@
         .pronouns
           font-style: italic
           color: rgba(#fff, .75)
-          font-size: .75rem
+          font-size: .9rem
 
         .badges
           display: inline-flex

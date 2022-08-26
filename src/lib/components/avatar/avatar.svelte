@@ -10,8 +10,8 @@
 
 <style lang="sass">
   .avatar
-    height: 3rem
-    width: 3rem
+    height: 2.75rem
+    width: 2.75rem
     border-radius: 50%
     background-color: #191919
 
