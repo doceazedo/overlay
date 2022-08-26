@@ -28,7 +28,7 @@
         {author.displayName}
       </span>
       <span class="pronouns" class:hide={!author?.pronouns}>
-        {author?.pronouns}
+        ({author?.pronouns})
       </span>
       <span
         class="badges"
