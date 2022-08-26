@@ -10,6 +10,12 @@
     author: MessageAuthor,
     theme: ChatTheme = 'dark',
     scrollToBottom: () => void;
+
+  const emojiOnly =
+    message.filter((word) => !!word.emote).length == message.length;
+  const jumbomoji = emojiOnly && message.length <= 24;
+  const singleEmoji = emojiOnly && message.length == 1;
+  const emojiSize = singleEmoji ? 2 : jumbomoji ? 1 : 0;
 </script>
 
 <div class="message-wrapper theme-{theme}" in:fly={{ x: -16, duration: 500 }}>
@@ -41,7 +47,7 @@
       {#each message as word}
         {#if word.emote}
           <img
-            src={word.emote.url[0]}
+            src={word.emote.url[emojiSize]}
             alt={word.text}
             class="emote"
             on:load={scrollToBottom}
