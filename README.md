@@ -17,21 +17,22 @@
 ## 🧰 Installation
 
 1. Clone this repository.
-2. Run `yarn` or `npm install` to install the dependencies.
-3. Create a [Spotify app](https://developer.spotify.com/dashboard/login) and grab your [refresh token](https://benwiz.com/blog/create-spotify-refresh-token) with the `user-read-currently-playing` scope.
-4. Create a [Twitch app](https://dev.twitch.tv/docs/authentication/register-app) and grab an [OAuth token](https://twitchapps.com/tokengen) - this can be from your personal account or any other, as no messages will be sent from it - with the following scopes: `chat:read chat:edit channel:moderate whispers:read whispers:edit channel_editor channel:read:subscriptions`.
-5. Optionally yet highly recommended, setup the [SucoBOT](https://github.com/doceazedo/suco-bot).
+2. Run `npm install` to install the dependencies.
+3. Run `npx prisma migrate dev` to setup the database.
+4. Create a [Spotify app](https://developer.spotify.com/dashboard/login) and grab your [refresh token](https://benwiz.com/blog/create-spotify-refresh-token) with the `user-read-currently-playing` scope.
+5. Create a [Twitch app](https://dev.twitch.tv/docs/authentication/register-app) and grab an [OAuth token](https://twitchapps.com/tokengen) - this can be from your personal account or any other, as no messages will be sent from it - with the following scopes: `chat:read chat:edit channel:moderate whispers:read whispers:edit channel_editor channel:read:subscriptions`.
+6. Optionally yet highly recommended, setup the [SucoBOT](https://github.com/doceazedo/suco-bot).
 
 ## 🤹‍♂️ Usage
 
 You can start the production server with:
 
 ```bash
-yarn start
+npm run start
 ```
 
 If you want to contribute or develop custom features, you can start the development server with:
 
 ```bash
-yarn dev
+npm run dev
 ```
