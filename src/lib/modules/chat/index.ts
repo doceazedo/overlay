@@ -1,6 +1,12 @@
-import type { Word } from 'emotettv';
 import type { SimpleIcon } from 'simple-icons';
 import type { ChatUserstate } from 'tmi.js';
+
+export type Word = {
+  text: string;
+  emote?: {
+    url: string[];
+  };
+};
 
 export type TmiMessage = {
   channel: string;

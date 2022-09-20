@@ -14,7 +14,10 @@ if (browser) {
   client.connect();
 
   client.on('message', async (channel, tags, message, self) => {
-    const words = await parseEmotes(message, tags.emotes, CHANNEL_ID);
+    const parsedMessage = await parseEmotes(message, tags.emotes, {
+      channelId: CHANNEL_ID
+    });
+    const words = parsedMessage.toWords();
 
     chatMessageListener.set({
       channel,

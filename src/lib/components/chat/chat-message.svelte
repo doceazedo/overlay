@@ -1,10 +1,7 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
   import { fly } from 'svelte/transition';
   import { Avatar, ChatBubble } from '$lib/components';
-  import type { MessageAuthor } from '$lib/modules';
-  import type { Word } from 'emotettv';
-  import type { ChatTheme } from '$lib/modules';
+  import type { ChatTheme, MessageAuthor, Word } from '$lib/modules';
 
   export let message: Word[],
     author: MessageAuthor,

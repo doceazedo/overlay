@@ -42,7 +42,7 @@
     "@prisma/client": "4.2.1",
     "canvas-confetti": "^1.5.1",
     "dotenv": "^16.0.1",
-    "emotettv": "^0.0.12",
+    "emotettv": "^0.0.16",
     "simple-icons": "^7.8.0",
     "socket.io-client": "4.5.1",
     "spotify-web-api-node": "^5.0.2",
