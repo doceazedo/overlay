@@ -4,10 +4,10 @@ import { sveltekit } from '@sveltejs/kit/vite';
 const config = {
   plugins: [sveltekit()],
   server: {
-    port: 2424
+    port: 2425
   },
   preview: {
-    port: 2425
+    port: 2424
   }
 };
 
