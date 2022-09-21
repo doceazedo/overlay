@@ -32,7 +32,7 @@ This monorepo uses [npm](https://www.npmjs.com/) as a package manager. It includ
 7. Copy the **.env.example** file to **.env** on all directories inside **/apps** and fill them.
 8. Run `(cd ../apps/overlay && npx prisma migrate dev)` to setup the database.
 
-> _This entire process may soon be replaced for a more convenient post-install script._
+> **Note**: This entire process may soon be replaced for a more convenient post-install script.
 
 ## 🤹‍♂️ Usage
 
