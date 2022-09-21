@@ -1,0 +1,52 @@
+{
+  "name": "doceazedo-overlay-v2",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "vite dev",
+    "build": "vite build",
+    "start": "vite preview",
+    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+    "lint": "prettier --check --plugin-search-dir=. . && eslint .",
+    "format": "prettier --write --plugin-search-dir=. ."
+  },
+  "devDependencies": {
+    "@sveltejs/adapter-auto": "1.0.0-next.65",
+    "@sveltejs/kit": "1.0.0-next.428",
+    "@types/canvas-confetti": "^1.4.3",
+    "@types/socket.io-client": "3.0.0",
+    "@types/spotify-web-api-node": "^5.0.7",
+    "@types/tinycolor2": "^1.4.3",
+    "@types/tmi.js": "^1.8.1",
+    "@types/uuid": "^8.3.4",
+    "@typescript-eslint/eslint-plugin": "^5.33.1",
+    "@typescript-eslint/parser": "^5.33.1",
+    "eslint": "^8.22.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-svelte3": "^4.0.0",
+    "prettier": "^2.7.1",
+    "prettier-plugin-svelte": "^2.5.0",
+    "prisma": "4.2.1",
+    "sass": "^1.54.5",
+    "svelte": "^3.49.0",
+    "svelte-check": "^2.8.1",
+    "svelte-preprocess": "^4.10.7",
+    "tslib": "^2.4.0",
+    "typescript": "~4.7.4",
+    "vite": "^3.0.9"
+  },
+  "type": "module",
+  "dependencies": {
+    "@coldino/tmi.js-clientonly-fork": "^1.8.5-clientonly",
+    "@prisma/client": "4.2.1",
+    "canvas-confetti": "^1.5.1",
+    "dotenv": "^16.0.1",
+    "emotettv": "^0.0.16",
+    "simple-icons": "^7.8.0",
+    "socket.io-client": "4.5.1",
+    "spotify-web-api-node": "^5.0.2",
+    "tinycolor2": "^1.4.2",
+    "tmi.js": "^1.8.5",
+    "uuid": "^8.3.2"
+  }
+}

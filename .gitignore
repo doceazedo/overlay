@@ -36,5 +36,5 @@ google-application-credentials.json
 build/
 
 # prisma
-/prisma/*.db
-/prisma/*.db-journal
+prisma/*.db
+prisma/*.db-journal
