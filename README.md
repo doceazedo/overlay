@@ -9,7 +9,7 @@
   <sup>Cute wallpaper made by the outstanding <a href="https://twitter.com/saroliro/status/1417469066604859393">@saroliro</a> ✨</sup>
 </p>
 
-## 🗂 What's inside
+## 🗂 What's inside?
 
 This monorepo uses [npm](https://www.npmjs.com/) as a package manager. It includes the following applications:
 
