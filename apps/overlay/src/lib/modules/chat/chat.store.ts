@@ -1,4 +1,4 @@
-import { browser } from '$app/env';
+import { browser } from '$app/environment';
 import { writable } from 'svelte/store';
 import tmi from '@coldino/tmi.js-clientonly-fork';
 import { CHANNEL_NAME, CHANNEL_ID } from '$lib/env';

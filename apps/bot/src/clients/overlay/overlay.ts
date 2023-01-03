@@ -25,13 +25,10 @@ export const getUser = async (id: string) => {
   }
 };
 
-export const updateUser = async (id: string, body: UserRequest) => {
+export const updateUser = async (id: string, req: UserRequest) => {
   const resp = await fetch(`${baseUrl}/users/${id}`, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(body),
+    body: JSON.stringify(req),
   });
   const data: UserResponse = await resp.json();
   return data;

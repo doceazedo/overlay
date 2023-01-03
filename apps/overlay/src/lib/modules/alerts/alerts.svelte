@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { browser } from '$app/env';
+  import { browser } from '$app/environment';
   import { socket } from '$lib/modules';
   import { throwConfetti } from '$lib/modules/confetti';
   import { Alert } from '$lib/components';
