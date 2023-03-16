@@ -38,6 +38,7 @@
   "type": "module",
   "dependencies": {
     "@coldino/tmi.js-clientonly-fork": "^1.8.5-clientonly",
+    "@paralleldrive/cuid2": "^2.2.0",
     "@prisma/client": "4.2.1",
     "canvas-confetti": "^1.6.0",
     "dotenv": "^16.0.3",

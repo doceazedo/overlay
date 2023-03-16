@@ -15,7 +15,7 @@
   const emojiSize = singleEmoji ? 2 : jumbomoji ? 1 : 0;
 </script>
 
-<div class="message-wrapper theme-{theme}" in:fly={{ x: -16, duration: 500 }}>
+<div class="message-wrapper theme-{theme}" transition:fly={{ x: -16, duration: 500 }}>
   <div class="avatar-wrapper">
     <Avatar src={author.avatar} />
   </div>

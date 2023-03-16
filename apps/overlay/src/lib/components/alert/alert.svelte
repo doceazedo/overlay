@@ -3,17 +3,21 @@
   import { fly } from 'svelte/transition';
   import { elasticOut, elasticIn } from 'svelte/easing';
 
+  export let position: 'left' | 'right' = 'left';
   export let title: string,
     message = '',
     image: string;
 
-  const transition = { duration: 1200, x: -400 };
+  const x = position == 'left' ? -400 : 400;
+  const transition = { duration: 1200, x };
 
   onMount(async () => {});
 </script>
 
 <div
   class="alert-wrapper"
+  class:is-left={position == 'left'}
+  class:is-right={position == 'right'}
   in:fly={{ ...transition, easing: elasticOut }}
   out:fly={{ ...transition, easing: elasticIn }}
 >
@@ -30,12 +34,17 @@
   .alert-wrapper
     position: absolute
     top: 0
-    left: 1rem
     display: flex
     flex-direction: column
     justify-content: center
     align-items: center
     height: 100%
+
+    &.is-left
+      left: 1rem
+
+    &.is-right
+      right: 1rem
 
   .image
     width: 20rem

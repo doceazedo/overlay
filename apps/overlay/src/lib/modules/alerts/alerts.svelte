@@ -15,6 +15,8 @@
     // TODO: tts?: string;
   };
 
+  export let position: 'left' | 'right' = 'left';
+
   const defaultDuration = 7500;
   const defaultImage = '';
   const delay = 1500;
@@ -58,5 +60,6 @@
     title={alertData.title}
     message={alertData.message}
     image={alertData.image || defaultImage}
+    {position}
   />
 {/if}

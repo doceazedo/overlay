@@ -16,6 +16,7 @@
 
   .chat-wrapper
     flex-grow: 1
+    height: 100%
     padding: .75rem
     border-radius: 24px
     overflow: hidden

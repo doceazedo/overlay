@@ -5,8 +5,9 @@
   import type { ChatTheme } from '.';
 
   export let theme: ChatTheme = 'dark';
+  export let ttl = 0;
 </script>
 
 <Chat {theme} bind:chatEl={$chatEl}>
-  <ChatMessages {theme} />
+  <ChatMessages {theme} {ttl} />
 </Chat>

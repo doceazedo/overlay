@@ -32,6 +32,7 @@ export type MessageAuthor = {
 };
 
 export type Message = {
+  id: string;
   content: Word[];
   author: MessageAuthor;
 };
