@@ -49,3 +49,40 @@ export const getArtist = async (id: string) => {
     return null;
   }
 };
+
+export const getTrack = async (id: string) => {
+  await refreshAccessToken();
+
+  try {
+    const track = await spotifyApi.getTrack(id);
+    if (track.statusCode != 200) return null;
+    return track.body;
+  } catch (error) {
+    return null;
+  }
+};
+
+export const queueTrack = async (uri: string) => {
+  await refreshAccessToken();
+
+  try {
+    await spotifyApi.addToQueue(uri);
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+
+export const findFirstTrack = async (query: string) => {
+  await refreshAccessToken();
+
+  try {
+    const resp = await spotifyApi.searchTracks(query, { limit: 1 });
+    if (!resp.body.tracks) return null;
+    const tracks = resp.body.tracks.items;
+    if (tracks.length) return tracks[0];
+    return null;
+  } catch (error) {
+    return null;
+  }
+};

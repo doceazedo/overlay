@@ -51,3 +51,16 @@ export const getFollows = async (id: string) => {
     return null;
   }
 };
+
+export const queueSong = async (query: string) => {
+  try {
+    const resp = await fetch(`${baseUrl}/queue`, {
+      method: 'POST',
+      body: JSON.stringify({ query })
+    });
+    const data = await resp.json();
+    return data.track as SpotifyApi.SingleTrackResponse | null;
+  } catch (error) {
+    return null;
+  }
+};
