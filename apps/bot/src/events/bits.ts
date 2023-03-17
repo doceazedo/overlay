@@ -1,9 +1,9 @@
-import type { EventSubListener } from '@twurple/eventsub';
+import type { EventSubWsListener } from '@twurple/eventsub-ws';
 import { broadcast, send } from '../utils';
 import type { AlertEventData } from './events.types';
 
-export const bitsEvent = (eventSubClient: EventSubListener, userId: string) =>
-  eventSubClient.subscribeToChannelCheerEvents(userId, (e) => {
+export const bitsEvent = (eventSubClient: EventSubWsListener, userId: string) =>
+  eventSubClient.onChannelCheer(userId, (e) => {
     const displayName = e.userDisplayName || 'Anonimo';
     const title = `${displayName} mandou ${e.bits} bits! 💎`;
     send(`@${title}`);

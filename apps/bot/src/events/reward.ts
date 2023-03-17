@@ -1,8 +1,6 @@
 import { playAudioFromFile } from '../utils';
-import type {
-  EventSubChannelRedemptionAddEvent,
-  EventSubListener,
-} from '@twurple/eventsub';
+import type { EventSubWsListener } from '@twurple/eventsub-ws';
+import type { EventSubChannelRedemptionAddEvent } from '@twurple/eventsub-base';
 
 type Reward = {
   id: string;
@@ -43,11 +41,11 @@ const rewards: Reward[] = [
 ];
 
 export const rewardEvent = (
-  eventSubClient: EventSubListener,
+  eventSubClient: EventSubWsListener,
   userId: string
 ) => {
   const registeredEvents = rewards.map((reward) =>
-    eventSubClient.subscribeToChannelRedemptionAddEventsForReward(
+    eventSubClient.onChannelRedemptionAddForReward(
       userId,
       reward.id,
       reward.handler

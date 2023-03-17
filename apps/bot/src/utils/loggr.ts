@@ -1,4 +1,6 @@
+import fs from 'fs';
 import chalk from 'chalk';
+import { v4 as uuidv4 } from 'uuid'; 
 
 const getTimestamp = () => {
   const now = new Date();
@@ -34,10 +36,15 @@ const init = (str: string) => {
   log(`${chalk.bgBlue.black('  init   ')} ${str}`);
 };
 
+const toFile = (str: string) => {
+  fs.writeFileSync(`log_${new Date().getTime()}_${uuidv4()}.txt`, str);
+}
+
 export const loggr = {
   debug,
   error,
   info,
   init,
   warn,
+  toFile
 };

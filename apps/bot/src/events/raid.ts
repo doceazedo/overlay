@@ -1,10 +1,10 @@
-import type { EventSubListener } from '@twurple/eventsub';
+import type { EventSubWsListener } from '@twurple/eventsub-ws';
 import { getUser } from '../clients';
 import { broadcast, send } from '../utils';
 import type { AlertEventData } from './events.types';
 
-export const raidEvent = (eventSubClient: EventSubListener, userId: string) =>
-  eventSubClient.subscribeToChannelRaidEventsTo(userId, (e) => {
+export const raidEvent = (eventSubClient: EventSubWsListener, userId: string) =>
+  eventSubClient.onChannelRaidFrom(userId, (e) => {
     send(
       `${e.raidingBroadcasterDisplayName} está fazendo uma raid com ${e.viewers} pessoas! 🎊`
     );

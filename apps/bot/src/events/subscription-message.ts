@@ -1,39 +1,40 @@
-import type { EventSubListener } from '@twurple/eventsub';
-import { broadcast, send } from '../utils';
+import type { EventSubWsListener } from '@twurple/eventsub-ws';
+import { broadcast, loggr, send } from '../utils';
 import type { AlertEventData } from './events.types';
 
 export const subscriptionMessageEvent = (
-  eventSubClient: EventSubListener,
+  eventSubClient: EventSubWsListener,
   userId: string
 ) =>
-  eventSubClient.subscribeToChannelSubscriptionMessageEvents(
+  eventSubClient.onChannelSubscriptionMessage(
     userId,
     async (e) => {
-      const monthsSuffix = e.durationMonths == 1 ? 'mês' : 'meses';
+      const months = e.cumulativeMonths == 1 ? `${e.cumulativeMonths} mês` : `${e.cumulativeMonths} meses`;
 
-      const isResub = e.durationMonths > 1;
-      const isStrike = (e.streakMonths || 0) > 0;
-
-      const resubNote = e.messageText ? ` - "${e.messageText}"` : '.';
-      const strikeNote = isStrike ? ` (total de: ${e.streakMonths}m)` : '';
-      const notes = strikeNote + resubNote;
-
-      const subTitle = 'Nova inscrição! 🌟';
-      const resubTitle = 'Renovação de sub! 🌟';
-
-      const subMessage = `${e.userDisplayName} se inscreveu por ${e.durationMonths} ${monthsSuffix}.`;
-      const resubMessage = `${e.userDisplayName} se reinscreveu por ${e.durationMonths} ${monthsSuffix}${notes}`;
-
-      const title = isResub ? resubTitle : subTitle;
-      const body = isResub ? resubMessage : subMessage;
-
-      send(`@${body} 🌟`);
+      send(`${e.userDisplayName} se reinscreveu por ${months}! 🌟`);
       broadcast<AlertEventData>('event:alert', {
         type: 'subscription',
-        title: `${e.userDisplayName} se inscreveu!`,
+        title: `${e.userDisplayName} se reinscreveu!`,
         message: e.messageText,
         image: '/assets/img/sailor-moon-hug.gif',
         audio: '/assets/audio/alert-subscription.mp3',
       });
+
+      loggr.debug('EventSubChannelSubscriptionMessageEvent');
+      const data = {
+        userId: e.userId,
+        userName: e.userName,
+        userDisplayName: e.userDisplayName,
+        broadcasterId: e.broadcasterId,
+        broadcasterName: e.broadcasterName,
+        broadcasterDisplayName: e.broadcasterDisplayName,
+        tier: e.tier,
+        cumulativeMonths: e.cumulativeMonths,
+        streakMonths: e.streakMonths,
+        durationMonths: e.durationMonths,
+        messageText: e.messageText,
+      };
+      console.log(data);
+      loggr.toFile(JSON.stringify({ event: 'EventSubChannelSubscriptionMessageEvent', data }, null, 2));
     }
   );

@@ -1,25 +1,20 @@
-import { ClientCredentialsAuthProvider } from '@twurple/auth';
+import { StaticAuthProvider } from '@twurple/auth';
 import { ApiClient } from '@twurple/api';
-import { EventSubListener } from '@twurple/eventsub';
-import { NgrokAdapter } from '@twurple/eventsub-ngrok';
+import { EventSubWsListener } from '@twurple/eventsub-ws';
 import 'dotenv/config';
 
 const clientId = process.env.TWITCH_CLIENT_ID || '';
-const clientSecret = process.env.TWITCH_CLIENT_SECRET || '';
-const eventsubSecret = process.env.TWITCH_EVENTSUB_SECRET || '';
+const accessToken = process.env.TWITCH_BROADCASTER_ACCESS_TOKEN || '';
 
-const authProvider = new ClientCredentialsAuthProvider(clientId, clientSecret);
+const authProvider = new StaticAuthProvider(clientId, accessToken);
 const apiClient = new ApiClient({ authProvider });
-let eventSubClient: EventSubListener;
+let eventSubClient: EventSubWsListener;
 
 export const getEventSubClient = async () => {
   if (eventSubClient != null) return eventSubClient;
   await apiClient.eventSub.deleteAllSubscriptions();
-  eventSubClient = new EventSubListener({
+  eventSubClient = new EventSubWsListener({
     apiClient,
-    adapter: new NgrokAdapter(),
-    secret: eventsubSecret,
-    strictHostCheck: true,
   });
   return eventSubClient;
 };

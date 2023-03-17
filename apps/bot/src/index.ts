@@ -21,3 +21,5 @@ eventHandler();
 const wsPort = parseInt(PORT || '80');
 loggr.init(`Websocket server listening to port ${wsPort}...`);
 io.listen(wsPort);
+
+loggr.debug('logado');

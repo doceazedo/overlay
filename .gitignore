@@ -20,6 +20,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
+log_*.txt
 
 # environment variables
 .env
