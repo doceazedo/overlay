@@ -4,7 +4,7 @@ import { broadcast, send } from '../utils';
 import type { AlertEventData } from './events.types';
 
 export const raidEvent = (eventSubClient: EventSubWsListener, userId: string) =>
-  eventSubClient.onChannelRaidFrom(userId, (e) => {
+  eventSubClient.onChannelRaidTo(userId, (e) => {
     send(
       `${e.raidingBroadcasterDisplayName} está fazendo uma raid com ${e.viewers} pessoas! 🎊`
     );
