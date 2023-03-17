@@ -17,14 +17,13 @@ if (browser) {
     const parsedMessage = await parseEmotes(message, tags.emotes, {
       channelId: CHANNEL_ID
     });
-    const words = parsedMessage.toWords();
 
     chatMessageListener.set({
       channel,
       tags,
       message,
       self,
-      words,
+      parsedMessage,
     });
   });
 }
