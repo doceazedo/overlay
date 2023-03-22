@@ -1,7 +1,9 @@
-import simpleIcons from 'simple-icons';
+import * as simpleIcons from 'simple-icons';
 import { reply, replyError, send } from '../utils';
 import { updateUser } from '../clients/overlay';
 import type { Command } from '.';
+
+const iconsMap = new Map(Object.entries(simpleIcons).map(([_, icon]) => [icon.slug, icon]));
 
 export const team: Command = {
   aliases: [
@@ -21,7 +23,7 @@ export const team: Command = {
     if (!args.length) return reply(user, usageMsg);
 
     const iconInput = args[0];
-    const icon = iconInput && simpleIcons.Get(iconInput);
+    const icon = iconsMap.get(iconInput);
 
     if (!icon) return replyError(user, usageMsg);
 
