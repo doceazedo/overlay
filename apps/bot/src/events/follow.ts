@@ -7,7 +7,7 @@ export const followEvent = (eventSubClient: EventSubWsListener, userId: string) 
     send(`@${e.userDisplayName} acabou de seguir! 💜`);
     broadcast<AlertEventData>('event:alert', {
       type: 'follow',
-      title: `${e.userDisplayName} segiu!`,
+      title: `${e.userDisplayName} seguiu!`,
       message: 'Obrigado e seja bem-vinde!',
       image: '/assets/img/sailor-moon-sailor-mars.gif',
       audio: '/assets/audio/alert-follow.mp3',
