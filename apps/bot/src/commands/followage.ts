@@ -31,7 +31,7 @@ export const followage: Command = {
       new Date().getTime() - new Date(follows.followed_at).getTime();
     const followage = dayjs
       .duration(duration)
-      .format('M [meses,] D [dias,] H [horas,] m [minutos e] s [segundos]');
+      .format('Y [anos,] M [meses,] D [dias,] H [horas,] m [minutos e] s [segundos]');
     reply(user, `${who} segue há ${followage}`);
   },
 };
