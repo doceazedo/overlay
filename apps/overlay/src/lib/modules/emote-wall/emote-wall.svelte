@@ -71,8 +71,9 @@
   chatMessageListener.subscribe((message) => {
     if (message == null) return;
 
-    const words = message.parsedMessage.toWords();
-    words.forEach((word) => word?.emote && pushEmote(word.emote.url[2]));
+    message.words.forEach(
+      (word) => word?.emote && pushEmote(word.emote.url[2]),
+    );
   });
 
   socket.on('cmd:alan', async () => {

@@ -16,10 +16,7 @@ export type TmiMessage = {
 };
 
 export type ParsedTmiMessage = {
-  parsedMessage: {
-    toWords: () => Word[];
-    toHtml: (size?: number | undefined) => string;
-};
+  words: Word[];
 } & TmiMessage;
 
 export type MessageAuthor = {
@@ -29,14 +26,14 @@ export type MessageAuthor = {
   badges: string[];
   self: boolean;
   id: string;
-  pronouns: string | null;
+  pronouns?: string;
   team?: SimpleIcon;
   avatar: string;
 };
 
 export type Message = {
   id: string;
-  content: string;
+  content: Word[];
   author: MessageAuthor;
 };
 

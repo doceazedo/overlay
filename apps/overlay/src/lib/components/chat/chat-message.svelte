@@ -1,27 +1,18 @@
 <script lang="ts">
   import { fly } from 'svelte/transition';
-  import { browser } from '$app/environment';
   import { Avatar, ChatBubble } from '$lib/components';
-  import { chatEl } from '$lib/modules';
-  import type { ChatTheme, MessageAuthor } from '$lib/modules';
-  import { onMount } from 'svelte';
+  import type { ChatTheme, MessageAuthor, Word } from '$lib/modules';
 
-  export let messageThatIReallyReallyPromiseIHaveSanitized: string,
+  export let message: Word[],
     author: MessageAuthor,
-    theme: ChatTheme = 'dark';
+    theme: ChatTheme = 'dark',
+    scrollToBottom: () => void;
 
-  let contentEl: HTMLElement;
-
-  const scrollToBottom = () => $chatEl?.scrollTo(0, $chatEl.scrollHeight);
-
-  onMount(() => {
-    if (!browser) return;
-    [...contentEl.querySelectorAll('img')].map((img: HTMLImageElement) => {
-      img.addEventListener('load', scrollToBottom)
-    })
-
-    scrollToBottom();
-  })
+  const emojiOnly =
+    message.filter((word) => !!word.emote).length == message.length;
+  const jumbomoji = emojiOnly && message.length <= 24;
+  const singleEmoji = emojiOnly && message.length == 1;
+  const emojiSize = singleEmoji ? 2 : jumbomoji ? 1 : 0;
 </script>
 
 <div class="message-wrapper theme-{theme}" transition:fly={{ x: -16, duration: 500 }}>
@@ -43,16 +34,25 @@
       >
         {@html author?.team?.svg}
       </span>
-      {#if author.badges.length}
-        <span class="badges" class:hide={!author.badges.length}>
-          {#each author.badges as badge}
-            <img src={badge} alt="" />
-          {/each}
-        </span>
-      {/if}
+      <span class="badges" class:hide={!author.badges.length}>
+        {#each author.badges as badge}
+          <img src={badge} alt="" />
+        {/each}
+      </span>
     </div>
-    <div bind:this={contentEl} class="content">
-      {@html messageThatIReallyReallyPromiseIHaveSanitized}
+    <div class="content">
+      {#each message as word}
+        {#if word.emote}
+          <img
+            src={word.emote.url[emojiSize]}
+            alt={word.text}
+            class="emote"
+            on:load={scrollToBottom}
+          />
+        {:else}
+          {` ${word.text} `}
+        {/if}
+      {/each}
     </div>
     <ChatBubble {theme} />
   </div>
@@ -98,8 +98,7 @@
           padding: .35rem
           border-radius: .5rem
 
-          :global(svg),
-          img
+          :global(svg)
             height: 1.125rem
 
         .hide
@@ -110,18 +109,11 @@
         line-height: 1.5
         word-break: break-word
 
-        :global(.emote)
+        .emote
           transform: translateY(.5rem)
 
-        :global(.emote + .emote)
-          margin-left: .25rem
-
-        :global(img:not(.emote))
-          border-radius: .25rem
-
-        :global(a)
-          color: inherit
-          text-decoration: none
+          + .emote
+            margin-left: .25rem
 
     &.theme-dark .message
       background-color: $dark-message
