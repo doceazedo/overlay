@@ -44,5 +44,8 @@ export const sendStriped = async (msgs: string[], color1: HelixChatUserColor, co
   }
 };
 
-// FIXME: this is sending messages out of order
-export const sendMultiple = async (msgs: string[], color: HelixChatUserColor = 'spring_green') => msgs.map((msg) => send(`/me ${msg}`, color));
+export const sendMultiple = async (msgs: string[], color: HelixChatUserColor = 'spring_green') => {
+  for (const msg of msgs) {
+    await send(`/me ${msg}`, color);
+  }
+};
