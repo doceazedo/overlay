@@ -14,6 +14,7 @@ import { help } from './help';
 import { hug } from './hug';
 import { kiss } from './kiss';
 import { maldicao } from './maldicao';
+import { marquee } from './marquee';
 import { odeiopc } from './odeiopc';
 import { overlay } from './overlay';
 import { ping } from './ping';
@@ -54,6 +55,7 @@ export const commands: Command[] = [
   hug,
   kiss,
   maldicao,
+  marquee,
   odeiopc,
   overlay,
   ping,

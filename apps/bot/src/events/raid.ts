@@ -11,6 +11,7 @@ export const raidEvent = (eventSubClient: EventSubWsListener, userId: string) =>
     setTimeout(async () => {
       const data = await getUser(e.raidingBroadcasterDisplayName);
       broadcast('cmd:sh', data);
+      setTimeout(() => broadcast('marquee:show'), 10000);
     }, 5000);
     broadcast<AlertEventData>('event:alert', {
       type: 'raid',

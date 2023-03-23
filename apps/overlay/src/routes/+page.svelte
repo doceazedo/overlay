@@ -8,6 +8,7 @@
     Sidebar,
     VideoPlayer,
   } from '$lib/modules';
+  import { Marquee } from '$lib/components/marquee';
 </script>
 
 <Confetti />
@@ -17,3 +18,4 @@
 <Alerts />
 <VideoPlayer />
 <AudioPlayer />
+<Marquee />
