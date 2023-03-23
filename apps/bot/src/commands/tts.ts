@@ -3,9 +3,10 @@ import {
   isModerator,
   playGoogleTTS,
   playPollyTTS,
+  playTikTokTTS,
   replyError,
 } from '../utils';
-import { pollyVoices } from '../helpers';
+import { pollyVoices, tikTokDefaultVoices, tikTokVoices } from '../helpers';
 import type { Command } from '.';
 
 export const tts: Command = {
@@ -23,9 +24,8 @@ export const tts: Command = {
       return broadcast('skipaudio');
     }
 
-    const voiceId =
+    let voiceId =
       args[0].charAt(0).toUpperCase() + args[0].slice(1).toLowerCase();
-
     const isSSML = args?.[1]?.toLowerCase() == 'ssml';
 
     if (pollyVoices.includes(voiceId)) {
@@ -35,6 +35,19 @@ export const tts: Command = {
       return;
     }
 
-    playGoogleTTS(args.join(' '), 'pt-BR');
+    voiceId = voiceId.toLowerCase();
+    if (voiceId == 'google') {
+      args.shift();
+      playGoogleTTS(args.join(' '), 'pt-BR');
+      return;
+    }
+
+    if (tikTokVoices.includes(voiceId)) {
+      args.shift();
+    } else {
+      voiceId = tikTokDefaultVoices[Math.floor(Math.random() * tikTokDefaultVoices.length)];
+    }
+
+    playTikTokTTS(args.join(' '), voiceId);
   },
 };
