@@ -98,7 +98,8 @@
           padding: .35rem
           border-radius: .5rem
 
-          :global(svg)
+          :global(svg),
+          img
             height: 1.125rem
 
         .hide

@@ -43,7 +43,7 @@
     "canvas-confetti": "^1.6.0",
     "dotenv": "^16.0.3",
     "emotettv": "^0.0.16",
-    "simple-icons": "^7.8.0",
+    "simple-icons": "^8.8.0",
     "socket.io-client": "4.5.1",
     "spotify-web-api-node": "^5.0.2",
     "tinycolor2": "^1.5.2",
