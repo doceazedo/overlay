@@ -13,6 +13,6 @@ const socialsArr = [
 export const social: Command = {
   aliases: ['social', 'socials', 'redes', 'github', 'gh'],
   exec: async () => {
-    sendStriped(socialsArr, 'DodgerBlue', 'BlueViolet');
+    sendStriped(socialsArr, 'dodger_blue', 'blue_violet');
   },
 };
