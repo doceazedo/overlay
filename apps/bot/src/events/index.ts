@@ -13,3 +13,5 @@ export const twitchEvents = [
   subscriptionEvent,
   subscriptionMessageEvent,
 ];
+
+export * from './chat';
