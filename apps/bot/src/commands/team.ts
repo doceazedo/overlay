@@ -17,15 +17,12 @@ export const team: Command = {
     'badge',
   ],
   exec: async (input, args, user) => {
-    const usageMsg =
-      'clique em qualquer ícone do site https://doceazedo.com/icones e cole o comando aqui!';
-
-    if (!args.length) return reply(user, usageMsg);
+    if (!args.length) return reply(user, 'escolha um ícone em https://doceazedo.com/icones e cole o comando aqui! ✨');
 
     const iconInput = args[0];
     const icon = iconsMap.get(iconInput);
 
-    if (!icon) return replyError(user, usageMsg);
+    if (!icon) return replyError(user, 'não achei esse ícone! 😳 Você pode escolher um em https://doceazedo.com/icones');
 
     const userId = user['user-id'] as string;
     await updateUser(userId, { team: icon.slug });
