@@ -8,6 +8,7 @@ import { confetti } from './confetti';
 import { discord } from './discord';
 import { dog } from './dog';
 import { evaluate } from './eval';
+import { first } from './first';
 import { followage } from './followage';
 import { help } from './help';
 import { hug } from './hug';
@@ -47,6 +48,7 @@ export const commands: Command[] = [
   discord,
   dog,
   evaluate,
+  first,
   followage,
   help,
   hug,
