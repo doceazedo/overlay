@@ -7,12 +7,15 @@ const userId = process.env.TWITCH_BOT_ID || '';
 const channel = process.env.TWITCH_CHANNEL || '';
 const maxLength = 440;
 
+let currentColor: HelixChatUserColor;
+
 const trim = (str: string, length = maxLength) =>
   str.length > length ? str.substring(0, length - 3) + '...' : str;
 
 export const send = async (str: string, color: HelixChatUserColor = 'spring_green') => {
   const trimmedMessage = trim(str);
-  await botApiClient.chat.setColorForUser(userId, color);
+  if (color != currentColor) await botApiClient.chat.setColorForUser(userId, color);
+  currentColor = color;
   tmiClient.say(channel, trimmedMessage);
 };
 
@@ -40,3 +43,5 @@ export const sendStriped = async (msgs: string[], color1: HelixChatUserColor, co
     i++;
   }
 };
+
+export const sendMultiple = async (msgs: string[], color: HelixChatUserColor = 'spring_green') => msgs.map((msg) => send(`/me ${msg}`));

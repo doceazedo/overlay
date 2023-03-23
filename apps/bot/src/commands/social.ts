@@ -1,4 +1,4 @@
-import { sendStriped } from '../utils';
+import { sendMultiple } from '../utils';
 import type { Command } from '.';
 
 const socialsArr = [
@@ -12,7 +12,5 @@ const socialsArr = [
 
 export const social: Command = {
   aliases: ['social', 'socials', 'redes', 'github', 'gh'],
-  exec: async () => {
-    sendStriped(socialsArr, 'dodger_blue', 'blue_violet');
-  },
+  exec: async () => sendMultiple(socialsArr),
 };
