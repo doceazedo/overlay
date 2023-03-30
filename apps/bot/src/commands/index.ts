@@ -13,6 +13,7 @@ import { followage } from './followage';
 import { help } from './help';
 import { hug } from './hug';
 import { kiss } from './kiss';
+import { lurk } from './lurk';
 import { maldicao } from './maldicao';
 import { marquee } from './marquee';
 import { odeiopc } from './odeiopc';
@@ -54,6 +55,7 @@ export const commands: Command[] = [
   help,
   hug,
   kiss,
+  lurk,
   maldicao,
   marquee,
   odeiopc,

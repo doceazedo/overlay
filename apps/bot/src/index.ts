@@ -2,6 +2,7 @@ import { tmiClient } from './clients';
 import io from './websockets';
 import commandHandler from './command-handler';
 import eventHandler from './event-handler';
+import { messageEvents } from './events';
 import { loggr } from './utils';
 import 'dotenv/config';
 
@@ -11,7 +12,14 @@ loggr.init(`Connecting to channel ${TWITCH_CHANNEL}...`);
 tmiClient.connect();
 
 tmiClient.on('message', (channel, tags, message, self) => {
-  if (self || !message.startsWith('!')) return;
+  if (self) return;
+
+  const isCommand = message.startsWith('!');
+  for (const event of messageEvents) {
+    event(message, isCommand, tags);
+  }
+
+  if (!isCommand) return;
   commandHandler(channel, tags, message);
 });
 

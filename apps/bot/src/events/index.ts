@@ -15,3 +15,4 @@ export const twitchEvents = [
 ];
 
 export * from './chat';
+export * from './messages';
