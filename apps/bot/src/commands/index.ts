@@ -3,6 +3,7 @@ import { age } from './age';
 import { alan } from './alan';
 import { ban } from './ban';
 import { bellebelinha } from './bellebelinha';
+import { blog } from './blog';
 import { chuu } from './chuu';
 import { confetti } from './confetti';
 import { discord } from './discord';
@@ -45,6 +46,7 @@ export const commands: Command[] = [
   alan,
   ban,
   bellebelinha,
+  blog,
   chuu,
   confetti,
   discord,
