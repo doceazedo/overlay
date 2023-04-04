@@ -1,33 +1,33 @@
 import {
   broadcast,
-  isModerator,
   playGoogleTTS,
   playPollyTTS,
   playTikTokTTS,
-  replyError,
+  replyError
 } from '../utils';
+import { modOnlyCmd } from '../middlewares';
 import { pollyVoices, tikTokDefaultVoices, tikTokVoices } from '../helpers';
 import type { Command } from '.';
 
 export const tts: Command = {
   aliases: ['tts'],
   exec: async (input, args, user) => {
+    // there's no message
     if (!args.length)
       return replyError(
         user,
         'veja como usar e quais vozes estão disponíveis em https://doceazedo.com/tts'
       );
 
-    if (args[0] == 'skip') {
-      if (!isModerator(user))
-        return replyError(user, 'Somente mods podem usar esse comando 🤭');
-      return broadcast('skipaudio');
-    }
+    // trying to skip current tts
+    if (args[0] == 'skip') return modOnlyCmd(user, () => broadcast('skipaudio'));
 
+    // get voiceid / ssml
     let voiceId =
       args[0].charAt(0).toUpperCase() + args[0].slice(1).toLowerCase();
     const isSSML = args?.[1]?.toLowerCase() == 'ssml';
 
+    // handle polly voices
     if (pollyVoices.includes(voiceId)) {
       args.shift();
       if (isSSML) args.shift();
@@ -35,6 +35,7 @@ export const tts: Command = {
       return;
     }
 
+    // handle google voices
     voiceId = voiceId.toLowerCase();
     if (voiceId == 'google') {
       args.shift();
@@ -42,12 +43,12 @@ export const tts: Command = {
       return;
     }
 
+    // handle tiktok voices
     if (tikTokVoices.includes(voiceId)) {
       args.shift();
     } else {
       voiceId = tikTokDefaultVoices[Math.floor(Math.random() * tikTokDefaultVoices.length)];
     }
-
     playTikTokTTS(args.join(' '), voiceId);
   },
 };
