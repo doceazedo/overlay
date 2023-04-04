@@ -1,4 +1,5 @@
 import { send } from '../utils';
+import { targetedCmd } from '../middlewares';
 import type { Command } from '.';
 
 const offenses = [
@@ -40,7 +41,8 @@ const getOffense = () => offenses[Math.floor(Math.random() * offenses.length)];
 
 export const ban: Command = {
   aliases: ['ban', 'kick', 'bane', 'somedaqui'],
-  exec: async (input, args, user) => {
-    send(`${args.join(' ')} levou ban por ${getOffense()} PunOko`);
-  },
+  exec: (input, args, user) =>
+    targetedCmd(input, args, user, (target) => {
+      send(`${target} levou ban por ${getOffense()} PunOko`);
+    })
 };

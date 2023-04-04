@@ -1,4 +1,5 @@
 import { send } from '../utils';
+import { targetedCmd } from '../middlewares';
 import type { Command } from '.';
 
 const offenses = [
@@ -23,7 +24,9 @@ const getOffense = () => offenses[Math.floor(Math.random() * offenses.length)];
 
 export const maldicao: Command = {
   aliases: ['maldicao', 'praga', 'coisaruim', 'ritual'],
-  exec: async (input, args, user) => {
-    send(`${args.join(' ')} foi amaldiçoade a ${getOffense()} PunOko`);
-  },
+
+  exec: (input, args, user) =>
+    targetedCmd(input, args, user, (target) => {
+      send(`${target} foi amaldiçoade a ${getOffense()} PunOko`);
+    })
 };
