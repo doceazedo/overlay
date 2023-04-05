@@ -86,3 +86,14 @@ export const findFirstTrack = async (query: string) => {
     return null;
   }
 };
+
+export const getPlayback = async () => {
+  await refreshAccessToken();
+
+  try {
+    const resp = await spotifyApi.getMyCurrentPlaybackState();
+    return resp.body;
+  } catch (error) {
+    return null;
+  }
+};

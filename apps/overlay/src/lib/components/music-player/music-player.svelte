@@ -6,6 +6,7 @@
 
   export let song: CurrentlyPlayingDetailsResponse = null,
     showDetails = false;
+
 </script>
 
 <div class="now-playing" class:details={showDetails}>
@@ -24,6 +25,7 @@
       class="artist"
       style="background-image: url({song?.artist?.image})"
     />
+    <div class="progress" style="--progress:{song?.progress}%" />
   </div>
 </div>
 
@@ -48,13 +50,14 @@
     .content
       z-index: 10
       display: flex
+      align-items: center
       gap: 12px
       padding: 12px
 
       .cover-sm
         flex-shrink: 0
         height: 76px
-        max-width: 76px
+        width: 76px
         transition: all .8s ease
 
         img
@@ -65,7 +68,6 @@
       display: flex
       align-items: center
       border-radius: 24px
-      opacity: .1
       overflow: hidden
       transition: all .3s ease
 
@@ -83,11 +85,19 @@
         background-size: cover
         transition: all .5s ease
 
+      .progress
+        position: absolute
+        width: var(--progress)
+        height: 100%
+        background-color: rgba(#6930c3, .75)
+        box-shadow: 0 0 0 100vw rgba(#070212, .75)
+        z-index: 1
+        transition: width 2500ms linear, opacity .2s ease
+
     .info
       display: flex
       flex-direction: column
       gap: 4px
-      margin-top: 8px
       transition: all .8s ease
 
       &.paused
@@ -141,9 +151,9 @@
           h2
             font-size: .75rem
 
-      .background
-        opacity: 1
+      .background img
+        filter: blur(0)
 
-        img
-          filter: blur(0)
+      .progress
+        opacity: 0
 </style>

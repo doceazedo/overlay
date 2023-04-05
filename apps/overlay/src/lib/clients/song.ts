@@ -16,6 +16,7 @@ export type CurrentlyPlayingDetailsResponse = {
     name: string;
     image: string;
   };
+  progress: number;
 };
 
 const baseUrl = '/api';
