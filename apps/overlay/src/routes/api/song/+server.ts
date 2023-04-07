@@ -1,23 +1,22 @@
-import { json } from '@sveltejs/kit';
-import { getArtist, getCurrentPlayingTrack, getPlayback } from '$lib/clients/spotify';
+import { error, json } from '@sveltejs/kit';
+import { getArtist, getPlayback } from '$lib/clients/spotify';
 import type { RequestHandler } from '@sveltejs/kit';
 
 export const GET: RequestHandler = async ({ url }) => {
   const showDetails = url.searchParams.get('details') != null;
-  const track = await getCurrentPlayingTrack();
   const playback = await getPlayback();
 
-  if (
-    track == null ||
-    playback == null ||
-    playback.item == null
-  ) return json({});
+  if (playback == null || playback.item == null) return json({});
+
+  const track = playback.item as SpotifyApi.TrackObjectFull;
 
   const progressMs = playback.progress_ms || 0;
   const progress = (progressMs * 100) / playback.item.duration_ms;
 
   if (showDetails) {
     const artist = await getArtist(track.artists[0].id);
+    if (!artist) throw error(500, 'No artist');
+
     return json({
       song: {
         title: track.name,
