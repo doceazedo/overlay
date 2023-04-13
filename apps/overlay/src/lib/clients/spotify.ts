@@ -39,13 +39,14 @@ export const getCurrentPlayingTrack = async () => {
   }
 };
 
-export const getArtist = async (id: string) => {
-  await refreshAccessToken();
+export const getArtist = async (id: string, refreshToken = true) => {
+  if (refreshToken) await refreshAccessToken();
 
   try {
     const artist = await spotifyApi.getArtist(id);
     return artist.body;
   } catch (error) {
+    console.log(error);
     return null;
   }
 };

@@ -14,13 +14,13 @@ export const GET: RequestHandler = async ({ url }) => {
   const progress = (progressMs * 100) / playback.item.duration_ms;
 
   if (showDetails) {
-    const artist = await getArtist(track.artists[0].id);
+    const artist = await getArtist(track.artists[0].id, false);
     if (!artist) throw error(500, 'No artist');
 
     return json({
       song: {
         title: track.name,
-        cover: track.album.images[1].url,
+        cover: track.album.images?.[1]?.url,
         id: track.id,
       },
       artist: {
