@@ -34,6 +34,7 @@ import { team } from './team';
 import { tronco } from './tronco';
 import { tts } from './tts';
 import { whois } from './whois';
+import { wrongsong } from './wrongsong';
 import { xixi } from './xixi';
 import { xxx } from './xxx';
 
@@ -78,6 +79,7 @@ export const commands: Command[] = [
   tronco,
   tts,
   whois,
+  wrongsong,
   xixi,
   xxx,
 ];

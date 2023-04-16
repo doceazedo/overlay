@@ -27,7 +27,7 @@
     "typescript": "^5.0.2"
   },
   "dependencies": {
-    "@google-cloud/text-to-speech": "^4.2.1",
+    "@google-cloud/text-to-speech": "^4.2.2",
     "@twurple/api": "^6.0.9",
     "@twurple/auth": "^6.0.9",
     "@twurple/chat": "^6.0.9",
