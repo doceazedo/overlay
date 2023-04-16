@@ -52,12 +52,22 @@ export const getFollows = async (id: string) => {
   }
 };
 
-export const queueSong = async (query: string) => {
+export const queueSong = async (uri: string) => {
   try {
     const resp = await fetch(`${baseUrl}/queue`, {
       method: 'POST',
-      body: JSON.stringify({ query })
+      body: JSON.stringify({ uri })
     });
+    const data = await resp.json();
+    return data.track as SpotifyApi.SingleTrackResponse | null;
+  } catch (error) {
+    return null;
+  }
+};
+
+export const searchSong = async (query: string) => {
+  try {
+    const resp = await fetch(`${baseUrl}/song/search?query=${query}`);
     const data = await resp.json();
     return data.track as SpotifyApi.SingleTrackResponse | null;
   } catch (error) {
