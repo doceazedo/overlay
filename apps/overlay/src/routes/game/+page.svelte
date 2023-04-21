@@ -1,5 +1,6 @@
 <script>
-  import { Alerts, Chat, EmoteWall, MusicPlayer, Shoutout } from '$lib/modules';
+  import { Marquee } from '$lib/components/marquee';
+  import { Alerts, AudioPlayer, Chat, EmoteWall, MusicPlayer, Shoutout, VideoPlayer } from '$lib/modules';
 </script>
 
 <div class="camera" />
@@ -12,6 +13,9 @@
   <Chat theme="light" ttl={60000} />
 </div>
 <Alerts position="right" />
+<VideoPlayer />
+<AudioPlayer />
+<Marquee />
 
 <style lang="sass">
   .camera
