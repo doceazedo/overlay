@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <img src="./apps/overlay/static/assets/img/screenshot.png" />
+  <img src="./apps/overlay/static/assets/img/screenshot.gif" />
   <sup>Cute wallpaper made by the outstanding <a href="https://twitter.com/saroliro/status/1417469066604859393">@saroliro</a> ✨</sup>
 </p>
 
