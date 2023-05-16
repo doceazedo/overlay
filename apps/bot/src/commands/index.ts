@@ -9,6 +9,7 @@ import { confetti } from './confetti';
 import { discord } from './discord';
 import { dog } from './dog';
 import { evaluate } from './eval';
+import { faker } from './faker';
 import { first } from './first';
 import { followage } from './followage';
 import { help } from './help';
@@ -54,6 +55,7 @@ export const commands: Command[] = [
   discord,
   dog,
   evaluate,
+  faker,
   first,
   followage,
   help,

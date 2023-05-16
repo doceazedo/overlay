@@ -19,6 +19,12 @@ if (browser) {
     });
     const words = parsedMessage.toWords();
 
+    console.log({channel,
+      tags,
+      message,
+      self,
+      words});
+
     chatMessageListener.set({
       channel,
       tags,

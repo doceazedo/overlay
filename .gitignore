@@ -21,6 +21,7 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 log_*.txt
+apps/bot/identities/*.json
 
 # environment variables
 .env

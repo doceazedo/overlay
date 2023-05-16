@@ -9,6 +9,7 @@
     VideoPlayer,
   } from '$lib/modules';
   import { Marquee } from '$lib/components/marquee';
+  import { Faker } from '$lib/components/faker';
 </script>
 
 <Confetti />
@@ -19,3 +20,4 @@
 <VideoPlayer />
 <AudioPlayer />
 <Marquee />
+<Faker />

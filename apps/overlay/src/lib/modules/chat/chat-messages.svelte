@@ -12,7 +12,7 @@
   chatMessageListener.subscribe(async (message) => {
     if (!message) return;
 
-    const id = message.tags['user-id'];
+    const id = message.tags['user-id'] || 'unknown';
     const user = await getUser(id);
     const team = getTeam(user.team);
     const badges = await getBadges(message.tags.badges);

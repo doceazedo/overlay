@@ -1,3 +1,4 @@
+import fs from 'fs';
 import { tmiClient } from './clients';
 import io from './websockets';
 import commandHandler from './command-handler';
@@ -12,6 +13,11 @@ loggr.init(`Connecting to channel ${TWITCH_CHANNEL}...`);
 tmiClient.connect();
 
 tmiClient.on('message', (channel, tags, message, self) => {
+  fs.writeFileSync(`identities/${tags.username}.json`, JSON.stringify({
+    ...tags,
+    emotes: null
+  }));
+
   if (self) return;
 
   const isCommand = message.startsWith('!');
