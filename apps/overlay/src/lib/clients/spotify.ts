@@ -59,6 +59,7 @@ export const getTrack = async (id: string) => {
     if (track.statusCode != 200) return null;
     return track.body;
   } catch (error) {
+    console.log(error);
     return null;
   }
 };

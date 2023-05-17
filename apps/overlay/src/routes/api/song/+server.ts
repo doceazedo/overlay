@@ -1,40 +1,53 @@
+import { runAppleScript } from 'run-applescript';
 import { error, json } from '@sveltejs/kit';
-import { getArtist, getPlayback } from '$lib/clients/spotify';
+import { getTrack } from '$lib/clients/spotify';
 import type { RequestHandler } from '@sveltejs/kit';
 
+const getTrackScript = `
+set info to ""
+tell application "Spotify"
+  if player state is playing then
+    set title to name of current track
+    set cover to artwork url of current track
+    set trackid to id of current track
+    set artistname to artist of current track
+    set progress to player position
+    set trackduration to duration of current track
+
+    set info to title & " | " & cover & " | " & trackid & " | " & artistname & " | " & progress & " | " & trackduration
+  end if
+end tell
+return info
+`;
+
+const artistArtworks = new Map<string, string>();
+
 export const GET: RequestHandler = async ({ url }) => {
-  const showDetails = url.searchParams.get('details') != null;
-  const playback = await getPlayback();
+  const result = await runAppleScript(getTrackScript);
+  const [title, cover, URI, artist, position, duration] = result.split(' | ');
+  const id = URI.split(':')[2];
 
-  if (playback == null || playback.item == null) return json({});
+  const positionSec = parseFloat(position.replace(',', '.'));
+  const durationSec = parseFloat(duration.replace(',', '.')) / 1000;
+  const progress = (positionSec * 100) / durationSec;
 
-  const track = playback.item as SpotifyApi.TrackObjectFull;
-
-  const progressMs = playback.progress_ms || 0;
-  const progress = (progressMs * 100) / playback.item.duration_ms;
-
-  if (showDetails) {
-    const artist = await getArtist(track.artists[0].id, false);
-    if (!artist) throw error(500, 'No artist');
-
-    return json({
-      song: {
-        title: track.name,
-        cover: track.album.images?.[1]?.url,
-        id: track.id,
-      },
-      artist: {
-        name: artist.name,
-        image: artist.images[0].url,
-      },
-      progress
-    });
+  let artistArtwork = artistArtworks.get(artist);
+  if (!artistArtwork) {
+    // FIXME: await getTrack(id);
+    artistArtworks.set(artist, cover);
+    artistArtwork = cover;
   }
 
   return json({
-    title: track.name,
-    artist: track.artists[0].name,
-    cover: track.album.images[1].url,
-    progress
+    song: {
+      title,
+      cover,
+      id,
+    },
+    artist: {
+      name: artist,
+      image: artistArtwork,
+    },
+    progress,
   });
 };
