@@ -26,6 +26,7 @@ import { pronouns } from './pronouns';
 import { punch } from './punch';
 import { rasteira } from './rasteira';
 import { sh } from './sh';
+import { site } from './site';
 import { social } from './social';
 import { song } from './song';
 import { specs } from './specs';
@@ -72,6 +73,7 @@ export const commands: Command[] = [
   punch,
   rasteira,
   sh,
+  site,
   social,
   song,
   specs,
