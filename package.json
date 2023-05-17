@@ -10,14 +10,15 @@
     "dev": "FORCE_COLOR=1 turbo run dev --parallel",
     "start": "FORCE_COLOR=1 turbo run start",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "cmd:new": "vite-node scripts/new-command.ts --"
   },
   "devDependencies": {
-    "turbo": "latest"
+    "turbo": "latest",
+    "vite-node": "^0.31.0"
   },
   "engines": {
     "node": ">=18.0.0"
   },
-  "dependencies": {},
   "packageManager": "npm@8.18.0"
 }

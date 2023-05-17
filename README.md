@@ -53,3 +53,12 @@ npm run dev
 ```
 
 By default, the overlay will be available at http://localhost:2425.
+
+## 🧑‍💻 Development
+
+To create a new command use the following command:
+
+```sh
+npm run cmd:new <command> [...aliases]
+# eg: npm run cmd:new hello ola hola
+```
