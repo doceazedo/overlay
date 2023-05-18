@@ -1,6 +1,6 @@
 import { runAppleScript } from 'run-applescript';
 import { error, json } from '@sveltejs/kit';
-import { getTrack } from '$lib/clients/spotify';
+import { getArtist, getTrack } from '$lib/clients/spotify';
 import type { RequestHandler } from '@sveltejs/kit';
 
 const getTrackScript = `
@@ -33,9 +33,17 @@ export const GET: RequestHandler = async ({ url }) => {
 
   let artistArtwork = artistArtworks.get(artist);
   if (!artistArtwork) {
-    // FIXME: await getTrack(id);
-    artistArtworks.set(artist, cover);
-    artistArtwork = cover;
+    const track = await getTrack(id);
+
+    const artistID = track?.artists?.[0]?.id;
+    if (!artistID) throw error(500, 'Could not get artist ID');
+
+    const artist = await getArtist(artistID);
+    if (!artist) throw error(500, 'Could not find artist');
+
+    const artwork = artist.images[0].url;
+    artistArtworks.set(artist.id, artwork);
+    artistArtwork = artwork;
   }
 
   return json({
