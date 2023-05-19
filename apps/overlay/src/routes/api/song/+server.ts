@@ -1,6 +1,6 @@
 import { runAppleScript } from 'run-applescript';
-import { error, json } from '@sveltejs/kit';
-import { getArtist, getTrack } from '$lib/clients/spotify';
+import { json } from '@sveltejs/kit';
+import { searchArtist } from '$lib/clients/deezer';
 import type { RequestHandler } from '@sveltejs/kit';
 
 const getTrackScript = `
@@ -22,7 +22,7 @@ return info
 
 const artistArtworks = new Map<string, string>();
 
-export const GET: RequestHandler = async ({ url }) => {
+export const GET: RequestHandler = async () => {
   const result = await runAppleScript(getTrackScript);
   const [title, cover, URI, artist, position, duration] = result.split(' | ');
   const id = URI.split(':')[2];
@@ -33,16 +33,9 @@ export const GET: RequestHandler = async ({ url }) => {
 
   let artistArtwork = artistArtworks.get(artist);
   if (!artistArtwork) {
-    const track = await getTrack(id);
-
-    const artistID = track?.artists?.[0]?.id;
-    if (!artistID) throw error(500, 'Could not get artist ID');
-
-    const artist = await getArtist(artistID);
-    if (!artist) throw error(500, 'Could not find artist');
-
-    const artwork = artist.images[0].url;
-    artistArtworks.set(artist.id, artwork);
+    const artistData = await searchArtist(artist);
+    const artwork = artistData?.picture_big || cover;
+    artistArtworks.set(artist, artwork);
     artistArtwork = artwork;
   }
 
