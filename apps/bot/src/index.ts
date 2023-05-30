@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { tmiClient } from './clients';
+import { setPlaybackVolume, tmiClient } from './clients';
 import io from './websockets';
 import commandHandler from './command-handler';
 import eventHandler from './event-handler';
@@ -13,10 +13,13 @@ loggr.init(`Connecting to channel ${TWITCH_CHANNEL}...`);
 tmiClient.connect();
 
 tmiClient.on('message', (channel, tags, message, self) => {
-  fs.writeFileSync(`identities/${tags.username}.json`, JSON.stringify({
-    ...tags,
-    emotes: null
-  }));
+  fs.writeFileSync(
+    `identities/${tags.username}.json`,
+    JSON.stringify({
+      ...tags,
+      emotes: null,
+    })
+  );
 
   if (self) return;
 
@@ -36,4 +39,10 @@ const wsPort = parseInt(PORT || '80');
 loggr.init(`Websocket server listening to port ${wsPort}...`);
 io.listen(wsPort);
 
-loggr.debug('logado');
+const setVolumeTimer = setInterval(async () => {
+  const volume = await setPlaybackVolume(40);
+  if (volume) {
+    clearInterval(setVolumeTimer);
+    loggr.debug('Volume do Spotify definido em 40%');
+  }
+}, 1000);

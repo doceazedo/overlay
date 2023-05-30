@@ -42,3 +42,7 @@ export type FollowsResponse = {
   to_name: string;
   followed_at: Date;
 } | null;
+
+export type PlaybackVolumeResponse = {
+  volume: number;
+};

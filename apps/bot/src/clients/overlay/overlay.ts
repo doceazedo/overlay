@@ -3,6 +3,7 @@ import 'dotenv/config';
 import type {
   CurrentlyPlayingDetailsResponse,
   FollowsResponse,
+  PlaybackVolumeResponse,
   UserRequest,
   UserResponse,
 } from './overlay.types';
@@ -13,6 +14,19 @@ export const getCurrentlyPlayingDetails = async () => {
   const resp = await fetch(`${baseUrl}/song?details`);
   const data: CurrentlyPlayingDetailsResponse = await resp.json();
   return data;
+};
+
+export const setPlaybackVolume = async (volume: number) => {
+  try {
+    const resp = await fetch(`${baseUrl}/song/volume`, {
+      method: 'POST',
+      body: JSON.stringify({ volume }),
+    });
+    const data: PlaybackVolumeResponse = await resp.json();
+    return data.volume;
+  } catch (error) {
+    return 0;
+  }
 };
 
 export const getUser = async (id: string) => {
@@ -56,7 +70,7 @@ export const queueSong = async (uri: string) => {
   try {
     const resp = await fetch(`${baseUrl}/queue`, {
       method: 'POST',
-      body: JSON.stringify({ uri })
+      body: JSON.stringify({ uri }),
     });
     const data = await resp.json();
     return data.track as SpotifyApi.SingleTrackResponse | null;
