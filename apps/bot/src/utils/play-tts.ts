@@ -2,6 +2,7 @@ import textToSpeech from '@google-cloud/text-to-speech';
 import AWS from 'aws-sdk';
 import { playAudio } from '.';
 import 'dotenv/config';
+import { tikTokDefaultVoices } from '../helpers';
 
 export const playGoogleTTS = async (text: string, languageCode: string) => {
   const client = new textToSpeech.TextToSpeechClient();
@@ -47,9 +48,9 @@ export const playTikTokTTS = async (text: string, voice: string) => {
     const resp = await fetch(`${BASE_URL_TIKTOK_TTS}/api/generation`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ text, voice })
+      body: JSON.stringify({ text, voice }),
     });
     const data = await resp.json();
     if (!resp.ok || !data.success || !data.data) throw Error(data);
@@ -58,4 +59,10 @@ export const playTikTokTTS = async (text: string, voice: string) => {
   } catch (error) {
     console.error(error);
   }
-}
+};
+
+export const playRandomTikTokTTS = (text: string) => {
+  const voiceId =
+    tikTokDefaultVoices[Math.floor(Math.random() * tikTokDefaultVoices.length)];
+  return playTikTokTTS(voiceId, text);
+};

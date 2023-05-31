@@ -1,4 +1,4 @@
-import { broadcast, send } from '../../utils';
+import { broadcast, playRandomTikTokTTS, send } from '../../utils';
 import type { AlertEventData } from '../events.types';
 import type { ChatClient } from '@twurple/chat';
 
@@ -14,4 +14,6 @@ export const resubEvent = (chatClient: ChatClient, userId: string) =>
       image: '/assets/img/sailor-moon-hug.gif',
       audio: '/assets/audio/alert-subscription.mp3',
     });
+
+    if (info.message) playRandomTikTokTTS(info.message);
   });

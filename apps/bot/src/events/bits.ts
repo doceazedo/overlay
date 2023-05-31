@@ -1,5 +1,5 @@
 import type { EventSubWsListener } from '@twurple/eventsub-ws';
-import { broadcast, send } from '../utils';
+import { broadcast, playRandomTikTokTTS, send } from '../utils';
 import type { AlertEventData } from './events.types';
 
 export const bitsEvent = (eventSubClient: EventSubWsListener, userId: string) =>
@@ -14,4 +14,6 @@ export const bitsEvent = (eventSubClient: EventSubWsListener, userId: string) =>
       image: '/assets/img/rei-chair.gif',
       audio: '/assets/audio/alert-bits.mp3',
     });
+
+    if (e.message) playRandomTikTokTTS(e.message);
   });
