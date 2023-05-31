@@ -43,6 +43,6 @@ const setVolumeTimer = setInterval(async () => {
   const volume = await setPlaybackVolume(40);
   if (volume) {
     clearInterval(setVolumeTimer);
-    loggr.debug('Volume do Spotify definido em 40%');
+    loggr.info('Spotify playback volume set to 40%');
   }
 }, 1000);

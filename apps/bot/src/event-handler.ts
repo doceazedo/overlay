@@ -16,6 +16,7 @@ const eventHandler = async () => {
 
   // Chat Events
   chatClient.connect();
+  loggr.init('ChatClient started');
   for (const event of chatEvents) {
     event(chatClient, userId);
     // TODO: listen for gift subs
