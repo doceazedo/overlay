@@ -13,9 +13,19 @@
   const jumbomoji = emojiOnly && message.length <= 24;
   const singleEmoji = emojiOnly && message.length == 1;
   const emojiSize = singleEmoji ? 2 : jumbomoji ? 1 : 0;
+
+  const isImage = (str: string) =>
+    str.startsWith('https://') &&
+    (str.endsWith('.png') ||
+      str.endsWith('.jpg') ||
+      str.endsWith('.gif') ||
+      str.endsWith('.webp'));
 </script>
 
-<div class="message-wrapper theme-{theme}" transition:fly={{ x: -16, duration: 500 }}>
+<div
+  class="message-wrapper theme-{theme}"
+  transition:fly={{ x: -16, duration: 500 }}
+>
   <div class="avatar-wrapper">
     <Avatar src={author.avatar} />
   </div>
@@ -49,6 +59,8 @@
             class="emote"
             on:load={scrollToBottom}
           />
+        {:else if message.length === 1 && isImage(word.text)}
+          <img src={word.text} alt="" class="image" on:load={scrollToBottom} />
         {:else}
           {` ${word.text} `}
         {/if}
@@ -115,6 +127,11 @@
 
           + .emote
             margin-left: .25rem
+
+        .image
+          max-height: 12rem
+          border-radius: .75rem
+          margin-top: .25rem
 
     &.theme-dark .message
       background-color: $dark-message
