@@ -1,5 +1,5 @@
-import { subInfo } from './sub-info';
+import { announcementEvent } from './announcement';
+import { resubEvent } from './resub';
+import { subEvent } from './sub';
 
-export const chatEvents = [
-  subInfo,
-];
+export const chatEvents = [announcementEvent, resubEvent, subEvent];
