@@ -15,15 +15,9 @@ if (browser) {
 
   client.on('message', async (channel, tags, message, self) => {
     const parsedMessage = await parseEmotes(message, tags.emotes, {
-      channelId: CHANNEL_ID
+      channelId: CHANNEL_ID,
     });
     const words = parsedMessage.toWords();
-
-    console.log({channel,
-      tags,
-      message,
-      self,
-      words});
 
     chatMessageListener.set({
       channel,
@@ -33,7 +27,14 @@ if (browser) {
       words,
     });
   });
+
+  client.on('raw_message', (messageCloned, message) => {
+    if (message.command !== 'CLEARCHAT') return;
+    const timedOutUsers = message.params.splice(1);
+    clearChatListener.set(timedOutUsers);
+  });
 }
 
 export const chatMessageListener = writable<ParsedTmiMessage>();
+export const clearChatListener = writable<string[]>([]);
 export const chatEl = writable<HTMLDivElement>();

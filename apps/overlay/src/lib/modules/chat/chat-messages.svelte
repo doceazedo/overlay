@@ -1,7 +1,13 @@
 <script lang="ts">
   import { createId } from '@paralleldrive/cuid2';
   import { getUser } from '$lib/clients/users';
-  import { ChatMessage, chatMessageListener, getBadges, getTeam } from '.';
+  import {
+    ChatMessage,
+    chatMessageListener,
+    clearChatListener,
+    getBadges,
+    getTeam,
+  } from '.';
   import type { ChatTheme, MessageAuthor, Message } from '.';
 
   export let theme: ChatTheme = 'dark';
@@ -37,9 +43,17 @@
     });
     messages = messages;
 
-    if (ttl) setTimeout(() => {
-      messages = messages.filter(message => message.id != messageId);
-    }, ttl);
+    if (ttl)
+      setTimeout(() => {
+        messages = messages.filter((message) => message.id != messageId);
+      }, ttl);
+  });
+
+  clearChatListener.subscribe((users) => {
+    if (!users.length) return;
+    users.forEach((user) => {
+      messages = messages.filter((message) => message.author.username != user);
+    });
   });
 </script>
 
