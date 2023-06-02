@@ -13,7 +13,6 @@
     "@types/audio-play": "^2.3.0",
     "@types/node": "^18.15.3",
     "@types/node-notifier": "^8.0.2",
-    "@types/socket.io-client": "1.4.36",
     "@types/spotify-web-api-node": "^5.0.7",
     "@types/tmi.js": "^1.8.3",
     "@types/uuid": "^9.0.1",
@@ -31,8 +30,6 @@
     "@twurple/api": "^6.2.1",
     "@twurple/auth": "^6.2.1",
     "@twurple/chat": "^6.2.1",
-    "@twurple/eventsub": "^5.1.6",
-    "@twurple/eventsub-ngrok": "^6.2.1",
     "@twurple/eventsub-ws": "^6.2.1",
     "aws-sdk": "^2.1389.0",
     "chalk": "4.1.2",
@@ -42,7 +39,6 @@
     "fast-xml-parser": "^4.2.2",
     "simple-icons": "^9.0.0",
     "socket.io": "^4.6.2",
-    "socket.io-client": "2.4.0",
     "uuid": "^9.0.0",
     "vm2": "^3.9.19"
   }
