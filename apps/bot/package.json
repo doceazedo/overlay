@@ -5,7 +5,7 @@
   "types": "build/index.d.ts",
   "license": "MIT",
   "scripts": {
-    "start": "node -r @swc-node/register src",
+    "start": "vite-node src",
     "dev": "nodemon src/index.ts"
   },
   "devDependencies": {
@@ -39,7 +39,9 @@
     "fast-xml-parser": "^4.2.2",
     "simple-icons": "^9.0.0",
     "socket.io": "^4.6.2",
+    "trpc-client": "*",
     "uuid": "^9.0.0",
+    "vite-node": "^0.32.0",
     "vm2": "^3.9.19"
   }
 }

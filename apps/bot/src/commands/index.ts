@@ -35,6 +35,7 @@ import { sr } from './sr';
 import { svelte } from './svelte';
 import { team } from './team';
 import { tronco } from './tronco';
+import { trpc } from './trpc';
 import { tts } from './tts';
 import { whois } from './whois';
 import { wrongsong } from './wrongsong';
@@ -83,6 +84,7 @@ export const commands: Command[] = [
   svelte,
   team,
   tronco,
+  trpc,
   tts,
   whois,
   wrongsong,
