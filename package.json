@@ -6,7 +6,7 @@
     "apps/*"
   ],
   "scripts": {
-    "build": "turbo run build",
+    "build": "(cd apps/overlay && npm run build) && npm run start",
     "dev": "FORCE_COLOR=1 turbo run dev --parallel",
     "start": "FORCE_COLOR=1 turbo run start",
     "lint": "turbo run lint",
