@@ -2,7 +2,7 @@ import { json } from '@sveltejs/kit';
 import { getRedditMemes } from '$lib/modules/memes';
 import { shuffleArray } from '$lib/utils';
 
-const subreddits = ['botecodoreddit', 'AgiotasClub', 'eu_nvr', 'ProgrammerHumor'];
+const subreddits = ['ProgrammerHumor'];
 
 export const GET = async () => {
   const promises = subreddits.map((r) => getRedditMemes(r));
