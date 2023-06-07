@@ -1,11 +1,11 @@
 import { createHTTPServer } from "@trpc/server/adapters/standalone";
-import { inferRouterInputs, inferRouterOutputs } from "@trpc/server";
 import cors from "cors";
 import { router } from "./trpc";
-import { spotifyRouter } from "./routers/spotify";
+import { spotifyAppRouter } from "./routers/spotify-app";
+import type { inferRouterInputs, inferRouterOutputs } from "@trpc/server";
 
 const appRouter = router({
-  spotify: spotifyRouter,
+  spotifyApp: spotifyAppRouter,
 });
 
 const server = createHTTPServer({

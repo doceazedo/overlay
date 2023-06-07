@@ -7,7 +7,7 @@ export const song: Command = {
   aliases: ['song', 'music', 'stream', 'musica'],
   exec: async () => {
     broadcast('cmd:song');
-    const song = await trpc.spotify.getTrack.query();
+    const song = await trpc.spotifyApp.getTrack.query();
     if (!song) return send('🔇 Nada tocando agora...');
     const url = `https://song.link/s/${song.track.id}`;
     send(

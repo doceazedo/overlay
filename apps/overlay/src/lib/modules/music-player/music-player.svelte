@@ -5,7 +5,7 @@
   import { socket } from '$lib/modules';
   import type { RouterOutput } from 'trpc-client';
 
-  let song: RouterOutput['spotify']['getTrack'];
+  let song: RouterOutput['spotifyApp']['getTrack'];
   let showDetails = false;
 
   socket.on('cmd:song', async () => {
@@ -15,8 +15,11 @@
   });
 
   onMount(async () => {
-    song = await trpc.spotify.getTrack.query();
-    setInterval(async () => (song = await trpc.spotify.getTrack.query()), 2500);
+    song = await trpc.spotifyApp.getTrack.query();
+    setInterval(
+      async () => (song = await trpc.spotifyApp.getTrack.query()),
+      2500,
+    );
   });
 </script>
 

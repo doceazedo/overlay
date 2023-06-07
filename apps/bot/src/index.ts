@@ -41,7 +41,7 @@ loggr.init(`Websocket server listening to port ${wsPort}...`);
 io.listen(wsPort);
 
 const setVolumeTimer = setInterval(async () => {
-  const data = await trpc.spotify.setVolume.mutate(40);
+  const data = await trpc.spotifyApp.setVolume.mutate(40);
   if (!isNaN(data.volume)) {
     clearInterval(setVolumeTimer);
     loggr.info('Spotify playback volume set to 40%');

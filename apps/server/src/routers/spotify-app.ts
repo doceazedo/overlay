@@ -30,7 +30,7 @@ end tell
 
 const artistArtworks = new Map<string, string>();
 
-export const spotifyRouter = router({
+export const spotifyAppRouter = router({
   getTrack: publicProcedure.query(async () => {
     const result = await runAppleScript(getTrackScript);
     const [title, cover, uri, artist, position, duration] = result.split(" | ");

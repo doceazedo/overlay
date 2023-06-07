@@ -3,7 +3,7 @@
   import { slide } from 'svelte/transition';
   import { quintOut } from 'svelte/easing';
 
-  export let song: RouterOutput['spotify']['getTrack'] = null;
+  export let song: RouterOutput['spotifyApp']['getTrack'] = null;
   export let showDetails = false;
 </script>
 
