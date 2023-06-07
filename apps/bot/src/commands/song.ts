@@ -8,8 +8,10 @@ export const song: Command = {
   exec: async () => {
     broadcast('cmd:song');
     const song = await trpc.spotify.getTrack.query();
-    if (!song) send('🔇 Nada tocando agora...');
-    const url = `https://song.link/s/${song.song.id}`;
-    send(`🎵 Tocando agora: ${song.artist.name} - ${song.song.title} | ${url}`);
+    if (!song) return send('🔇 Nada tocando agora...');
+    const url = `https://song.link/s/${song.track.id}`;
+    send(
+      `🎵 Tocando agora: ${song.artist.name} - ${song.track.title} | ${url}`
+    );
   },
 };

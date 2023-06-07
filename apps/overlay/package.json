@@ -49,6 +49,7 @@
     "spotify-web-api-node": "^5.0.2",
     "tinycolor2": "^1.5.2",
     "tmi.js": "^1.8.5",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "trpc-client": "*"
   }
 }

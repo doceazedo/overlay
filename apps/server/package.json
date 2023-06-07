@@ -12,7 +12,11 @@
   "license": "ISC",
   "dependencies": {
     "@trpc/server": "^10.29.1",
+    "cors": "^2.8.5",
     "run-applescript": "^6.1.0",
     "zod": "^3.21.4"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.13"
   }
 }

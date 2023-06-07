@@ -24,8 +24,10 @@ const artistArtworks = new Map<string, string>();
 export const spotifyRouter = router({
   getTrack: publicProcedure.query(async () => {
     const result = await runAppleScript(getTrackScript);
-    const [title, cover, URI, artist, position, duration] = result.split(" | ");
-    const id = URI.split(":")[2];
+    const [title, cover, uri, artist, position, duration] = result.split(" | ");
+    if (!uri) return null;
+
+    const id = uri.split(":")[2];
 
     const positionSec = parseFloat(position.replace(",", "."));
     const durationSec = parseFloat(duration.replace(",", ".")) / 1000;
@@ -40,7 +42,7 @@ export const spotifyRouter = router({
     }
 
     return {
-      song: {
+      track: {
         title,
         cover,
         id,

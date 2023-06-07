@@ -1,26 +1,28 @@
 <script lang="ts">
-  import type { CurrentlyPlayingDetailsResponse } from '$lib/clients/song';
+  import type { RouterOutput } from 'trpc-client';
+  import { slide } from 'svelte/transition';
+  import { quintOut } from 'svelte/easing';
 
-  const fallbackTitle = 'Nada tocando 😭';
-  const fallbackArtist = '';
-
-  export let song: CurrentlyPlayingDetailsResponse = null,
-    showDetails = false;
-
+  export let song: RouterOutput['spotify']['getTrack'] = null;
+  export let showDetails = false;
 </script>
 
-<div class="now-playing" class:details={showDetails}>
+<div
+  class="now-playing"
+  class:details={showDetails}
+  transition:slide={{ duration: 200, easing: quintOut }}
+>
   <div class="content">
     <figure class="cover-sm">
-      <img src={song?.song?.cover} alt="" />
+      <img src={song?.track?.cover} alt="" />
     </figure>
     <div class="info" class:paused={!song}>
-      <h1>{song?.song?.title || fallbackTitle}</h1>
-      <h2>{song?.artist?.name || fallbackArtist}</h2>
+      <h1>{song?.track?.title}</h1>
+      <h2>{song?.artist?.name}</h2>
     </div>
   </div>
   <div class="background">
-    <img class="cover-xl" src={song?.song?.cover} alt="" />
+    <img class="cover-xl" src={song?.track?.cover} alt="" />
     <figure
       class="artist"
       style="background-image: url({song?.artist?.image})"

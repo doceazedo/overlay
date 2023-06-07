@@ -10,12 +10,6 @@ import type {
 
 const { API_BASEURL: baseUrl } = process.env;
 
-export const getCurrentlyPlayingDetails = async () => {
-  const resp = await fetch(`${baseUrl}/song?details`);
-  const data: CurrentlyPlayingDetailsResponse = await resp.json();
-  return data;
-};
-
 export const setPlaybackVolume = async (volume: number) => {
   try {
     const resp = await fetch(`${baseUrl}/song/volume`, {

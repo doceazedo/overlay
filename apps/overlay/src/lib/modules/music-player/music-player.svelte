@@ -1,11 +1,11 @@
 <script lang="ts">
+  import { trpc } from 'trpc-client';
   import { onMount } from 'svelte';
-  import { getCurrentlyPlayingDetails } from '$lib/clients/song';
   import { MusicPlayer } from '$lib/components';
   import { socket } from '$lib/modules';
-  import type { CurrentlyPlayingDetailsResponse } from '$lib/clients/song';
+  import type { RouterOutput } from 'trpc-client';
 
-  let song: CurrentlyPlayingDetailsResponse;
+  let song: RouterOutput['spotify']['getTrack'];
   let showDetails = false;
 
   socket.on('cmd:song', async () => {
@@ -15,9 +15,11 @@
   });
 
   onMount(async () => {
-    song = await getCurrentlyPlayingDetails();
-    setInterval(async () => (song = await getCurrentlyPlayingDetails()), 2500);
+    song = await trpc.spotify.getTrack.query();
+    setInterval(async () => (song = await trpc.spotify.getTrack.query()), 2500);
   });
 </script>
 
-<MusicPlayer {song} {showDetails} />
+{#if song}
+  <MusicPlayer {song} {showDetails} />
+{/if}
