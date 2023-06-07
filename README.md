@@ -11,10 +11,15 @@
 
 ## 🗂 What's inside?
 
-This monorepo uses [npm](https://www.npmjs.com/) as a package manager. It includes the following applications:
+This monorepo uses [npm](https://www.npmjs.com/) as a package manager. It includes the following **applications**:
 
-- [`apps/bot`](./apps/bot): a TypeScript Twitch chat bot
-- [`apps/overlay`](./apps/overlay): a SvelteKit app with stream overlays
+- [`bot`](./apps/bot): a TypeScript Twitch chat bot
+- [`overlay`](./apps/overlay): a SvelteKit app with stream overlays
+- [`server`](./apps/server): a tRPC app for common API requests
+
+You'll also find the following **packages**:
+
+- [trpc-client](./packages/trpc-client): the tRPC client used by other apps
 
 ## 📝 Notes
 
