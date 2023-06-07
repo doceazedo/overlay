@@ -13,10 +13,13 @@
   "dependencies": {
     "@trpc/server": "^10.29.1",
     "cors": "^2.8.5",
+    "dotenv": "^16.1.4",
     "run-applescript": "^6.1.0",
+    "spotify-web-api-node": "^5.0.2",
     "zod": "^3.21.4"
   },
   "devDependencies": {
-    "@types/cors": "^2.8.13"
+    "@types/cors": "^2.8.13",
+    "@types/spotify-web-api-node": "^5.0.7"
   }
 }
