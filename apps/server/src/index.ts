@@ -1,14 +1,9 @@
-import z from "zod";
 import { createHTTPServer } from "@trpc/server/adapters/standalone";
-import { publicProcedure, router } from "./trpc";
+import { router } from "./trpc";
+import { spotifyRouter } from "./routers/spotify";
 
 const appRouter = router({
-  userCreate: publicProcedure
-    .input(z.object({ name: z.string() }))
-    .mutation(async (opts) => {
-      const { input } = opts;
-      return { foo: "bar", input };
-    }),
+  spotify: spotifyRouter,
 });
 
 const server = createHTTPServer({
