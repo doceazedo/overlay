@@ -1,15 +1,3 @@
-export type CurrentlyPlayingDetailsResponse = {
-  song: {
-    title: string;
-    cover: string;
-    id: string;
-  };
-  artist: {
-    name: string;
-    image: string;
-  };
-};
-
 export type User = {
   id: string;
   pronouns?: string;
@@ -42,7 +30,3 @@ export type FollowsResponse = {
   to_name: string;
   followed_at: Date;
 } | null;
-
-export type PlaybackVolumeResponse = {
-  volume: number;
-};

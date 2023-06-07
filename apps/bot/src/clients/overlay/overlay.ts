@@ -1,27 +1,12 @@
 import fetch from 'cross-fetch';
 import 'dotenv/config';
 import type {
-  CurrentlyPlayingDetailsResponse,
   FollowsResponse,
-  PlaybackVolumeResponse,
   UserRequest,
   UserResponse,
 } from './overlay.types';
 
 const { API_BASEURL: baseUrl } = process.env;
-
-export const setPlaybackVolume = async (volume: number) => {
-  try {
-    const resp = await fetch(`${baseUrl}/song/volume`, {
-      method: 'POST',
-      body: JSON.stringify({ volume }),
-    });
-    const data: PlaybackVolumeResponse = await resp.json();
-    return data.volume;
-  } catch (error) {
-    return 0;
-  }
-};
 
 export const getUser = async (id: string) => {
   try {

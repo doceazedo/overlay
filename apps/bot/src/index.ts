@@ -1,11 +1,12 @@
 import fs from 'fs';
-import { setPlaybackVolume, tmiClient } from './clients';
+import { tmiClient } from './clients';
 import io from './websockets';
 import commandHandler from './command-handler';
 import eventHandler from './event-handler';
 import { messageEvents } from './events';
 import { loggr } from './utils';
 import 'dotenv/config';
+import { trpc } from 'trpc-client';
 
 const { TWITCH_CHANNEL, PORT } = process.env;
 
@@ -40,8 +41,8 @@ loggr.init(`Websocket server listening to port ${wsPort}...`);
 io.listen(wsPort);
 
 const setVolumeTimer = setInterval(async () => {
-  const volume = await setPlaybackVolume(40);
-  if (volume) {
+  const data = await trpc.spotify.setVolume.mutate(40);
+  if (!isNaN(data.volume)) {
     clearInterval(setVolumeTimer);
     loggr.info('Spotify playback volume set to 40%');
   }

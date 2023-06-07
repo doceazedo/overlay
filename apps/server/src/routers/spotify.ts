@@ -1,3 +1,4 @@
+import z from "zod";
 import { runAppleScript } from "run-applescript";
 import { publicProcedure, router } from "../trpc";
 import { searchArtist } from "../clients/deezer";
@@ -17,6 +18,14 @@ tell application "Spotify"
   end if
 end tell
 return info
+`;
+
+const setVolumeScript = (volume: number) => `
+set info to ""
+tell application "Spotify"
+  set sound volume to ${volume}
+  return sound volume
+end tell
 `;
 
 const artistArtworks = new Map<string, string>();
@@ -52,6 +61,13 @@ export const spotifyRouter = router({
         image: artistArtwork,
       },
       progress,
+    };
+  }),
+  setVolume: publicProcedure.input(z.number()).mutation(async (opts) => {
+    const { input } = opts;
+    const result = await runAppleScript(setVolumeScript(input));
+    return {
+      volume: parseFloat(result),
     };
   }),
 });
