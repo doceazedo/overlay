@@ -15,7 +15,7 @@ const server = createHTTPServer({
   router: appRouter,
 });
 
-server.listen(2427);
+server.listen(parseInt(process.env.TRPC_SERVER_PORT || "2427"));
 
 export type AppRouter = typeof appRouter;
 export type RouterInput = inferRouterInputs<AppRouter>;

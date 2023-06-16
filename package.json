@@ -8,11 +8,11 @@
   ],
   "scripts": {
     "build": "(cd apps/overlay && npm run build) && npm run start",
-    "dev": "FORCE_COLOR=1 turbo run dev --parallel",
-    "start": "FORCE_COLOR=1 turbo run start",
+    "dev": "dotenv -- turbo run dev --parallel",
+    "start": "dotenv -- turbo run start",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "cmd:new": "vite-node scripts/new-command.ts --"
+    "postinstall": "vite-node scripts/postinstall.ts"
   },
   "devDependencies": {
     "turbo": "latest",
@@ -21,5 +21,8 @@
   "engines": {
     "node": ">=18.0.0"
   },
-  "packageManager": "npm@8.18.0"
+  "packageManager": "npm@8.18.0",
+  "dependencies": {
+    "dotenv-cli": "^7.2.1"
+  }
 }
