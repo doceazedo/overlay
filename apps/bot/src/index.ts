@@ -37,15 +37,6 @@ if (!TWITCH_CHANNEL_NAME) process.exit(1);
  *  INIT CHAT BOT
  */
 
-type TokenData = {
-  access_token: string;
-  expires_in: number | null;
-  refresh_token: string | null;
-  scope: string[];
-  token_type: string;
-  obtainmentTimestamp: number;
-};
-
 let tokenData: MakeOptional<AccessToken, "accessToken" | "scope">;
 try {
   const tokensFile = await fs.readFile(`../../tokens/${TWITCH_BOT_ID}.json`);
