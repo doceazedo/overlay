@@ -33,7 +33,7 @@
 	You have to <a href="/wizard">setup your Spotify application</a> before logging in with your account.
 </div>
 
-<div class="box">
+<div class="grid">
 	<AccountCard
 		label="Streamer"
 		data={getAccountData(data.twitchBroadcasterUser)}
@@ -48,3 +48,13 @@
 		disconnectUrl={getDisconnectUrl('bot')}
 	/>
 </div>
+
+<style lang="scss">
+	.grid {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		grid-template-rows: repeat(5, 1fr);
+		grid-column-gap: 1rem;
+		grid-row-gap: 1rem;
+	}
+</style>
