@@ -11,7 +11,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@twurple/auth": "^6.2.1",
-    "@twurple/easy-bot": "^6.2.1"
+    "@twurple/easy-bot": "^6.2.1",
+    "config": "*",
+    "twurple-auth": "*"
   }
 }

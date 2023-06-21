@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "@trpc/server": "^10.29.1",
+    "config": "*",
     "cors": "^2.8.5",
     "dotenv": "^16.1.4",
     "run-applescript": "^6.1.0",

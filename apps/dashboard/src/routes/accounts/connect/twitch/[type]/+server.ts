@@ -1,8 +1,8 @@
 import { CONFIG } from 'config';
-import { error, json } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 import { promises as fs } from 'fs';
 
-export const GET = async ({ url }) => {
+export const GET = async ({ url, params, cookies }) => {
 	const clientId = CONFIG.twitchClientId;
 	if (!clientId) throw error(500, 'Could not get client ID');
 
@@ -12,7 +12,10 @@ export const GET = async ({ url }) => {
 	const code = url.searchParams.get('code');
 	if (!code) throw error(400, 'Invalid callback');
 
-	const redirectUri = `${url.origin}/accounts/connect`;
+	const type = params.type;
+	if (type != 'broadcaster' && type != 'bot') throw error(400, 'Invalid account type');
+
+	const redirectUri = `${url.origin}/accounts/connect/twitch/${type}`;
 	const token = await getTwitchToken(clientId, clientSecret, code, redirectUri);
 	if (!token) throw error(500, 'Could not retrieve account token');
 
@@ -32,16 +35,16 @@ export const GET = async ({ url }) => {
 		throw error(500, 'Could not store token');
 	}
 
-	// TODO: save config twitch_broadcaster_id
-	// TODO: save config twitch_bot_id
-
 	await CONFIG.update({
-		twitchBroadcasterId: user.id
+		twitchBroadcasterId: type == 'broadcaster' ? user.id : CONFIG.twitchBroadcasterId,
+		twitchBotId: type == 'bot' ? user.id : CONFIG.twitchBotId
 	});
 
-	return json({
-		user
+	cookies.set(`twitch_${type}_id`, user.id, {
+		path: '/'
 	});
+
+	throw redirect(302, '/accounts');
 };
 
 const getTwitchToken = async (

@@ -1,7 +1,9 @@
 import { CONFIG } from 'config';
 
-export const load = () => {
+export const load = ({ locals }) => {
 	return {
-		clientId: CONFIG.twitchClientId
+		twitchClientId: CONFIG.twitchClientId,
+		twitchBroadcasterUser: locals.twitchBroadcasterUser,
+		twitchBotUser: locals.twitchBotUser
 	};
 };

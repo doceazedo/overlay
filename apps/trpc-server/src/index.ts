@@ -1,5 +1,6 @@
 import { createHTTPServer } from "@trpc/server/adapters/standalone";
 import cors from "cors";
+import { CONFIG } from "config";
 import { router } from "./trpc";
 import { spotifyAppRouter } from "./routers/spotify-app";
 import { spotifyWebApiRouter } from "./routers/spotify-web-api";
@@ -15,7 +16,7 @@ const server = createHTTPServer({
   router: appRouter,
 });
 
-server.listen(parseInt(process.env.TRPC_SERVER_PORT || "2427"));
+server.listen(CONFIG.trpcServerPort || 2427);
 
 export type AppRouter = typeof appRouter;
 export type RouterInput = inferRouterInputs<AppRouter>;
