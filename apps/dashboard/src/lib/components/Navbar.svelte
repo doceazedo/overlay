@@ -1,3 +1,7 @@
+<script lang="ts">
+	export let user: any;
+</script>
+
 <nav class="navbar has-shadow">
 	<div class="navbar-brand">
 		<a class="navbar-item" href="https://bulma.io">
@@ -29,11 +33,24 @@
 					Source code
 				</a>
 			</div>
-			<a href="/accounts" class="navbar-link is-arrowless">
-				<figure class="image">
-					<img class="is-rounded" src="https://bulma.io/images/placeholders/32x32.png" alt="" />
-				</figure>
-			</a>
+			{#if user}
+				<a href="/accounts" class="navbar-link is-arrowless">
+					<figure class="image">
+						<img
+							class="is-rounded"
+							src={user.profilePictureUrl}
+							alt="Avatar of {user.displayName}"
+						/>
+					</figure>
+				</a>
+			{/if}
 		</div>
 	</div>
 </nav>
+
+<style lang="scss">
+	.image {
+		width: 2.25rem;
+		height: 2.25rem;
+	}
+</style>
