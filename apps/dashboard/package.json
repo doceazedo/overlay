@@ -29,6 +29,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"bulma": "^0.9.4",
 		"config": "*",
 		"sass": "^1.63.4",
 		"svelte-tabler": "^0.4.5",

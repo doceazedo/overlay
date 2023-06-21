@@ -20,22 +20,31 @@
 	};
 </script>
 
-<h1>Accounts</h1>
+<h1 class="title">Accounts</h1>
+<h2 class="subtitle">Connect your accounts</h2>
 
 {#if !data.twitchClientId}
-	<div>Your Twitch application is not setup!</div>
+	<div class="notification is-danger is-light">
+		You must <a href="/wizard">setup your Twitch application</a> before logging in with your accounts.
+	</div>
 {/if}
 
-<AccountCard
-	label="Streamer"
-	data={getAccountData(data.twitchBroadcasterUser)}
-	connectUrl={getOauthUrl('broadcaster')}
-	disconnectUrl={getDisconnectUrl('broadcaster')}
-/>
+<div class="notification is-warning is-light">
+	You have to <a href="/wizard">setup your Spotify application</a> before logging in with your account.
+</div>
 
-<AccountCard
-	label="Bot"
-	data={getAccountData(data.twitchBotUser)}
-	connectUrl={getOauthUrl('bot')}
-	disconnectUrl={getDisconnectUrl('bot')}
-/>
+<div class="box">
+	<AccountCard
+		label="Streamer"
+		data={getAccountData(data.twitchBroadcasterUser)}
+		connectUrl={getOauthUrl('broadcaster')}
+		disconnectUrl={getDisconnectUrl('broadcaster')}
+	/>
+
+	<AccountCard
+		label="Bot"
+		data={getAccountData(data.twitchBotUser)}
+		connectUrl={getOauthUrl('bot')}
+		disconnectUrl={getDisconnectUrl('bot')}
+	/>
+</div>
