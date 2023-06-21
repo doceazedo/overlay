@@ -7,8 +7,6 @@ export const handle = async ({ event, resolve }) => {
 	const userIds = [twitchBroadcasterId, twitchBotId].filter((x) => x != null) as string[];
 	const users = userIds.length ? await twurple.users.getUsersByIds(userIds) : [];
 
-	console.log({ users });
-
 	users.forEach((user) => {
 		const userData = {
 			id: user.id,
