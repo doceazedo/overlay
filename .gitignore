@@ -30,6 +30,7 @@ apps/bot/identities/*.json
 .env.test.local
 .env.production.local
 google-application-credentials.json
+config.json
 
 # turbo
 .turbo

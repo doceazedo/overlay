@@ -1,7 +1,7 @@
-import { env } from '$env/dynamic/private';
+import { CONFIG } from 'config';
 
 export const load = () => {
 	return {
-		clientId: env.TWITCH_CLIENT_ID
+		clientId: CONFIG.twitchClientId
 	};
 };

@@ -30,6 +30,7 @@
 	"type": "module",
 	"dependencies": {
 		"@tabler/core": "^1.0.0-beta19",
+		"config": "*",
 		"sass": "^1.63.4",
 		"svelte-tabler": "^0.4.5"
 	}

@@ -1,0 +1,11 @@
+{
+  "trpcServerPort": 2428,
+  "twitchClientId": "",
+  "twitchClientSecret": "",
+  "twitchBotId": "",
+  "twitchBroadcasterId": "",
+  "twitchChannelName": "",
+  "spotifyClientId": "",
+  "spotifyClientSecret": "",
+  "spotifyRefreshToken": ""
+}

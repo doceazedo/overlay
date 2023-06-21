@@ -1,12 +1,12 @@
-import { env } from '$env/dynamic/private';
+import { CONFIG } from 'config';
 import { error, json } from '@sveltejs/kit';
 import { promises as fs } from 'fs';
 
 export const GET = async ({ url }) => {
-	const clientId = env.TWITCH_CLIENT_ID;
+	const clientId = CONFIG.twitchClientId;
 	if (!clientId) throw error(500, 'Could not get client ID');
 
-	const clientSecret = env.TWITCH_CLIENT_SECRET;
+	const clientSecret = CONFIG.twitchClientSecret;
 	if (!clientSecret) throw error(500, 'Could not get client secret');
 
 	const code = url.searchParams.get('code');
@@ -34,6 +34,10 @@ export const GET = async ({ url }) => {
 
 	// TODO: save config twitch_broadcaster_id
 	// TODO: save config twitch_bot_id
+
+	await CONFIG.update({
+		twitchBroadcasterId: user.id
+	});
 
 	return json({
 		user
@@ -70,7 +74,7 @@ const getTwitchUser = async (clientId: string, token: string) => {
 			}
 		});
 		const data = await resp.json();
-		return data.data;
+		return data?.data?.[0] || null;
 	} catch (error) {
 		return null;
 	}
