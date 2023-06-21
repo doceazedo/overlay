@@ -1,19 +1,11 @@
-import { MakeOptional } from "@d-fischer/shared-utils";
-import { AccessToken, RefreshingAuthProvider } from "@twurple/auth";
+import { type AccessToken, RefreshingAuthProvider } from "@twurple/auth";
 import { CONFIG } from "config";
 import { promises as fs } from "fs";
+import type { MakeOptional } from "@d-fischer/shared-utils";
 
 /*
  *  INIT CONFIG
  */
-
-const { twitchClientId, twitchClientSecret, twitchBotId, twitchBroadcasterId } =
-  CONFIG;
-
-if (!twitchClientId) process.exit();
-if (!twitchClientSecret) process.exit();
-if (!twitchBotId) process.exit();
-if (!twitchBroadcasterId) process.exit();
 
 /*
  *  INIT AUTH PROVIDER
@@ -21,31 +13,39 @@ if (!twitchBroadcasterId) process.exit();
 
 let tokenData: MakeOptional<AccessToken, "accessToken" | "scope">;
 try {
-  const tokensFile = await fs.readFile(`../../tokens/${twitchBotId}.json`);
+  const tokensFile = await fs.readFile(
+    `../../tokens/${CONFIG.twitchBotId}.json`
+  );
   tokenData = JSON.parse(tokensFile.toString());
 } catch (error) {
-  console.warn(`Missing token data file for user ID ${twitchBotId}`);
+  console.warn(`Missing token data file for user ID ${CONFIG.twitchBotId}`);
   console.warn("Shutting chatbot down...");
   process.exit();
 }
 
-const authProvider = new RefreshingAuthProvider({
-  clientId: twitchClientId,
-  clientSecret: twitchClientSecret,
-  onRefresh: async (userId, newTokenData) =>
-    await fs.writeFile(
-      `../../tokens/${userId}.json`,
-      JSON.stringify(newTokenData, null, 4)
-    ),
-});
+let authProvider: RefreshingAuthProvider;
+
+const newAuthProvider = async () => {
+  if (!CONFIG.twitchClientId || !CONFIG.twitchClientSecret) return;
+
+  authProvider = new RefreshingAuthProvider({
+    clientId: CONFIG.twitchClientId,
+    clientSecret: CONFIG.twitchClientSecret,
+    onRefresh: async (userId, newTokenData) =>
+      await fs.writeFile(
+        `../../tokens/${userId}.json`,
+        JSON.stringify(newTokenData, null, 4)
+      ),
+  });
+};
 
 export const getAuthProvider = async () => {
-  const hasUsers =
-    authProvider.hasUser(twitchBotId) &&
-    authProvider.hasUser(twitchBroadcasterId);
-  if (!hasUsers) {
+  if (!authProvider) newAuthProvider();
+  if (!authProvider) return null;
+
+  if (CONFIG.twitchBotId && !authProvider.hasUser(CONFIG.twitchBotId))
     await authProvider.addUserForToken(tokenData, ["chat"]);
-    // TODO: addUserForToken(broadcaster);
-  }
+  // TODO: ^ same for broadcaster
+
   return authProvider;
 };

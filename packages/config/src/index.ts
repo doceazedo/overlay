@@ -14,18 +14,29 @@ type ConfigData = {
 
 type Config = ConfigData & {
   update: (data: ConfigData) => Promise<void>;
+  refresh: () => Promise<void>;
 };
 
 const CONFIG_FILE_PATH = "../../config.json";
 
-export const refreshConfigFile = async () => {
+export const refresh = async () => {
   const configFile = await fs.promises.readFile(CONFIG_FILE_PATH);
-  CONFIG = JSON.parse(configFile.toString());
+  const data = JSON.parse(configFile.toString());
+  configData = {
+    ...configData,
+    ...data,
+  };
+  CONFIG = {
+    ...CONFIG,
+    ...configData,
+  };
 };
 
 export const update = async (data: ConfigData) => {
+  const configFile = await fs.promises.readFile(CONFIG_FILE_PATH);
+  const storedData = JSON.parse(configFile.toString());
   configData = {
-    ...configData,
+    ...storedData,
     ...data,
   };
   CONFIG = {
@@ -39,9 +50,10 @@ export const update = async (data: ConfigData) => {
 };
 
 const configFile = fs.readFileSync(CONFIG_FILE_PATH);
-let configData = JSON.parse(configFile.toString());
+let configData = JSON.parse(configFile.toString()) as ConfigData;
 
 export let CONFIG: Config = {
   ...configData,
   update,
+  refresh,
 };

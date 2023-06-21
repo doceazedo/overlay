@@ -1,6 +1,11 @@
 import { ApiClient } from '@twurple/api';
 import { getAuthProvider } from 'twurple-auth';
 
-export const authProvider = await getAuthProvider();
+let twurple: ApiClient;
 
-export const twurple = new ApiClient({ authProvider });
+export const getTwurpleClient = async () => {
+	const authProvider = await getAuthProvider();
+	if (!authProvider) return null;
+	if (!twurple) twurple = new ApiClient({ authProvider });
+	return twurple;
+};
