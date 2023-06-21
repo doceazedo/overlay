@@ -21,16 +21,16 @@
 </script>
 
 <h1 class="title">Accounts</h1>
-<h2 class="subtitle">Connect your accounts</h2>
+<p class="subtitle">Connect your accounts</p>
 
 {#if !data.twitchClientId}
 	<div class="notification is-danger is-light">
-		You must <a href="/wizard">setup your Twitch application</a> before logging in with your accounts.
+		You must <a href="/setup">setup your Twitch application</a> before logging in with your accounts.
 	</div>
 {/if}
 
 <div class="notification is-warning is-light">
-	You have to <a href="/wizard">setup your Spotify application</a> before logging in with your account.
+	You have to <a href="/setup">setup your Spotify application</a> before logging in with your account.
 </div>
 
 <div class="grid">
