@@ -2,7 +2,7 @@ import { CONFIG } from 'config';
 import { error, redirect } from '@sveltejs/kit';
 import { promises as fs } from 'fs';
 
-export const GET = async ({ url, params, cookies }) => {
+export const GET = async ({ url, params }) => {
 	const clientId = CONFIG.twitchClientId;
 	if (!clientId) throw error(500, 'Could not get client ID');
 
@@ -38,10 +38,6 @@ export const GET = async ({ url, params, cookies }) => {
 	await CONFIG.update({
 		twitchBroadcasterId: type == 'broadcaster' ? user.id : CONFIG.twitchBroadcasterId,
 		twitchBotId: type == 'bot' ? user.id : CONFIG.twitchBotId
-	});
-
-	cookies.set(`twitch_${type}_id`, user.id, {
-		path: '/'
 	});
 
 	throw redirect(302, '/accounts');

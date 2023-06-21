@@ -1,8 +1,8 @@
+import { CONFIG } from 'config';
 import { twurple } from '$lib/clients/twurple';
 
 export const handle = async ({ event, resolve }) => {
-	const twitchBroadcasterId = event.cookies.get('twitch_broadcaster_id');
-	const twitchBotId = event.cookies.get('twitch_bot_id');
+	const { twitchBroadcasterId, twitchBotId } = CONFIG;
 
 	const userIds = [twitchBroadcasterId, twitchBotId].filter((x) => x != null) as string[];
 	const users = userIds.length ? await twurple.users.getUsersByIds(userIds) : [];
