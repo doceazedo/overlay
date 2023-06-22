@@ -9,7 +9,7 @@
 
 <form method="post">
 	<div class="box">
-		<h2 class="title is-4">1. Twitch application</h2>
+		<h2 class="title is-4">Twitch application</h2>
 		<p class="subtitle is-6">Please insert the credentials for your Twitch developer application</p>
 
 		<div class="notification is-info is-light">
@@ -51,24 +51,6 @@
 					placeholder="••••••••••••••••••••••••••••••"
 					name="twitch_client_secret"
 					value={data.twitchClientSecret}
-				/>
-			</div>
-		</div>
-	</div>
-
-	<div class="box">
-		<h2 class="title is-4">2. Twitch channel</h2>
-		<p class="subtitle is-6">What channel should the bot join?</p>
-
-		<div class="field">
-			<label class="label" for="twitch_client_id">Channel name</label>
-			<div class="control">
-				<input
-					class="input"
-					type="text"
-					placeholder="doceazedo911"
-					name="twitch_channel_name"
-					value={data.twitchChannelName}
 				/>
 			</div>
 		</div>

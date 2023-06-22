@@ -37,7 +37,8 @@ export const GET = async ({ url, params }) => {
 
 	await CONFIG.update({
 		twitchBroadcasterId: type == 'broadcaster' ? user.id : CONFIG.twitchBroadcasterId,
-		twitchBotId: type == 'bot' ? user.id : CONFIG.twitchBotId
+		twitchBotId: type == 'bot' ? user.id : CONFIG.twitchBotId,
+		twitchChannelName: type == 'broadcaster' ? user.login : CONFIG.twitchChannelName
 	});
 
 	throw redirect(302, '/accounts');

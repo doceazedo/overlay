@@ -13,12 +13,10 @@ export const actions = {
 
 		const twitchClientId = data.get('twitch_client_id')?.toString();
 		const twitchClientSecret = data.get('twitch_client_secret')?.toString();
-		const twitchChannelName = data.get('twitch_channel_name')?.toString();
 
 		CONFIG.update({
 			twitchClientId,
-			twitchClientSecret,
-			twitchChannelName
+			twitchClientSecret
 		});
 
 		throw redirect(302, '/accounts');
