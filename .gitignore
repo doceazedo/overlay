@@ -41,4 +41,5 @@ build/
 # prisma
 *.db
 
-tokens
+tokens/*.json
+config/*.json
