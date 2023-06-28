@@ -17,6 +17,8 @@ export const POST = async ({ request }) => {
 	}
 	await commandsDB.write();
 
+	// TODO: create script file if it does not exists
+
 	return json({ command: commandsDB.data.commands[idx] });
 };
 

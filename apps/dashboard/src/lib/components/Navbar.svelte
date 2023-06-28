@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Coins, Home, Megaphone, MessageCircle, RadioTower, Users } from 'lucide-svelte';
+	import { Coins, Home, Megaphone, MessageCircle, Puzzle, RadioTower, Users } from 'lucide-svelte';
 	import type { SvelteComponent } from 'svelte';
 	import { page } from '$app/stores';
 
@@ -31,6 +31,11 @@
 			href: '/channel-points',
 			label: 'Channel Points',
 			icon: Coins
+		},
+		{
+			href: '/widgets',
+			label: 'Widgets',
+			icon: Puzzle
 		},
 		{
 			href: '/accounts',
