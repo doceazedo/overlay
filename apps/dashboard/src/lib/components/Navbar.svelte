@@ -1,5 +1,15 @@
 <script lang="ts">
-	import { Coins, Home, Megaphone, MessageCircle, Puzzle, RadioTower, Users } from 'lucide-svelte';
+	import {
+		Coins,
+		Github,
+		Home,
+		Megaphone,
+		MessageCircle,
+		Puzzle,
+		RadioTower,
+		Settings,
+		Users
+	} from 'lucide-svelte';
 	import type { SvelteComponent } from 'svelte';
 	import { page } from '$app/stores';
 
@@ -43,9 +53,9 @@
 			icon: Users
 		},
 		{
-			href: '/connections',
-			label: 'Connections',
-			icon: RadioTower
+			href: '/setup',
+			label: 'Settings',
+			icon: Settings
 		}
 	];
 </script>
@@ -81,7 +91,10 @@
 					rel="noopener noreferrer"
 					class="button is-light"
 				>
-					Source code
+					<span class="icon">
+						<Github size={20} />
+					</span>
+					<span>Source code</span>
 				</a>
 			</div>
 			{#if user}

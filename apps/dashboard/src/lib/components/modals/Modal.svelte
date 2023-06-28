@@ -1,19 +1,33 @@
 <script lang="ts">
 	import { fade, scale } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
+	import { tick } from 'svelte';
 
 	export let active = false;
 	export let title: string;
+	let modal: HTMLDivElement;
 
 	const close = () => (active = false);
 
 	const handleKeyDown = (event: KeyboardEvent) => {
 		if (event.key == 'Escape') close();
 	};
+
+	const handleActiveToggle = async () => {
+		// await modal to be mounted/destroyed after `active` changes
+		await tick();
+		if (!active) return;
+		const interactableEl = modal?.querySelector(
+			'input,textarea,select,button:not(.delete):not(.is-static)'
+		) as HTMLElement;
+		interactableEl?.focus();
+	};
+
+	$: active, handleActiveToggle();
 </script>
 
 {#if active}
-	<div class="modal is-active">
+	<div class="modal is-active" bind:this={modal}>
 		<div
 			class="modal-background"
 			transition:fade={{ duration: 200, easing: quintOut }}
