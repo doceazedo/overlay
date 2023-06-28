@@ -1,5 +1,48 @@
 <script lang="ts">
+	import { Coins, Home, Megaphone, MessageCircle, RadioTower, Users } from 'lucide-svelte';
+	import type { SvelteComponent } from 'svelte';
+	import { page } from '$app/stores';
+
+	type NavbarItem = {
+		href: string;
+		label: string;
+		icon: typeof SvelteComponent;
+	};
+
 	export let user: any;
+
+	const navbarItems: NavbarItem[] = [
+		{
+			href: '/',
+			label: 'Dashboard',
+			icon: Home
+		},
+		{
+			href: '/commands',
+			label: 'Commands',
+			icon: MessageCircle
+		},
+		{
+			href: '/events',
+			label: 'Events',
+			icon: Megaphone
+		},
+		{
+			href: '/channel-points',
+			label: 'Channel Points',
+			icon: Coins
+		},
+		{
+			href: '/accounts',
+			label: 'Accounts',
+			icon: Users
+		},
+		{
+			href: '/connections',
+			label: 'Connections',
+			icon: RadioTower
+		}
+	];
 </script>
 
 <nav class="navbar has-shadow">
@@ -17,10 +60,12 @@
 
 	<div id="navbarBasicExample" class="navbar-menu">
 		<div class="navbar-start">
-			<a href="/" class="navbar-item">Dashboard</a>
-			<a href="/accounts" class="navbar-item">Accounts</a>
-			<a href="/connections" class="navbar-item">Connections</a>
-			<a href="/commands" class="navbar-item">Commands</a>
+			{#each navbarItems as item}
+				<a href={item.href} class="navbar-item" class:is-active={$page.url.pathname == item.href}>
+					<svelte:component this={item.icon} size={20} />
+					{item.label}
+				</a>
+			{/each}
 		</div>
 
 		<div class="navbar-end">
@@ -53,5 +98,14 @@
 	.image {
 		width: 2.25rem;
 		height: 2.25rem;
+	}
+
+	.navbar-item {
+		gap: 0.375rem;
+
+		&.is-active {
+			box-shadow: 0 2px #00d1b2;
+			color: #00d1b2;
+		}
 	}
 </style>
