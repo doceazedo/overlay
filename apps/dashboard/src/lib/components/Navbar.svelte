@@ -20,6 +20,7 @@
 			<a href="/" class="navbar-item">Dashboard</a>
 			<a href="/accounts" class="navbar-item">Accounts</a>
 			<a href="/connections" class="navbar-item">Connections</a>
+			<a href="/commands" class="navbar-item">Commands</a>
 		</div>
 
 		<div class="navbar-end">

@@ -31,6 +31,8 @@
 	"dependencies": {
 		"bulma": "^0.9.4",
 		"config": "*",
+		"database": "*",
+		"lucide-svelte": "^0.255.0",
 		"sass": "^1.63.4",
 		"svelte-tabler": "^0.4.5",
 		"twurple-auth": "*"
