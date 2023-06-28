@@ -26,7 +26,7 @@
 		>
 			<header class="modal-card-head">
 				<p class="modal-card-title">{title}</p>
-				<button class="delete" on:click={close} />
+				<button class="delete" type="button" on:click={close} />
 			</header>
 			<section class="modal-card-body">
 				<slot />
