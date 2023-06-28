@@ -13,6 +13,7 @@
   "dependencies": {
     "@twurple/easy-bot": "^6.2.1",
     "config": "*",
+    "db": "*",
     "twurple-auth": "*"
   }
 }

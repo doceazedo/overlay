@@ -1,27 +1,45 @@
 import { Bot, createBotCommand } from "@twurple/easy-bot";
 import { getAuthProvider } from "twurple-auth";
 import { CONFIG } from "config";
+import { commandsDB } from "db";
 
 const { twitchChannelName } = CONFIG;
 
 if (!twitchChannelName) process.exit();
 
 const authProvider = await getAuthProvider();
+if (!authProvider) throw Error("No auth provider");
+
+await commandsDB.read();
+const botCommands = commandsDB.data.commands
+  .map((cmd) => {
+    const aliases = cmd.aliases?.length
+      ? [cmd.name, ...cmd.aliases]
+      : [cmd.name];
+    return aliases.map((alias) => {
+      return createBotCommand(alias, async (params, ctx) => {
+        const message = cmd.reply || cmd.say;
+        const parsedMessage =
+          message &&
+          message
+            .replace("%username%", ctx.userDisplayName)
+            .replace("%params%", params.join(" "));
+
+        if (cmd.reply && parsedMessage) ctx.reply(parsedMessage);
+        if (cmd.say && parsedMessage) ctx.reply(parsedMessage);
+        if (cmd.script) {
+          const module = await import(`../../data/scripts/${alias}`);
+          module.default(params, ctx);
+        }
+      });
+    });
+  })
+  .flat();
 
 const bot = new Bot(null, {
   authProvider,
   channels: [twitchChannelName],
-  commands: [
-    createBotCommand("dice", (params, { reply }) => {
-      const diceRoll = Math.floor(Math.random() * 6) + 1;
-      reply(`You rolled a ${diceRoll}`);
-    }),
-    createBotCommand("slap", (params, { userName, say }) => {
-      say(
-        `${userName} slaps ${params.join(" ")} around a bit with a large trout`
-      );
-    }),
-  ],
+  commands: botCommands,
 });
 
 bot.onConnect(() => {

@@ -42,4 +42,6 @@ build/
 *.db
 
 tokens/*.json
-config/*.json
+data/*.json
+data/scripts/*.js
+data/scripts/*.ts
