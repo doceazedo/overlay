@@ -13,7 +13,7 @@
 
 	const updateDefaultValues = () => {
 		key = variable?.key || '';
-		value = variable?.value != null ? variable.value : '';
+		value = variable?.value != null ? `${variable.value}` : '';
 		incrementCooldown = variable?.incrementCooldown || 0;
 		restartOnStreamEnds = variable?.restartOnStreamEnds || false;
 		updateIsNumber();
@@ -22,18 +22,49 @@
 	let isLoading = false;
 
 	let key = '';
-	let value: VariableValue = '';
+	let value: string = '';
 	let incrementCooldown = 0;
 	let restartOnStreamEnds = false;
 	let isNumber = false;
 
-	const updateIsNumber = () => (isNumber = hasDigitsOnly(`${value}`));
+	const updateIsNumber = () => (isNumber = hasDigitsOnly(value));
 	$: value, updateIsNumber();
 
 	$: variable, updateDefaultValues();
 
 	const handleSubmit = async () => {
-		// ...
+		isLoading = true;
+		const data: Omit<VariableData, 'key'> = {
+			value: hasDigitsOnly(value) ? Number.parseInt(value) : value,
+			incrementCooldown,
+			restartOnStreamEnds
+		};
+		try {
+			const resp = await fetch(`/api/variables/${key}`, {
+				method: 'POST',
+				body: JSON.stringify(data)
+			});
+			if (!resp.ok) throw Error(); // TODO: error message
+			// TODO: toast success
+
+			const idx = variables.findIndex((x) => x.key == key);
+			if (idx >= 0) {
+				variables[idx] = {
+					...variables[idx],
+					...data
+				};
+			} else {
+				variables.push({
+					key,
+					...data
+				});
+			}
+			variables = variables;
+			active = false;
+		} catch (error) {
+			// TODO: toast error
+		}
+		isLoading = false;
 	};
 </script>
 

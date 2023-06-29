@@ -2,6 +2,7 @@
 	import { Edit3, Trash2, Plus } from 'lucide-svelte';
 	import type { VariableData } from 'db/models/variables';
 	import VariableModal from '$lib/components/modals/VariableModal.svelte';
+	import VariableDeleteModal from '$lib/components/modals/VariableDeleteModal.svelte';
 
 	type ParsedMessage = { value: string; type: 'text' | 'variable' }[];
 
@@ -71,3 +72,8 @@
 </table>
 
 <VariableModal bind:active={isVariableModalActive} bind:variables variable={editingVariable} />
+<VariableDeleteModal
+	bind:active={isVariableDeleteModalActive}
+	variable={editingVariable}
+	bind:variables
+/>

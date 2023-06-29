@@ -53,12 +53,12 @@
 				commands.push(data);
 			}
 			commands = commands;
+			active = false;
 		} catch (error) {
 			// TODO: toast error
 		}
 
 		isLoading = false;
-		active = false;
 	};
 </script>
 
