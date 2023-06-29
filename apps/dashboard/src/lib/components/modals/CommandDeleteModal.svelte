@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { CommandData } from 'db';
+	import type { CommandData } from 'db/models/commands';
 	import Modal from './Modal.svelte';
 
 	export let active = false;

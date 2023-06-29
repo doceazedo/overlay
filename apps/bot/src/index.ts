@@ -1,7 +1,7 @@
 import { Bot, createBotCommand } from "@twurple/easy-bot";
 import { getAuthProvider } from "twurple-auth";
 import { CONFIG } from "config";
-import { commandsDB } from "db";
+import { commands } from "db/models/commands";
 
 const { twitchChannelName } = CONFIG;
 
@@ -10,8 +10,8 @@ if (!twitchChannelName) process.exit();
 const authProvider = await getAuthProvider();
 if (!authProvider) throw Error("No auth provider");
 
-await commandsDB.read();
-const botCommands = commandsDB.data.commands
+await commands.read();
+const botCommands = commands.data.commands
   .map((cmd) => {
     const aliases = cmd.aliases?.length
       ? [cmd.name, ...cmd.aliases]

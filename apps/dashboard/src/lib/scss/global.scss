@@ -7,3 +7,19 @@ body {
 	display: flex;
 	flex-direction: column;
 }
+
+.header.has-actions {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 1.5rem;
+}
+
+.table .actions {
+	width: fit-content;
+	margin-left: auto;
+
+	.button {
+		border-radius: 0.375rem;
+	}
+}

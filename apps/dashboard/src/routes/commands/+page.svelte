@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Edit3, Trash2, Plus } from 'lucide-svelte';
-	import type { CommandData } from 'db';
+	import type { CommandData } from 'db/models/commands';
 	import CommandModal from '$lib/components/modals/CommandModal.svelte';
 	import CommandDeleteModal from '$lib/components/modals/CommandDeleteModal.svelte';
 
@@ -65,7 +65,7 @@
 	};
 </script>
 
-<header class="header">
+<header class="header has-actions">
 	<div>
 		<h1 class="title">Commands</h1>
 		<p class="subtitle">Manage your chat bot commands</p>
@@ -129,21 +129,3 @@
 	bind:commands
 	command={editingCommand}
 />
-
-<style lang="scss">
-	.header {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		margin-bottom: 1.5rem;
-	}
-
-	.actions {
-		width: fit-content;
-		margin-left: auto;
-
-		.button {
-			border-radius: 0.375rem;
-		}
-	}
-</style>

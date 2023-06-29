@@ -13,8 +13,5 @@ type Data = {
   commands: CommandData[];
 };
 
-const COMMANDS_FILE_PATH = "../../data/commands.json";
-
-const adapter = new JSONFile<Data>(COMMANDS_FILE_PATH);
-const defaultData = { commands: [] };
-export const commandsDB = new Low<Data>(adapter, defaultData);
+const adapter = new JSONFile<Data>("../../data/commands.json");
+export const commands = new Low<Data>(adapter, { commands: [] });

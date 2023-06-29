@@ -1,8 +1,8 @@
-import { commandsDB } from 'db';
+import { commands } from 'db/models/commands';
 
 export const load = async () => {
-	await commandsDB.read();
+	await commands.read();
 	return {
-		commands: commandsDB.data.commands
+		commands: commands.data.commands
 	};
 };

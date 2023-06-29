@@ -1,37 +1,37 @@
 import { error, json } from '@sveltejs/kit';
-import { commandsDB, type CommandData } from 'db';
+import { commands, type CommandData } from 'db/models/commands';
 
 export const POST = async ({ request }) => {
 	const data = (await request.json()) as CommandData;
 
-	await commandsDB.read();
-	const idx = commandsDB.data.commands.findIndex((cmd) => cmd.name == data.name);
+	await commands.read();
+	const idx = commands.data.commands.findIndex((cmd) => cmd.name == data.name);
 
 	if (idx >= 0) {
-		commandsDB.data.commands[idx] = {
-			...commandsDB.data.commands[idx],
+		commands.data.commands[idx] = {
+			...commands.data.commands[idx],
 			...data
 		};
 	} else {
-		commandsDB.data.commands.push(data);
+		commands.data.commands.push(data);
 	}
-	await commandsDB.write();
+	await commands.write();
 
 	// TODO: create script file if it does not exists
 
-	return json({ command: commandsDB.data.commands[idx] });
+	return json({ command: commands.data.commands[idx] });
 };
 
 export const DELETE = async ({ request }) => {
 	const data = (await request.json()) as { name: string };
 
-	await commandsDB.read();
-	const idx = commandsDB.data.commands.findIndex((cmd) => cmd.name == data.name);
+	await commands.read();
+	const idx = commands.data.commands.findIndex((cmd) => cmd.name == data.name);
 	if (idx < 0) throw error(404, 'Command not found');
 
-	const command = commandsDB.data.commands[idx];
-	commandsDB.data.commands.splice(idx, 1);
-	await commandsDB.write();
+	const command = commands.data.commands[idx];
+	commands.data.commands.splice(idx, 1);
+	await commands.write();
 
 	// TODO: delete script if it exists
 
