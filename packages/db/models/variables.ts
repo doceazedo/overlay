@@ -7,6 +7,7 @@ export type VariableData = {
   key: string;
   value: VariableValue;
   incrementCooldown?: number;
+  lastIncremented?: string;
   restartOnStreamEnds?: boolean;
 };
 
@@ -20,7 +21,7 @@ export const variables = new Low<Data>(adapter, { variables: [] });
 export const getVariable = async (key: string) => {
   await variables.read();
   const variable = variables.data.variables.find((x) => x.key == key);
-  return variable?.value || null;
+  return variable || null;
 };
 
 export const setVariable = async (
@@ -48,11 +49,22 @@ export const setVariable = async (
 };
 
 export const incrementVariable = async (key: string) => {
-  // TODO: cooldown
   const variable = await getVariable(key);
-  if (isNaN(variable as any)) return variable;
+  if (!variable) return null;
+  if (isNaN(variable.value as any)) return variable.value;
+
+  const now = new Date();
+  if (variable.incrementCooldown && variable.lastIncremented) {
+    if (
+      now.getTime() - new Date(variable.lastIncremented).getTime() <=
+      variable.incrementCooldown
+    )
+      return variable.value;
+  }
+
   const updatedVariable = await setVariable(key, {
-    value: (variable as number) + 1,
+    value: (variable.value as number) + 1,
+    lastIncremented: now.toISOString(),
   });
   return updatedVariable.value;
 };
