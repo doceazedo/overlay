@@ -51,9 +51,10 @@ export const incrementVariable = async (key: string) => {
   // TODO: cooldown
   const variable = await getVariable(key);
   if (isNaN(variable as any)) return variable;
-  return setVariable(key, {
-    value: ++(variable as number),
+  const updatedVariable = await setVariable(key, {
+    value: (variable as number) + 1,
   });
+  return updatedVariable.value;
 };
 
 export const deleteVariable = async (key: string) => {

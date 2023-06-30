@@ -1,10 +1,9 @@
 <script lang="ts">
 	import { Edit3, Trash2, Plus } from 'lucide-svelte';
-	import type { CommandData } from 'db/models/commands';
+	import { parseMessageTemplate } from 'utils/parse-message-template';
 	import CommandModal from '$lib/components/modals/CommandModal.svelte';
 	import CommandDeleteModal from '$lib/components/modals/CommandDeleteModal.svelte';
-
-	type ParsedMessage = { value: string; type: 'text' | 'variable' }[];
+	import type { CommandData } from 'db/models/commands';
 
 	export let data;
 
@@ -16,42 +15,6 @@
 	const getCommandAliases = (aliases?: string[]) => {
 		aliases = aliases || [];
 		return aliases.map((alias) => `!${alias}`).join(' ');
-	};
-
-	const parseCommandMessage = (input: string): ParsedMessage => {
-		const result: ParsedMessage = [];
-		let currentIndex = 0;
-
-		while (currentIndex < input.length) {
-			const openingIndex = input.indexOf('%', currentIndex);
-
-			if (openingIndex === -1) {
-				const remainingText = input.slice(currentIndex);
-				result.push({ value: remainingText, type: 'text' });
-				break;
-			}
-
-			const closingIndex = input.indexOf('%', openingIndex + 1);
-
-			if (closingIndex === -1) {
-				const remainingText = input.slice(currentIndex);
-				result.push({ value: remainingText, type: 'text' });
-				break;
-			}
-
-			const textBefore = input.slice(currentIndex, openingIndex);
-
-			if (textBefore.length > 0) {
-				result.push({ value: textBefore, type: 'text' });
-			}
-
-			const variable = input.slice(openingIndex + 1, closingIndex);
-			result.push({ value: variable, type: 'variable' });
-
-			currentIndex = closingIndex + 1;
-		}
-
-		return result;
 	};
 
 	const editCommand = (cmd: CommandData | null = null) => {
@@ -89,14 +52,14 @@
 	</thead>
 	<tbody>
 		{#each commands as command}
-			{@const parsedMessage = parseCommandMessage(command.reply || command.say || '')}
+			{@const parsedMessage = parseMessageTemplate(command.reply || command.say || '')}
 			<tr>
 				<td>!{command.name}</td>
 				<td>{getCommandAliases(command.aliases)}</td>
 				<td>
 					{#each parsedMessage as text}
-						{#if text.type == 'variable'}
-							<code>%{text.value}%</code>
+						{#if text.type == 'script'}
+							<code>&lcub;&lcub;{text.value}&rcub;&rcub;</code>
 						{:else}
 							{text.value}
 						{/if}
