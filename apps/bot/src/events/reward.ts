@@ -43,6 +43,11 @@ const rewards: Reward[] = [
     id: 'b196f854-104c-42d9-97b3-66be64cc04b7',
     handler: () => playAudioFromFile('estevao-ferreira-me-ferrei.mp3'),
   },
+  {
+    // Rapaz tá certo isso? 🤨
+    id: '5df5f975-2658-402e-9d32-633aac124aa4',
+    handler: () => playAudioFromFile('rapaz-ta-certo-isso.mp3'),
+  },
 ];
 
 export const rewardEvent = (
