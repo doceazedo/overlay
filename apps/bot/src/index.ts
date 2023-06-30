@@ -39,6 +39,7 @@ const botCommands = commands.data.commands
             userId: ctx.userId,
             userName: ctx.userName,
             userDisplayName: ctx.userDisplayName,
+            params,
             ...variables.data.variables.reduce((result, item) => {
               result[item.key] = item.value;
               return result;
