@@ -1,4 +1,5 @@
 import { CONFIG } from 'config';
+import { botScopes, broadcasterScopes } from 'twurple-auth/scopes';
 import { error, redirect } from '@sveltejs/kit';
 import { promises as fs } from 'fs';
 
@@ -23,6 +24,7 @@ export const GET = async ({ url, params }) => {
 		accessToken: token.access_token,
 		refreshToken: token.refresh_token,
 		expiresIn: token.expires_in,
+		scope: type == 'bot' ? botScopes : broadcasterScopes,
 		obtainmentTimestamp: 0
 	};
 

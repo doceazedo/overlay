@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { botScopes, broadcasterScopes } from 'twurple-auth/scopes';
 	import { page } from '$app/stores';
 	import AccountCard from '$lib/components/AccountCard.svelte';
 
@@ -6,8 +7,12 @@
 
 	const redirectUri = `${$page.url.origin}/accounts/connect/twitch`;
 
-	const getOauthUrl = (type: string) =>
-		`https://id.twitch.tv/oauth2/authorize?client_id=${data.twitchClientId}&redirect_uri=${redirectUri}/${type}&response_type=code&scope=chat:read+chat:edit`;
+	const getOauthUrl = (type: string) => {
+		const scopes = type == 'bot' ? botScopes : broadcasterScopes;
+		return `https://id.twitch.tv/oauth2/authorize?client_id=${
+			data.twitchClientId
+		}&redirect_uri=${redirectUri}/${type}&response_type=code&scope=${scopes.join('+')}`; // chat:read+chat:edit
+	};
 
 	const getDisconnectUrl = (type: string) => `/accounts/remove/twitch/${type}`;
 

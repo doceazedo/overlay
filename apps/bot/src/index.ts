@@ -1,14 +1,16 @@
 import { Bot, createBotCommand } from "@twurple/easy-bot";
+import { EventSubWsListener } from "@twurple/eventsub-ws";
 import { getAuthProvider } from "twurple-auth";
+import { ApiClient } from "@twurple/api";
 import { VM } from "vm2";
 import { CONFIG } from "config";
 import { commands } from "db/models/commands";
 import { incrementVariable, variables } from "db/models/variables";
 import { parseMessageTemplate } from "utils/parse-message-template";
 
-const { twitchChannelName } = CONFIG;
+const { twitchChannelName, twitchBroadcasterId } = CONFIG;
 
-if (!twitchChannelName) process.exit();
+if (!twitchChannelName || !twitchBroadcasterId) process.exit();
 
 const authProvider = await getAuthProvider();
 if (!authProvider) throw Error("No auth provider");
@@ -106,4 +108,13 @@ bot.onSubGift(({ broadcasterName, gifterName, userName }) => {
     broadcasterName,
     `Thanks to @${gifterName} for gifting a subscription to @${userName}!`
   );
+});
+
+const apiClient = new ApiClient({ authProvider });
+
+const eventsub = new EventSubWsListener({ apiClient });
+eventsub.start();
+
+eventsub.onChannelFollow(twitchBroadcasterId, twitchBroadcasterId, (e) => {
+  console.log(`thx for the follow, ${e.userDisplayName}!!`);
 });
