@@ -32,3 +32,5 @@ export type ActionSetVariable = {
   value: string;
   onlySetIfEmpty?: boolean;
 };
+
+// TODO: ActionPlaySound, ActionPlayAudio, ActionPlayVideo
