@@ -1,10 +1,10 @@
 import { events } from 'db/models/events';
 
 const allEvents = [
-	{ event: 'raid', label: 'Raid' },
+	{ event: 'follow', label: 'Follow' },
 	{ event: 'sub', label: 'Subscription' },
 	{ event: 'giftsub', label: 'Gifted Subscription' },
-	{ event: 'follow', label: 'Follow' }
+	{ event: 'raid', label: 'Raid' }
 ];
 
 export const load = async () => {

@@ -12,7 +12,12 @@
 		[action: string]: string;
 	};
 
+	type EmptyActions = {
+		[action: string]: Action;
+	};
+
 	export let actions: Action[];
+	let showNewActionDropdown = false;
 
 	const ACTION_FIELDS_MAP: ActionFieldsMap = {
 		say: ActionSay,
@@ -23,6 +28,27 @@
 		say: 'Send message',
 		reply: 'Reply message'
 	};
+
+	const EMPTY_ACTIONS: EmptyActions = {
+		say: {
+			type: 'say',
+			message: ''
+		},
+		reply: {
+			type: 'reply',
+			message: ''
+		}
+	};
+
+	const addAction = (action: string) => {
+		actions = [...actions, EMPTY_ACTIONS[action]];
+		showNewActionDropdown = false;
+	};
+
+	const deleteAction = (idx: number) => {
+		actions.splice(idx, 1);
+		actions = actions;
+	};
 </script>
 
 <div class="field is-horizontal">
@@ -31,11 +57,11 @@
 	</div>
 	<div class="field-body">
 		<ul class="actions-list">
-			{#each actions as action}
+			{#each actions as action, i}
 				<li class="box">
 					<div class="action-title">
 						<h2>{ACTION_LABELS_MAP[action.type]}</h2>
-						<button type="button">
+						<button type="button" on:click={() => deleteAction(i)}>
 							<Trash2 size={16} />
 						</button>
 					</div>
@@ -44,10 +70,19 @@
 			{/each}
 
 			<div class="new-action">
-				<button type="button" class="button is-primary">New action</button>
-				<div class="box dropdown">
-					<button type="button">Send message</button>
-				</div>
+				<button
+					type="button"
+					class="button is-primary"
+					on:click={() => (showNewActionDropdown = !showNewActionDropdown)}>New action</button
+				>
+				{#if showNewActionDropdown}
+					<div class="box dropdown">
+						{#each Object.values(ACTION_LABELS_MAP) as actionLabel, i}
+							{@const action = Object.keys(ACTION_LABELS_MAP)[i]}
+							<button type="button" on:click={() => addAction(action)}>{actionLabel}</button>
+						{/each}
+					</div>
+				{/if}
 			</div>
 		</ul>
 	</div>
@@ -117,12 +152,21 @@
 			left: 0;
 			padding: 0;
 			z-index: 100;
+			gap: 0;
+			overflow: hidden;
 
 			button {
 				background: none;
 				margin: 0;
 				padding: 0.75rem 1rem;
 				border: none;
+				font-size: 0.8rem;
+				text-align: left;
+				cursor: pointer;
+
+				&:hover {
+					background-color: #eee;
+				}
 			}
 		}
 	}

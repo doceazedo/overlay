@@ -34,3 +34,5 @@ export type ActionSetVariable = {
 };
 
 // TODO: ActionPlaySound, ActionPlayAudio, ActionPlayVideo
+
+export const ACTION_TYPES = ["say", "reply"];
