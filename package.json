@@ -8,11 +8,10 @@
   ],
   "scripts": {
     "build": "(cd apps/overlay && npm run build) && npm run start",
-    "dev": "FORCE_COLOR=1 turbo run dev --parallel",
-    "start": "FORCE_COLOR=1 turbo run start",
+    "dev": "turbo run dev --parallel --no-cache --force",
+    "start": "turbo run start --no-cache --force",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "cmd:new": "vite-node scripts/new-command.ts --"
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
     "turbo": "latest",
