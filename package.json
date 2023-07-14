@@ -3,19 +3,18 @@
   "version": "0.0.0",
   "private": true,
   "workspaces": [
-    "apps/*",
-    "packages/*"
+    "apps/*"
   ],
   "scripts": {
     "build": "(cd apps/overlay && npm run build) && npm run start",
-    "dev": "turbo run dev --parallel --no-cache --force",
-    "start": "turbo run start --no-cache --force",
+    "dev": "dotenv -- turbo run dev --parallel --no-cache --force",
+    "start": "dotenv -- turbo run start --no-cache --force",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
-    "turbo": "latest",
-    "vite-node": "^0.31.0"
+    "dotenv-cli": "^7.2.1",
+    "turbo": "latest"
   },
   "engines": {
     "node": ">=18.0.0"
