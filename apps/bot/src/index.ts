@@ -3,6 +3,7 @@ import { Bot, BotCommand } from "@twurple/easy-bot";
 import { EventSubWsListener } from "@twurple/eventsub-ws";
 import { ApiClient } from "@twurple/api";
 import { authProvider } from "./auth";
+import { initEventHandler } from "./events";
 
 console.log("Starting bot...");
 
@@ -30,33 +31,8 @@ bot.onConnect(() => {
   bot.say(channelName, "/me Tô na área! KonCha");
 });
 
-bot.onSub(({ broadcasterName, userName }) => {
-  bot.say(
-    broadcasterName,
-    `Thanks to @${userName} for subscribing to the channel!`
-  );
-});
-
-bot.onResub(({ broadcasterName, userName, months }) => {
-  bot.say(
-    broadcasterName,
-    `Thanks to @${userName} for subscribing to the channel for a total of ${months} months!`
-  );
-});
-
-bot.onSubGift(({ broadcasterName, gifterName, userName }) => {
-  bot.say(
-    broadcasterName,
-    `Thanks to @${gifterName} for gifting a subscription to @${userName}!`
-  );
-});
-
 const apiClient = new ApiClient({ authProvider });
+const eventSub = new EventSubWsListener({ apiClient });
+eventSub.start();
 
-const eventsub = new EventSubWsListener({ apiClient });
-eventsub.start();
-
-const broadcasterId = `${process.env.TWITCH_BROADCASTER_ID}`;
-eventsub.onChannelFollow(broadcasterId, broadcasterId, (e) => {
-  console.log(`thx for the follow, ${e.userDisplayName}!!`);
-});
+initEventHandler(bot, eventSub);
