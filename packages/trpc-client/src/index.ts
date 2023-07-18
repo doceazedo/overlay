@@ -8,7 +8,7 @@ import type {
 export const trpc = createTRPCProxyClient<AppRouter>({
   links: [
     httpBatchLink({
-      url: `http://localhost:${process.env.TRPC_SERVER_PORT}`,
+      url: `http://localhost:42070`,
     }),
   ],
 });

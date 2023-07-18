@@ -20,10 +20,21 @@ export const twitchRouter = router({
       const subscriptions = await apiClient.subscriptions.getSubscriptions(
         input.id
       );
-
       return {
         followers,
         subscriptions: subscriptions.total,
+        viewers: stream?.viewers || 0,
+      };
+    }),
+  getStreamViewers: publicProcedure
+    .input(
+      z.object({
+        id: z.string(),
+      })
+    )
+    .query(async ({ input }) => {
+      const stream = await apiClient.streams.getStreamByUserId(input.id);
+      return {
         viewers: stream?.viewers || 0,
       };
     }),

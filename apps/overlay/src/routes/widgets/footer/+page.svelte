@@ -2,19 +2,16 @@
 	import { onMount } from 'svelte';
 	import { fly } from 'svelte/transition';
 	import { flyIn, flyOut } from '$lib/utils/transitions';
-	import Eye from '$lib/components/icons/Eye.svelte';
-	import Heart from '$lib/components/icons/Heart.svelte';
 	import Music from '$lib/components/icons/Music.svelte';
-	import Star from '$lib/components/icons/Star.svelte';
 	import Follow from '$lib/components/icons/Follow.svelte';
 	import FooterItem from './FooterItem.svelte';
 	import FooterSocials from './FooterSocials.svelte';
+	import FooterStats from './FooterStats.svelte';
 
 	let showAnnouncement = false;
-
 	let song = 'Kim Petras - Claws';
 
-	onMount(() => {
+	onMount(async () => {
 		// TODO: remove debug methods
 		window.toggleAnnouncement = () => (showAnnouncement = !showAnnouncement);
 		window.setSong = (str: string) => (song = str);
@@ -28,11 +25,7 @@
 			<hr />
 			<FooterSocials />
 			<hr />
-			<div class="metrics">
-				<FooterItem icon={Heart} label="1.033" />
-				<FooterItem icon={Star} label="32" />
-				<FooterItem icon={Eye} label="15" />
-			</div>
+			<FooterStats />
 		{:else}
 			<FooterItem icon={Follow}>
 				Valeu por me seguir, <b>DoceAzedo911</b>!
@@ -52,14 +45,6 @@
 		gap: 1.5rem;
 		width: 100%;
 		height: 93px;
-	}
-
-	.metrics {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		gap: 1.5rem;
-		color: rgba(#fff, 0.8);
 	}
 
 	hr {

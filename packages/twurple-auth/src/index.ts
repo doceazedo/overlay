@@ -25,9 +25,9 @@ export const authProvider = new RefreshingAuthProvider({
     ),
 });
 
-const botTokenData = await getTokenData(process.env.TWITCH_BOT_ID);
+const botTokenData = await getTokenData(process.env.PUBLIC_TWITCH_BOT_ID);
 const broadcasterTokenData = await getTokenData(
-  process.env.TWITCH_BROADCASTER_ID
+  process.env.PUBLIC_TWITCH_BROADCASTER_ID
 );
 
 await authProvider.addUserForToken(botTokenData, ["chat"]);

@@ -2,7 +2,7 @@
 	import { flyIn, flyOut, fly as patchedFly } from '$lib/utils/transitions';
 	import type { SvelteComponent } from 'svelte';
 
-	export let label = 'Label';
+	export let label: string | number = 'Label';
 	export let icon: any;
 	export let hasIconTransitions = true;
 	export let hasLabelTransitions = true;

@@ -31,6 +31,7 @@
 	"type": "module",
 	"dependencies": {
 		"sass": "^1.63.6",
+		"trpc-client": "*",
 		"ws-client": "*"
 	}
 }

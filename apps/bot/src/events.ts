@@ -2,7 +2,7 @@ import { Bot } from "@twurple/easy-bot";
 import { EventSubWsListener } from "@twurple/eventsub-ws";
 import { socket } from "ws-client";
 
-const broadcasterId = `${process.env.TWITCH_BROADCASTER_ID}`;
+const broadcasterId = `${process.env.PUBLIC_TWITCH_BROADCASTER_ID}`;
 
 export const initEventHandler = (chat: Bot, eventSub: EventSubWsListener) => {
   chat.onMessage((e) => {
