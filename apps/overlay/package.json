@@ -30,6 +30,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"js-confetti": "^0.11.0",
 		"sass": "^1.63.6",
 		"trpc-client": "*",
 		"uid": "^2.0.2",

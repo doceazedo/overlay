@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { socket } from 'ws-client';
+	import { sleep } from '$lib/utils/sleep';
 	import Follow from '$lib/components/icons/Follow.svelte';
 	import Crown from '$lib/components/icons/Crown.svelte';
 	import Star from '$lib/components/icons/Star.svelte';
@@ -9,7 +11,6 @@
 	import raidSound from '$lib/assets/sounds/raid-sound.mp3';
 	import subSound from '$lib/assets/sounds/sub-sound.mp3';
 	import { ALERTS, type Alert } from './stores/alerts';
-	import { sleep } from '$lib/utils/sleep';
 
 	export let id: string | null;
 	let alert: Alert | null;
@@ -21,6 +22,8 @@
 		await sleep(400);
 		const audio = new Audio(ALERT_SOUNDS_MAP[alert.type]);
 		audio.play();
+
+		if (alert.type == 'raid') socket.emit('confetti');
 	});
 
 	const getAlertIcon = (alert: Alert) => {
