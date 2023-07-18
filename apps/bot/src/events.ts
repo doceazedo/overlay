@@ -6,48 +6,66 @@ const broadcasterId = `${process.env.PUBLIC_TWITCH_BROADCASTER_ID}`;
 
 export const initEventHandler = (chat: Bot, eventSub: EventSubWsListener) => {
   chat.onMessage((e) => {
-    socket.emit("message", {
-      broadcasterId: e.broadcasterId,
-      broadcasterName: e.broadcasterName,
-      emoteOffsets: e.emoteOffsets,
-      isAction: e.isAction,
-      text: e.text,
+    socket.emit("event", {
+      type: "message",
       userDisplayName: e.userDisplayName,
-      userId: e.userId,
-      userName: e.userName,
+      text: e.text,
+      emoteOffsets: e.emoteOffsets,
     });
   });
 
   eventSub.onChannelFollow(broadcasterId, broadcasterId, (e) => {
-    socket.emit("message", {
-      broadcasterDisplayName: e.broadcasterDisplayName,
-      broadcasterId: e.broadcasterId,
-      broadcasterName: e.broadcasterName,
-      followDate: e.followDate,
+    socket.emit("event", {
+      type: "follow",
       userDisplayName: e.userDisplayName,
-      userId: e.userId,
-      userName: e.userName,
     });
+    chat.say(broadcasterId, `Valeu por me seguir, @${e.userDisplayName}!`);
   });
 
-  chat.onSub(({ broadcasterName, userName }) => {
+  chat.onSub((e) => {
+    socket.emit("event", {
+      type: "sub",
+      userDisplayName: e.userDisplayName,
+      isPrime: e.isPrime,
+    });
     chat.say(
-      broadcasterName,
-      `Thanks to @${userName} for subscribing to the channel!`
+      e.broadcasterName,
+      `Valeu ${e.isPrime ? "pelo Prime" : "por se inscrever"}, @${
+        e.userDisplayName
+      }!`
     );
   });
 
-  chat.onResub(({ broadcasterName, userName, months }) => {
+  chat.onResub((e) => {
+    socket.emit("event", {
+      type: "resub",
+      userDisplayName: e.userDisplayName,
+      months: e.months,
+      isPrime: e.isPrime,
+    });
     chat.say(
-      broadcasterName,
-      `Thanks to @${userName} for subscribing to the channel for a total of ${months} months!`
+      e.broadcasterName,
+      `Valeu ${e.isPrime ? "pelo Prime de" : "por se inscrever por"} ${
+        e.months
+      } meses, @${e.userDisplayName}!`
     );
   });
 
-  chat.onSubGift(({ broadcasterName, gifterName, userName }) => {
+  // TODO: sub gift + prevent spam
+
+  chat.onRaid((e) => {
+    socket.emit("event", {
+      type: "raid",
+      userDisplayName: e.userDisplayName,
+      raiders: e.viewerCount,
+    });
     chat.say(
-      broadcasterName,
-      `Thanks to @${gifterName} for gifting a subscription to @${userName}!`
+      e.broadcasterName,
+      `@${e.userDisplayName} está raidando com ${e.viewerCount} pessoas!`
     );
   });
+
+  // TODO: queue song
+
+  // TODO: redeems
 };

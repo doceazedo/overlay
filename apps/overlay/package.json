@@ -32,6 +32,7 @@
 	"dependencies": {
 		"sass": "^1.63.6",
 		"trpc-client": "*",
+		"uid": "^2.0.2",
 		"ws-client": "*"
 	}
 }

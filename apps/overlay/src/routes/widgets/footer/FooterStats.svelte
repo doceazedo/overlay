@@ -6,33 +6,28 @@
 	import Heart from '$lib/components/icons/Heart.svelte';
 	import Star from '$lib/components/icons/Star.svelte';
 	import FooterItem from './FooterItem.svelte';
+	import { STATS } from './stores';
 
 	const channelId = `${env.PUBLIC_TWITCH_BROADCASTER_ID}`;
 
-	let stats = {
-		followers: 0,
-		subscriptions: 0,
-		viewers: 0
-	};
-
 	onMount(async () => {
-		stats = await trpc.twitch.getStreamStats.query({
+		$STATS = await trpc.twitch.getStreamStats.query({
 			id: channelId
 		});
 	});
 
 	const interval = setInterval(async () => {
 		const { viewers } = await trpc.twitch.getStreamViewers.query({ id: channelId });
-		stats.viewers = viewers;
+		$STATS.viewers = viewers;
 	}, 15000);
 
 	onDestroy(() => clearInterval(interval));
 </script>
 
 <div class="stats">
-	<FooterItem icon={Heart} label={stats.followers.toLocaleString('pt-BR')} />
-	<FooterItem icon={Star} label={stats.subscriptions.toLocaleString('pt-BR')} />
-	<FooterItem icon={Eye} label={stats.viewers.toLocaleString('pt-BR')} />
+	<FooterItem icon={Heart} label={$STATS.followers.toLocaleString('pt-BR')} />
+	<FooterItem icon={Star} label={$STATS.subscriptions.toLocaleString('pt-BR')} />
+	<FooterItem icon={Eye} label={$STATS.viewers.toLocaleString('pt-BR')} />
 </div>
 
 <style lang="scss">

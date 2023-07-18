@@ -1,6 +1,11 @@
 import { Server } from "socket.io";
 
-const io = new Server();
+const io = new Server({
+  cors: {
+    origin: `http://localhost:5174`,
+    methods: ["GET", "POST"],
+  },
+});
 
 io.on("connection", (socket) => {
   console.log(`New connection ${socket.id}`);

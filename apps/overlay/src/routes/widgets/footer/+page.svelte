@@ -1,33 +1,30 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import { fly } from 'svelte/transition';
 	import { flyIn, flyOut } from '$lib/utils/transitions';
-	import Follow from '$lib/components/icons/Follow.svelte';
+	import FooterAlert from './FooterAlert.svelte';
 	import FooterDivider from './FooterDivider.svelte';
-	import FooterItem from './FooterItem.svelte';
 	import FooterSocials from './FooterSocials.svelte';
 	import FooterSong from './FooterSong.svelte';
 	import FooterStats from './FooterStats.svelte';
+	import { ALERTS, activeAlert, queueAlert } from './stores';
+	import { onMount } from 'svelte';
 
-	let showAnnouncement = false;
-
-	onMount(async () => {
-		// TODO: remove debug methods
-		window.toggleAnnouncement = () => (showAnnouncement = !showAnnouncement);
+	onMount(() => {
+		window.debug = (x = 'DoceAzedo911') => {
+			queueAlert({ type: 'follow', userDisplayName: x });
+		};
 	});
 </script>
 
-{#key showAnnouncement}
+{#key !!$ALERTS.length && activeAlert}
 	<footer class="footer" in:fly={flyIn} out:fly={flyOut}>
-		{#if !showAnnouncement}
+		{#if !$ALERTS.length}
 			<FooterSong />
 			<FooterSocials />
 			<FooterDivider />
 			<FooterStats />
 		{:else}
-			<FooterItem icon={Follow}>
-				Valeu por me seguir, <b>DoceAzedo911</b>!
-			</FooterItem>
+			<FooterAlert id={activeAlert} />
 		{/if}
 	</footer>
 {/key}
