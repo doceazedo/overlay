@@ -2,7 +2,7 @@ import { promises as fs } from "fs";
 import { Bot, BotCommand } from "@twurple/easy-bot";
 import { EventSubWsListener } from "@twurple/eventsub-ws";
 import { ApiClient } from "@twurple/api";
-import { authProvider } from "./auth";
+import { authProvider } from "twurple-auth";
 import { initEventHandler } from "./events";
 
 console.log("Starting bot...");

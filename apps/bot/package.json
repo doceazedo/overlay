@@ -12,10 +12,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@twurple/auth": "^6.2.1",
     "@twurple/easy-bot": "^7.0.0",
     "@twurple/eventsub-ws": "^7.0.0",
     "vite-node": "^0.33.0",
+    "twurple-auth": "*",
     "ws-client": "*"
   }
 }
