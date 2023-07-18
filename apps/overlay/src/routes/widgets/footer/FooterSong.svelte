@@ -6,12 +6,11 @@
 	import Music from '$lib/components/icons/Music.svelte';
 	import FooterDivider from './FooterDivider.svelte';
 	import FooterItem from './FooterItem.svelte';
-
-	let song: string | null = null;
+	import { CURRENT_SONG } from './stores';
 
 	const updateCurrentSong = async () => {
 		const track = await trpc.spotifyApp.getTrack.query();
-		song = track?.id ? `${track?.artist} - ${track?.title}` : null;
+		$CURRENT_SONG = track?.id ? `${track?.artist} - ${track?.title}` : null;
 	};
 
 	onMount(updateCurrentSong);
@@ -20,9 +19,9 @@
 	onDestroy(() => clearInterval(interval));
 </script>
 
-{#if song}
+{#if $CURRENT_SONG}
 	<div class="song" in:fly={flyIn} out:fly={flyOut}>
-		<FooterItem icon={Music} label={song} />
+		<FooterItem icon={Music} label={$CURRENT_SONG} />
 	</div>
 	<FooterDivider />
 {/if}

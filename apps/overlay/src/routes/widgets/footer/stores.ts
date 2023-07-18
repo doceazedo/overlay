@@ -9,6 +9,8 @@ export const STATS = writable({
 	viewers: 0
 });
 
+export const CURRENT_SONG = writable<string | null>(null);
+
 export const ALERTS = writable<any[]>([]);
 export let activeAlert: string | null = null;
 
