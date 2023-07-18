@@ -13,6 +13,13 @@
 		window.debug = (x = 'DoceAzedo911') => {
 			queueAlert({ type: 'follow', userDisplayName: x });
 		};
+		window.debug2 = () => {
+			queueAlert({ type: 'raid', userDisplayName: 'DoceAzedo911', raiders: 8 });
+			queueAlert({ type: 'follow', userDisplayName: 'DoceAzedo911' });
+			queueAlert({ type: 'sub', userDisplayName: 'DoceAzedo911', isPrime: true });
+			queueAlert({ type: 'sub', userDisplayName: 'DoceAzedo911', isPrime: false });
+			queueAlert({ type: 'resub', userDisplayName: 'DoceAzedo911', isPrime: false, months: 3 });
+		};
 	});
 </script>
 
