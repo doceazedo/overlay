@@ -1,0 +1,23 @@
+{
+  "name": "trpc-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "vite-node src",
+    "dev": "vite-node --watch src"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@trpc/server": "^10.34.0",
+    "cors": "^2.8.5",
+    "run-applescript": "^6.1.0",
+    "zod": "^3.21.4"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.13"
+  }
+}
