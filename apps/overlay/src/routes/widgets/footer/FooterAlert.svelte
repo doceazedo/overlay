@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import Follow from '$lib/components/icons/Follow.svelte';
 	import FooterItem from './FooterItem.svelte';
-	import { ALERTS } from './stores';
+	import { ALERTS } from './stores/alerts';
 
 	export let id: string | null;
 	let alert: any;

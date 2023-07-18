@@ -3,14 +3,6 @@ import { uid } from 'uid';
 import { socket } from 'ws-client';
 import { sleep } from '$lib/utils/sleep';
 
-export const STATS = writable({
-	followers: 0,
-	subscriptions: 0,
-	viewers: 0
-});
-
-export const CURRENT_SONG = writable<string | null>(null);
-
 export const ALERTS = writable<any[]>([]);
 export let activeAlert: string | null = null;
 

@@ -6,7 +6,7 @@
 	import Heart from '$lib/components/icons/Heart.svelte';
 	import Star from '$lib/components/icons/Star.svelte';
 	import FooterItem from './FooterItem.svelte';
-	import { STATS } from './stores';
+	import { STATS } from './stores/stats';
 
 	const channelId = `${env.PUBLIC_TWITCH_BROADCASTER_ID}`;
 

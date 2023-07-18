@@ -6,7 +6,7 @@
 	import Music from '$lib/components/icons/Music.svelte';
 	import FooterDivider from './FooterDivider.svelte';
 	import FooterItem from './FooterItem.svelte';
-	import { CURRENT_SONG } from './stores';
+	import { CURRENT_SONG } from './stores/song';
 
 	const updateCurrentSong = async () => {
 		const track = await trpc.spotifyApp.getTrack.query();

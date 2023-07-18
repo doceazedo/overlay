@@ -6,7 +6,7 @@
 	import FooterSocials from './FooterSocials.svelte';
 	import FooterSong from './FooterSong.svelte';
 	import FooterStats from './FooterStats.svelte';
-	import { ALERTS, activeAlert, queueAlert } from './stores';
+	import { ALERTS, activeAlert, queueAlert } from './stores/alerts';
 	import { onMount } from 'svelte';
 
 	onMount(() => {
