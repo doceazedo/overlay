@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import { env } from '$env/dynamic/public';
 	import { trpc } from 'trpc-client';
 	import Eye from '$lib/components/icons/Eye.svelte';
@@ -21,10 +21,12 @@
 		});
 	});
 
-	setTimeout(async () => {
+	const interval = setInterval(async () => {
 		const { viewers } = await trpc.twitch.getStreamViewers.query({ id: channelId });
 		stats.viewers = viewers;
 	}, 15000);
+
+	onDestroy(() => clearInterval(interval));
 </script>
 
 <div class="stats">
