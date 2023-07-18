@@ -4,11 +4,15 @@
 	import Twitter from '$lib/components/icons/Twitter.svelte';
 	import Link from '$lib/components/icons/Link.svelte';
 	import FooterItem from './FooterItem.svelte';
+	import Mastodon from '$lib/components/icons/Mastodon.svelte';
+	import Instagram from '$lib/components/icons/Instagram.svelte';
 
 	const socials = [
 		{ icon: Link, label: 'doceazedo.com' },
 		{ icon: GitHub, label: 'github.com/doceazedo' },
-		{ icon: Twitter, label: '@doceazedo' }
+		{ icon: Twitter, label: '@doceazedo911' },
+		{ icon: Mastodon, label: '@doceazedo@bolha.us' },
+		{ icon: Instagram, label: '@doceazedo911' }
 	];
 
 	let activeSocial = 0;
