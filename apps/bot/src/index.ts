@@ -4,6 +4,7 @@ import { EventSubWsListener } from "@twurple/eventsub-ws";
 import { ApiClient } from "@twurple/api";
 import { authProvider } from "twurple-auth";
 import { initEventHandler } from "./events";
+import { initChannelRewardsHandler } from "./rewards";
 
 console.log("Starting bot...");
 
@@ -36,3 +37,4 @@ const eventSub = new EventSubWsListener({ apiClient });
 eventSub.start();
 
 initEventHandler(bot, eventSub);
+initChannelRewardsHandler(eventSub);

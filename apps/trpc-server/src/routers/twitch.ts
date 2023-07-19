@@ -38,4 +38,23 @@ export const twitchRouter = router({
         viewers: stream?.viewers || 0,
       };
     }),
+  getChannelRewards: publicProcedure
+    .input(
+      z.object({
+        id: z.string(),
+      })
+    )
+    .query(async ({ input }) => {
+      const customRewards = await apiClient.channelPoints.getCustomRewards(
+        input.id
+      );
+      const rewards = customRewards.map((x) => ({
+        id: x.id,
+        title: x.title,
+      }));
+
+      return {
+        rewards,
+      };
+    }),
 });
