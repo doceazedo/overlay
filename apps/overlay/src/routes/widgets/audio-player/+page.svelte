@@ -18,7 +18,6 @@
 		const url = window.URL.createObjectURL(blob);
 		audio.src = url;
 		audio.play();
-		console.log(audio.src);
 	};
 
 	const handleAudioEnd = () => playNextAudio();
