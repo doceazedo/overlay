@@ -1,6 +1,7 @@
 import { playAudioFromFile } from "./utils/play-audio";
 import type { EventSubWsListener } from "@twurple/eventsub-ws";
 import type { EventSubChannelRedemptionAddEvent } from "@twurple/eventsub-base";
+import { playRandomTikTokTTS } from "./utils/play-tts";
 
 const broadcasterId = `${process.env.PUBLIC_TWITCH_BROADCASTER_ID}`;
 
@@ -10,6 +11,11 @@ type Reward = {
 };
 
 const rewards: Reward[] = [
+  {
+    // TTS 🎙️
+    id: "d86c9437-1778-4852-94cc-7b154916fb27",
+    handler: (e) => playRandomTikTokTTS(e.input),
+  },
   {
     // Hidratação 🥤
     id: "c541c16d-e4f9-4e91-89dc-e8274402b669",
