@@ -13,9 +13,7 @@
 
 	const playNextAudio = () => {
 		if (!audioQueue.length) return;
-		const buffer = audioQueue[0];
-
-		audioQueue.shift();
+		const buffer = audioQueue.shift() as Buffer;
 		const blob = new Blob([buffer], { type: 'audio/mp3' });
 		const url = window.URL.createObjectURL(blob);
 		audio.src = url;
