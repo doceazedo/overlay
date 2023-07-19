@@ -5,15 +5,6 @@ import { socket } from "ws-client";
 const broadcasterId = `${process.env.PUBLIC_TWITCH_BROADCASTER_ID}`;
 
 export const initEventHandler = (chat: Bot, eventSub: EventSubWsListener) => {
-  chat.onMessage((e) => {
-    socket.emit("event", {
-      type: "message",
-      userDisplayName: e.userDisplayName,
-      text: e.text,
-      emoteOffsets: e.emoteOffsets,
-    });
-  });
-
   eventSub.onChannelFollow(broadcasterId, broadcasterId, (e) => {
     socket.emit("event", {
       type: "follow",
