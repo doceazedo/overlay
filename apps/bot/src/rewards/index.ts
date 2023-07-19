@@ -1,13 +1,15 @@
-import { playAudioFromFile } from "./utils/play-audio";
+import { playAudioFromFile } from "../utils/play-audio";
+import { playRandomTikTokTTS } from "../utils/play-tts";
+import { songRequestHandler } from "./song-request";
 import type { EventSubWsListener } from "@twurple/eventsub-ws";
 import type { EventSubChannelRedemptionAddEvent } from "@twurple/eventsub-base";
-import { playRandomTikTokTTS } from "./utils/play-tts";
+import type { Bot } from "@twurple/easy-bot";
 
 const broadcasterId = `${process.env.PUBLIC_TWITCH_BROADCASTER_ID}`;
 
-type Reward = {
+export type Reward = {
   id: string;
-  handler: (e: EventSubChannelRedemptionAddEvent) => void;
+  handler: (e: EventSubChannelRedemptionAddEvent, chat: Bot) => void;
 };
 
 const rewards: Reward[] = [
@@ -15,6 +17,11 @@ const rewards: Reward[] = [
     // TTS 🎙️
     id: "d86c9437-1778-4852-94cc-7b154916fb27",
     handler: (e) => playRandomTikTokTTS(e.input),
+  },
+  {
+    // Song request 🎸
+    id: "26b6f04c-4ebd-45ba-928e-1b26f18b14aa",
+    handler: songRequestHandler,
   },
   {
     // Hidratação 🥤
@@ -58,12 +65,13 @@ const rewards: Reward[] = [
   },
 ];
 
-export const initChannelRewardsHandler = (eventSub: EventSubWsListener) => {
+export const initChannelRewardsHandler = (
+  chat: Bot,
+  eventSub: EventSubWsListener
+) => {
   const registeredEvents = rewards.map((reward) =>
-    eventSub.onChannelRedemptionAddForReward(
-      broadcasterId,
-      reward.id,
-      reward.handler
+    eventSub.onChannelRedemptionAddForReward(broadcasterId, reward.id, (e) =>
+      reward.handler(e, chat)
     )
   );
   console.log(`Loaded ${registeredEvents.length} channel rewards`);

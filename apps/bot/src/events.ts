@@ -3,6 +3,7 @@ import { EventSubWsListener } from "@twurple/eventsub-ws";
 import { socket } from "ws-client";
 
 const broadcasterId = `${process.env.PUBLIC_TWITCH_BROADCASTER_ID}`;
+const channelName = `${process.env.TWITCH_CHANNEL_NAME}`;
 
 export const initEventHandler = (chat: Bot, eventSub: EventSubWsListener) => {
   eventSub.onChannelFollow(broadcasterId, broadcasterId, (e) => {
@@ -10,7 +11,7 @@ export const initEventHandler = (chat: Bot, eventSub: EventSubWsListener) => {
       type: "follow",
       userDisplayName: e.userDisplayName,
     });
-    chat.say(broadcasterId, `Valeu por me seguir, @${e.userDisplayName}!`);
+    chat.say(channelName, `Valeu por me seguir, @${e.userDisplayName}!`);
   });
 
   chat.onSub((e) => {

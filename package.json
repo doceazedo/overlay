@@ -23,6 +23,7 @@
   },
   "packageManager": "npm@8.18.0",
   "dependencies": {
+    "spotify-api.js": "^9.2.5",
     "trpc-client": "*",
     "vite-node": "^0.33.0"
   }

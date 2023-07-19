@@ -37,4 +37,4 @@ const eventSub = new EventSubWsListener({ apiClient });
 eventSub.start();
 
 initEventHandler(bot, eventSub);
-initChannelRewardsHandler(eventSub);
+initChannelRewardsHandler(bot, eventSub);
