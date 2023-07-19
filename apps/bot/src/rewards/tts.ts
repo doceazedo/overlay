@@ -1,10 +1,11 @@
-import { playAudio } from "./play-audio";
+import { playAudio } from "../utils/play-audio";
+import type { Reward } from ".";
 
 const voices = ["br_003", "br_004", "br_005"];
 
 const BASE_URL_TIKTOK_TTS = "https://tiktok-tts.weilnet.workers.dev";
 
-export const playTikTokTTS = async (text: string, voice: string) => {
+const playTikTokTTS = async (text: string, voice: string) => {
   try {
     const resp = await fetch(`${BASE_URL_TIKTOK_TTS}/api/generation`, {
       method: "POST",
@@ -22,7 +23,7 @@ export const playTikTokTTS = async (text: string, voice: string) => {
   }
 };
 
-export const playRandomTikTokTTS = (text: string) => {
+export const ttsHandler: Reward["handler"] = (e) => {
   const voice = voices[Math.floor(Math.random() * voices.length)];
-  return playTikTokTTS(text, voice);
+  playTikTokTTS(e.input, voice);
 };

@@ -1,6 +1,6 @@
 import { playAudioFromFile } from "../utils/play-audio";
-import { playRandomTikTokTTS } from "../utils/play-tts";
 import { songRequestHandler } from "./song-request";
+import { ttsHandler } from "./tts";
 import type { EventSubWsListener } from "@twurple/eventsub-ws";
 import type { EventSubChannelRedemptionAddEvent } from "@twurple/eventsub-base";
 import type { Bot } from "@twurple/easy-bot";
@@ -16,7 +16,7 @@ const rewards: Reward[] = [
   {
     // TTS 🎙️
     id: "d86c9437-1778-4852-94cc-7b154916fb27",
-    handler: (e) => playRandomTikTokTTS(e.input),
+    handler: ttsHandler,
   },
   {
     // Song request 🎸
