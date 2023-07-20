@@ -16,14 +16,17 @@ type CommandHandler = (ctx: CommandContext) => void;
 type BotCommand = {
   aliases: string[];
   handler: CommandHandler;
+  isModOnly?: boolean;
 };
 
 export const createBotCommand = (
   aliases: string[],
-  handler: CommandHandler
+  handler: CommandHandler,
+  isModOnly = false
 ): BotCommand => ({
   aliases,
   handler,
+  isModOnly,
 });
 
 const commandsDir = "./src/commands";
@@ -49,7 +52,11 @@ export const initCommandHandler = (chat: ChatClient) => {
       reply: (text: string) => chat.say(channel, text, { replyTo: msg }),
     };
     const cmd = commands.find((x) => x.aliases.includes(ctx.cmd));
-    if (cmd) cmd.handler(ctx);
+    if (cmd) {
+      if (cmd.isModOnly && !msg.userInfo.isMod)
+        return ctx.reply("Somente mods podem usar esse comando! NotLikeThis");
+      cmd.handler(ctx);
+    }
   });
 
   console.log(`Loaded ${commands.length} commands`);
