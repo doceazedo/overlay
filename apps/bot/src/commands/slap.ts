@@ -1,7 +1,9 @@
-import { createBotCommand } from "@twurple/easy-bot";
+import { createBotCommand } from "../commands";
 
-const slap = createBotCommand("slap", (params, { userName, say }) => {
-  say(`${userName} slaps ${params.join(" ")} around a bit with a large trout`);
+const slap = createBotCommand(["slap"], (ctx) => {
+  ctx.say(
+    `${ctx.user} slaps ${ctx.params.join(" ")} around a bit with a large trout`
+  );
 });
 
 export default slap;

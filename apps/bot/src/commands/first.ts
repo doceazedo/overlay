@@ -1,4 +1,4 @@
-import { createBotCommand } from "@twurple/easy-bot";
+import { createBotCommand } from "../commands";
 import { first } from "db/models/first";
 
 export const dateHasPassed = (date: Date, hours = 1) => {
@@ -8,7 +8,7 @@ export const dateHasPassed = (date: Date, hours = 1) => {
   return now - time > ttl;
 };
 
-const firstCmd = createBotCommand("first", async (params, ctx) => {
+const firstCmd = createBotCommand(["first"], async (ctx) => {
   await first.read();
   if (
     first.data.first &&
@@ -19,13 +19,13 @@ const firstCmd = createBotCommand("first", async (params, ctx) => {
     );
   }
   first.data.first = {
-    displayName: ctx.userDisplayName,
+    displayName: ctx.user,
     redeemedAt: new Date().toISOString(),
   };
-  const counter = first.data.ranking[ctx.userId] || 0;
-  first.data.ranking[ctx.userId] = counter + 1;
+  const counter = first.data.ranking[ctx.msg.userInfo.userId] || 0;
+  first.data.ranking[ctx.msg.userInfo.userId] = counter + 1;
   await first.write();
-  ctx.say(`@${ctx.userDisplayName} foi a primeira pessoa a chegar! 🏃🏁🎊`);
+  ctx.say(`@${ctx.user} foi a primeira pessoa a chegar! 🏃🏁🎊`);
 });
 
 export default firstCmd;

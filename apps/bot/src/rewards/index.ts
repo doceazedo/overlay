@@ -1,15 +1,15 @@
 import { playAudioFromFile } from "../utils/play-audio";
 import { songRequestHandler } from "./song-request";
 import { ttsHandler } from "./tts";
+import type { ChatClient } from "@twurple/chat";
 import type { EventSubWsListener } from "@twurple/eventsub-ws";
 import type { EventSubChannelRedemptionAddEvent } from "@twurple/eventsub-base";
-import type { Bot } from "@twurple/easy-bot";
 
 const broadcasterId = `${process.env.PUBLIC_TWITCH_BROADCASTER_ID}`;
 
 export type Reward = {
   id: string;
-  handler: (e: EventSubChannelRedemptionAddEvent, chat: Bot) => void;
+  handler: (e: EventSubChannelRedemptionAddEvent, chat: ChatClient) => void;
 };
 
 const rewards: Reward[] = [
@@ -66,7 +66,7 @@ const rewards: Reward[] = [
 ];
 
 export const initChannelRewardsHandler = (
-  chat: Bot,
+  chat: ChatClient,
   eventSub: EventSubWsListener
 ) => {
   const registeredEvents = rewards.map((reward) =>

@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@twurple/chat": "6.2.1",
     "@twurple/easy-bot": "6.2.1",
     "@twurple/eventsub-ws": "6.2.1",
     "db": "*",

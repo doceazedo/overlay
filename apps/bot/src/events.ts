@@ -1,17 +1,20 @@
-import { Bot } from "@twurple/easy-bot";
-import { EventSubWsListener } from "@twurple/eventsub-ws";
 import { socket } from "ws-client";
+import type { ChatClient } from "@twurple/chat";
+import type { EventSubWsListener } from "@twurple/eventsub-ws";
 
 const broadcasterId = `${process.env.PUBLIC_TWITCH_BROADCASTER_ID}`;
 const channelName = `${process.env.TWITCH_CHANNEL_NAME}`;
 
-export const initEventHandler = (chat: Bot, eventSub: EventSubWsListener) => {
-  chat.onMessage((e) => {
+export const initEventHandler = (
+  chat: ChatClient,
+  eventSub: EventSubWsListener
+) => {
+  chat.onMessage((channel, user, text, msg) => {
     socket.emit("message", {
-      userDisplayName: e.userDisplayName,
-      userId: e.userId,
-      text: e.text,
-      emoteOffsets: e.emoteOffsets,
+      userDisplayName: user,
+      userId: msg.userInfo.userId,
+      text,
+      emoteOffsets: msg.emoteOffsets,
     });
   });
 
@@ -23,38 +26,36 @@ export const initEventHandler = (chat: Bot, eventSub: EventSubWsListener) => {
     chat.say(channelName, `Valeu por me seguir, @${e.userDisplayName}!`);
   });
 
-  chat.onSub((e) => {
+  chat.onSub((channel, user, subInfo, msg) => {
     socket.emit("event", {
       type: "sub",
-      userDisplayName: e.userDisplayName,
-      isPrime: e.isPrime,
+      userDisplayName: user,
+      isPrime: subInfo.isPrime,
     });
     chat.say(
-      e.broadcasterName,
-      `Valeu ${e.isPrime ? "pelo Prime" : "por se inscrever"}, @${
-        e.userDisplayName
-      }!`
+      channel,
+      `Valeu ${subInfo.isPrime ? "pelo Prime" : "por se inscrever"}, @${user}!`
     );
   });
 
-  chat.onResub((e) => {
+  chat.onResub((channel, user, subInfo, msg) => {
     socket.emit("event", {
       type: "resub",
-      userDisplayName: e.userDisplayName,
-      months: e.months,
-      isPrime: e.isPrime,
+      userDisplayName: user,
+      months: subInfo.months,
+      isPrime: subInfo.isPrime,
     });
     chat.say(
-      e.broadcasterName,
-      `Valeu ${e.isPrime ? "pelo Prime de" : "por se inscrever por"} ${
-        e.months
-      } meses, @${e.userDisplayName}!`
+      channel,
+      `Valeu ${subInfo.isPrime ? "pelo Prime de" : "por se inscrever por"} ${
+        subInfo.isPrime
+      } meses, @${user}!`
     );
   });
 
   const giftCounts = new Map<string | undefined, number>();
 
-  chat.chat.onCommunitySub((channel, user, subInfo) => {
+  chat.onCommunitySub((channel, user, subInfo) => {
     const previousGiftCount = giftCounts.get(user) || 0;
     giftCounts.set(user, previousGiftCount + subInfo.count);
     socket.emit("event", {
@@ -68,7 +69,7 @@ export const initEventHandler = (chat: Bot, eventSub: EventSubWsListener) => {
     );
   });
 
-  chat.chat.onSubGift((channel, recipient, subInfo) => {
+  chat.onSubGift((channel, recipient, subInfo) => {
     const user = subInfo.gifter;
     const previousGiftCount = giftCounts.get(user) || 0;
     if (previousGiftCount > 0) {
@@ -86,15 +87,15 @@ export const initEventHandler = (chat: Bot, eventSub: EventSubWsListener) => {
     }
   });
 
-  chat.onRaid((e) => {
+  chat.onRaid((channel, user, raidInfo, msg) => {
     socket.emit("event", {
       type: "raid",
-      userDisplayName: e.userDisplayName,
-      raiders: e.viewerCount,
+      userDisplayName: user,
+      raiders: raidInfo.viewerCount,
     });
     chat.say(
-      e.broadcasterName,
-      `@${e.userDisplayName} está raidando com ${e.viewerCount} pessoas!`
+      channel,
+      `@${user} está raidando com ${raidInfo.viewerCount} pessoas!`
     );
   });
 
