@@ -6,6 +6,15 @@ const broadcasterId = `${process.env.PUBLIC_TWITCH_BROADCASTER_ID}`;
 const channelName = `${process.env.TWITCH_CHANNEL_NAME}`;
 
 export const initEventHandler = (chat: Bot, eventSub: EventSubWsListener) => {
+  chat.onMessage((e) => {
+    socket.emit("message", {
+      userDisplayName: e.userDisplayName,
+      userId: e.userId,
+      text: e.text,
+      emoteOffsets: e.emoteOffsets,
+    });
+  });
+
   eventSub.onChannelFollow(broadcasterId, broadcasterId, (e) => {
     socket.emit("event", {
       type: "follow",
