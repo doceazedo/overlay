@@ -6,6 +6,7 @@
 	import Crown from '$lib/components/icons/Crown.svelte';
 	import Star from '$lib/components/icons/Star.svelte';
 	import Megaphone from '$lib/components/icons/Megaphone.svelte';
+	import Gift from '$lib/components/icons/Gift.svelte';
 	import DynamicItem from '$lib/components/DynamicItem.svelte';
 	import followSound from '$lib/assets/sounds/follow-sound.mp3';
 	import raidSound from '$lib/assets/sounds/raid-sound.mp3';
@@ -32,9 +33,11 @@
 			case 'follow':
 				return Follow;
 			case 'sub':
-				return Star;
 			case 'resub':
 				return Star;
+			case 'communitysub':
+			case 'giftsub':
+				return Gift;
 			case 'raid':
 				return Megaphone;
 		}
@@ -44,6 +47,8 @@
 		follow: followSound,
 		sub: subSound,
 		resub: subSound,
+		communitysub: subSound,
+		giftsub: subSound,
 		raid: raidSound
 	};
 </script>
@@ -60,6 +65,11 @@
 			Valeu por se reinscrever por {alert.months} meses, <b>{alert.userDisplayName}</b>!
 		{:else if alert.type == 'raid'}
 			<b>{alert.userDisplayName}</b> está raidando com <b>{alert.raiders} pessoas</b>!
+		{:else if alert.type == 'communitysub'}
+			Valeu por presentear <b>{alert.count} inscrições</b> para comunidade, {alert.gifterDisplayName}!
+		{:else if alert.type == 'giftsub'}
+			Valeu por presentear {alert.recipientDisplayName} com uma inscrição,
+			<b>{alert.gifterDisplayName}</b>!
 		{/if}
 	</DynamicItem>
 {/if}

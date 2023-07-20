@@ -21,7 +21,7 @@ const commands = await Promise.all(
 
 console.log(`Loaded ${commands.length} commands`);
 
-const bot = new Bot({
+const bot = new Bot(null, {
   authProvider,
   channels: [channelName],
   commands,

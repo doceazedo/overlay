@@ -52,7 +52,39 @@ export const initEventHandler = (chat: Bot, eventSub: EventSubWsListener) => {
     );
   });
 
-  // TODO: sub gift + prevent spam
+  const giftCounts = new Map<string | undefined, number>();
+
+  chat.chat.onCommunitySub((channel, user, subInfo) => {
+    const previousGiftCount = giftCounts.get(user) || 0;
+    giftCounts.set(user, previousGiftCount + subInfo.count);
+    socket.emit("event", {
+      type: "communitysub",
+      gifterDisplayName: user,
+      count: subInfo.count,
+    });
+    chat.say(
+      channel,
+      `Valeu por presentear ${subInfo.count} inscrições para comunidade, @${user}!`
+    );
+  });
+
+  chat.chat.onSubGift((channel, recipient, subInfo) => {
+    const user = subInfo.gifter;
+    const previousGiftCount = giftCounts.get(user) || 0;
+    if (previousGiftCount > 0) {
+      giftCounts.set(user, previousGiftCount - 1);
+    } else {
+      socket.emit("event", {
+        type: "giftsub",
+        gifterDisplayName: user,
+        recipientDisplayName: recipient,
+      });
+      chat.say(
+        channel,
+        `Valeu por presentear @${recipient} com uma inscrição, @${user}!`
+      );
+    }
+  });
 
   chat.onRaid((e) => {
     socket.emit("event", {

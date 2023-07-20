@@ -21,13 +21,31 @@ type ResubEvent = {
 	isPrime: boolean;
 };
 
+type CommunitySubEvent = {
+	type: 'communitysub';
+	gifterDisplayName: string;
+	count: number;
+};
+
+type GiftSubEvent = {
+	type: 'giftsub';
+	gifterDisplayName: string;
+	recipientDisplayName: string;
+};
+
 type RaidEvent = {
 	type: 'raid';
 	userDisplayName: string;
 	raiders: number;
 };
 
-type ChannelEvent = FollowEvent | SubEvent | ResubEvent | RaidEvent;
+type ChannelEvent =
+	| FollowEvent
+	| SubEvent
+	| ResubEvent
+	| CommunitySubEvent
+	| GiftSubEvent
+	| RaidEvent;
 
 export type Alert = {
 	id: string;
@@ -41,6 +59,8 @@ const ALERT_DURATION_MAP = {
 	follow: 5000,
 	sub: 8000,
 	resub: 8000,
+	communitysub: 8000,
+	giftsub: 8000,
 	raid: 10000
 };
 
