@@ -41,3 +41,4 @@ build/
 *.db
 
 tokens/*.json
+data/*.json
