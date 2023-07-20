@@ -3,7 +3,7 @@
 	import GitHub from '$lib/components/icons/GitHub.svelte';
 	import Twitter from '$lib/components/icons/Twitter.svelte';
 	import Link from '$lib/components/icons/Link.svelte';
-	import FooterItem from './FooterItem.svelte';
+	import DynamicItem from '$lib/components/DynamicItem.svelte';
 	import Mastodon from '$lib/components/icons/Mastodon.svelte';
 	import Instagram from '$lib/components/icons/Instagram.svelte';
 
@@ -25,7 +25,7 @@
 	onDestroy(() => clearInterval(socialsInterval));
 </script>
 
-<FooterItem
+<DynamicItem
 	icon={socials[activeSocial].icon}
 	label={socials[activeSocial].label}
 	hasIconTransitions={false}

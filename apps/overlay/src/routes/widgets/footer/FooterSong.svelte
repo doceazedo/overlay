@@ -5,7 +5,7 @@
 	import { flyIn, flyOut } from '$lib/utils/transitions';
 	import Music from '$lib/components/icons/Music.svelte';
 	import FooterDivider from './FooterDivider.svelte';
-	import FooterItem from './FooterItem.svelte';
+	import DynamicItem from '$lib/components/DynamicItem.svelte';
 	import { CURRENT_SONG } from './stores/song';
 
 	const updateCurrentSong = async () => {
@@ -21,7 +21,7 @@
 
 {#if $CURRENT_SONG}
 	<div class="song" in:fly={flyIn} out:fly={flyOut}>
-		<FooterItem icon={Music} label={$CURRENT_SONG} />
+		<DynamicItem icon={Music} label={$CURRENT_SONG} />
 	</div>
 	<FooterDivider />
 {/if}

@@ -3,7 +3,7 @@
 	import type { SvelteComponent } from 'svelte';
 
 	export let label: string | number = 'Label';
-	export let icon: any;
+	export let icon: any = null;
 	export let hasIconTransitions = true;
 	export let hasLabelTransitions = true;
 </script>

@@ -5,7 +5,7 @@
 	import Eye from '$lib/components/icons/Eye.svelte';
 	import Heart from '$lib/components/icons/Heart.svelte';
 	import Star from '$lib/components/icons/Star.svelte';
-	import FooterItem from './FooterItem.svelte';
+	import DynamicItem from '$lib/components/DynamicItem.svelte';
 	import { STATS } from './stores/stats';
 
 	const channelId = `${env.PUBLIC_TWITCH_BROADCASTER_ID}`;
@@ -25,9 +25,9 @@
 </script>
 
 <div class="stats">
-	<FooterItem icon={Heart} label={$STATS.followers.toLocaleString('pt-BR')} />
-	<FooterItem icon={Star} label={$STATS.subscriptions.toLocaleString('pt-BR')} />
-	<FooterItem icon={Eye} label={$STATS.viewers.toLocaleString('pt-BR')} />
+	<DynamicItem icon={Heart} label={$STATS.followers.toLocaleString('pt-BR')} />
+	<DynamicItem icon={Star} label={$STATS.subscriptions.toLocaleString('pt-BR')} />
+	<DynamicItem icon={Eye} label={$STATS.viewers.toLocaleString('pt-BR')} />
 </div>
 
 <style lang="scss">

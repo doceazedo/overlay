@@ -6,7 +6,7 @@
 	import Crown from '$lib/components/icons/Crown.svelte';
 	import Star from '$lib/components/icons/Star.svelte';
 	import Megaphone from '$lib/components/icons/Megaphone.svelte';
-	import FooterItem from './FooterItem.svelte';
+	import DynamicItem from '$lib/components/DynamicItem.svelte';
 	import followSound from '$lib/assets/sounds/follow-sound.mp3';
 	import raidSound from '$lib/assets/sounds/raid-sound.mp3';
 	import subSound from '$lib/assets/sounds/sub-sound.mp3';
@@ -49,7 +49,7 @@
 </script>
 
 {#if alert}
-	<FooterItem icon={getAlertIcon(alert)}>
+	<DynamicItem icon={getAlertIcon(alert)}>
 		{#if alert.type == 'follow'}
 			Valeu por me seguir, <b>{alert.userDisplayName}</b>!
 		{:else if alert.type == 'sub' && alert.isPrime}
@@ -61,5 +61,5 @@
 		{:else if alert.type == 'raid'}
 			<b>{alert.userDisplayName}</b> está raidando com <b>{alert.raiders} pessoas</b>!
 		{/if}
-	</FooterItem>
+	</DynamicItem>
 {/if}
