@@ -11,6 +11,11 @@
 		if (!audio.duration || audio.paused) playNextAudio();
 	});
 
+	socket.on('skip-audio', () => {
+		if (!browser) return;
+		audio.currentTime = audio.duration;
+	});
+
 	const playNextAudio = () => {
 		if (!audioQueue.length) return;
 		const buffer = audioQueue.shift() as Buffer;
