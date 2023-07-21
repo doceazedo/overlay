@@ -53,7 +53,7 @@ export const initCommandHandler = (chat: ChatClient) => {
     };
     const cmd = commands.find((x) => x.aliases.includes(ctx.cmd));
     if (cmd) {
-      if (cmd.isModOnly && !msg.userInfo.isMod)
+      if (cmd.isModOnly && !msg.userInfo.isMod && !msg.userInfo.isBroadcaster)
         return ctx.reply("Somente mods podem usar esse comando! NotLikeThis");
       cmd.handler(ctx);
     }
