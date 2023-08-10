@@ -48,7 +48,7 @@ export const initEventHandler = (
     chat.say(
       channel,
       `Valeu ${subInfo.isPrime ? "pelo Prime de" : "por se inscrever por"} ${
-        subInfo.isPrime
+        subInfo.months
       } meses, @${user}!`
     );
   });
