@@ -32,7 +32,7 @@ Additionally, there are also a few other useful **directiories**:
 
 ## 🏃 Getting started
 
-First off,
+First off, please make sure you have [Node.js v18](https://nodejs.org) or up installed and is using npm v8 or up.
 
 1. Clone this repository.
 2. Run `npm install` to install the dependencies.
