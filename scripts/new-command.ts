@@ -1,5 +1,5 @@
 import { promises as fs, existsSync } from "fs";
-import { confirm, input } from "@inquirer/prompts";
+import { input } from "@inquirer/prompts";
 import select from "@inquirer/select";
 
 const aliasesStr = await input({
