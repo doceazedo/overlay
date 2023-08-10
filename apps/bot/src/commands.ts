@@ -29,6 +29,12 @@ export const createBotCommand = (
   isModOnly,
 });
 
+export const createBotReply = (aliases: string[], message: string | string[]) =>
+  createBotCommand(aliases, ({ reply, say }) => {
+    if (typeof message === "string") return reply(message);
+    message.map((line) => say(line));
+  });
+
 const commandsDir = "./src/commands";
 const commandFiles = await fs.readdir(commandsDir);
 const commands = await Promise.all(
