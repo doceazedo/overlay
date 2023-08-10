@@ -8,18 +8,25 @@
   ],
   "scripts": {
     "build": "(cd apps/overlay && npm run build) && npm run start",
-    "dev": "FORCE_COLOR=1 turbo run dev --parallel",
-    "start": "FORCE_COLOR=1 turbo run start",
+    "dev": "dotenv -- turbo run dev --parallel --no-cache --force",
+    "start": "dotenv -- turbo run start --no-cache --force",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "cmd:new": "vite-node scripts/new-command.ts --"
+    "get-channel-rewards": "dotenv -- vite-node scripts/get-channel-rewards",
+    "setup": "dotenv -- vite-node scripts/setup"
   },
   "devDependencies": {
-    "turbo": "latest",
-    "vite-node": "^0.31.0"
+    "dotenv-cli": "^7.2.1",
+    "turbo": "latest"
   },
   "engines": {
     "node": ">=18.0.0"
   },
-  "packageManager": "npm@8.18.0"
+  "packageManager": "npm@8.18.0",
+  "dependencies": {
+    "@inquirer/prompts": "^3.0.0",
+    "spotify-api.js": "^9.2.5",
+    "trpc-client": "*",
+    "vite-node": "^0.33.0"
+  }
 }

@@ -1,69 +1,59 @@
 <h1 align="center">DoceAzedo's Overlay</h1>
 
 <p align="center">
-  A set of highly interactive scenes for my <a href="https://twitch.tv/doceazedo911">live coding streams</a>, including a Spotify now playing widget, Reddit memes while I'm away, custom icons and tons of chat commands.
+  The heart of my <a href="https://twitch.tv/doceazedo911">live coding streams</a> — a set of widgets and scripts including live stats, custom alerts, rewards and tons of chat commands.
 </p>
 
 <p align="center">
-  <img src="./apps/overlay/static/assets/img/screenshot.gif" />
-  <sup>Cute wallpaper made by the outstanding <a href="https://twitter.com/saroliro/status/1417469066604859393">@saroliro</a> ✨</sup>
+  <img src="./assets/screenshot.gif" />
 </p>
 
 ## 🗂 What's inside?
 
 This monorepo uses [npm](https://www.npmjs.com/) as a package manager. It includes the following **applications**:
 
-- [`bot`](./apps/bot): a TypeScript Twitch chat bot
-- [`overlay`](./apps/overlay): a SvelteKit app with stream overlays
-- [`server`](./apps/server): a tRPC app for common API requests
+- [`bot`](./apps/bot): a TypeScript Twitch chat bot and event listener
+- [`overlay`](./apps/overlay): a SvelteKit app with stream widgets
+- [`trpc-server`](./apps/trpc-server): a tRPC app to fetch third-party data
+- [`ws-server`](./apps/ws-server): a Socket.IO app that acts as a message broker
 
 You'll also find the following **packages**:
 
-- [trpc-client](./packages/trpc-client): the tRPC client used by other apps
+- [`db`](./packages/db): a LowDB powered JSON database for persistence
+- [`trpc-client`](./packages/trpc-client): the tRPC client used by other apps
+- [`twurple-auth`](./packages/twurple-auth): reusable Twurple auth data
+- [`ws-client`](./packages/ws-client): the Socket.IO client used by other apps
+
+Additionally, there are also a few other useful **directiories**:
+
+- [`assets`](./assets): images you may add to your OBS scenes
+- [`data`](./data): the folder where the database data is stored
+- [`tokens`](./tokens): the folder that Twurple stores your tokens
+
+## 🏃 Getting started
+
+First off, please make sure you have [Node.js v18](https://nodejs.org) or up installed and is using npm v8 or up.
+
+1. Clone this repository.
+2. Run `npm install` to install the dependencies.
+3. Run `npm run setup` to setup the required environment variables.
+   - Please follow each steps of the setup carefully.
+   - You might want to fill additional values on the `.env` file.
+4. Run `npm run start` to initialize the app.
+
+The bot will start and join the streamer's chat automatically.
+
+The overlay widgets will be available at [localhost:42069](http://localhost:42069) by default. You can check the availables widgets in the [`routes`](./apps/overlay/src/routes) directory.
+
+You can add these widgets as OBS browser sources. When doing that, you might need to add `body { background-color: rgba(0, 0, 0, 0) !important; }` to make sure OBS removes the background of the widget.
 
 ## 📝 Notes
 
 - This project is in **constant development** and I'm always open for new features ideas and pull requests! 🥳
-- The overlay has fixed sizes and expect the browser to have a resolution of `1920x1080` and your display to have a custom resolution of `1440x1080` (or just make sure your windows have around this size to always be in frame). 🖥
+- If you want to replicate the overlay I use on my streams, you'll need to place everything in the exact positions and sizes as I do, which is currently not documented _yet_.
+- The fancy transitions are handled by the [obs-move-transition](https://github.com/exeldro/obs-move-transition) plugin and a clever usage of [masks](./assets), both of which should also be setup manually.
+- The Spotify now playing and volume features only work on macOS as they depend on AppleScript to work.
 
-## 🧰 Installation
+## License
 
-1. Clone this repository.
-2. Run `npm install` to install the dependencies.
-3. Create a [Twitch app](https://dev.twitch.tv/docs/authentication/register-app) and grab an [OAuth token](https://twitchapps.com/tokengen) - this can be from your personal account or any other, as no messages will be sent from it - with the following scopes: `chat:read chat:edit channel:moderate whispers:read whispers:edit channel_editor channel:read:subscriptions`.
-4. Create a [Spotify app](https://developer.spotify.com/dashboard/login) and grab your [refresh token](https://benwiz.com/blog/create-spotify-refresh-token) with the `user-read-currently-playing` scope.
-5. For Google TTS to work, grab your GCP application credentials by following [these steps](https://www.npmjs.com/package/@google-cloud/text-to-speech#before-you-begin).
-6. For Amazon Polly TTS to work, grab your AWS keys by following [these steps](https://docs.aws.amazon.com/polly/latest/dg/setting-up.html).
-7. Copy the **.env.example** file to **.env** on all directories inside **/apps** and fill them.
-8. Run `(cd ../apps/overlay && npx prisma migrate dev)` to setup the database.
-
-> **Note**: This entire process may soon be replaced for a more convenient post-install script.
-
-## 🤹‍♂️ Usage
-
-You can start the production applications with:
-
-```bash
-npm run start
-```
-
-By default, the overlay will be available at http://localhost:2424.
-
----
-
-If you want to contribute or develop custom features, you can start the development server with:
-
-```bash
-npm run dev
-```
-
-By default, the overlay will be available at http://localhost:2425.
-
-## 🧑‍💻 Development
-
-To create a new command use the following command:
-
-```sh
-npm run cmd:new <command> [...aliases]
-# eg: npm run cmd:new hello ola hola
-```
+This project is licensed under the [GNU General Public License v3.0](./LICENSE).

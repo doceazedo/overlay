@@ -1,49 +1,28 @@
-import fs from 'fs';
-import { tmiClient } from './clients';
-import io from './websockets';
-import commandHandler from './command-handler';
-import eventHandler from './event-handler';
-import { messageEvents } from './events';
-import { loggr } from './utils';
-import 'dotenv/config';
-import { trpc } from 'trpc-client';
+import { ChatClient } from "@twurple/chat";
+import { EventSubWsListener } from "@twurple/eventsub-ws";
+import { ApiClient } from "@twurple/api";
+import { authProvider } from "twurple-auth";
+import { initCommandHandler } from "./commands";
+import { initEventHandler } from "./events";
+import { initChannelRewardsHandler } from "./rewards";
 
-const { TWITCH_CHANNEL, PORT } = process.env;
+console.log("Starting bot...");
 
-loggr.init(`Connecting to channel ${TWITCH_CHANNEL}...`);
-tmiClient.connect();
+const channelName = `${process.env.TWITCH_CHANNEL_NAME}`;
 
-tmiClient.on('message', (channel, tags, message, self) => {
-  fs.writeFileSync(
-    `identities/${tags.username}.json`,
-    JSON.stringify({
-      ...tags,
-      emotes: null,
-    })
-  );
+const chat = new ChatClient({ authProvider, channels: [channelName] });
+chat.connect();
 
-  if (self) return;
-
-  const isCommand = message.startsWith('!');
-  for (const event of messageEvents) {
-    event(message, isCommand, tags);
-  }
-
-  if (!isCommand) return;
-  commandHandler(channel, tags, message);
+chat.onConnect(() => {
+  console.log("Connected to chat");
+  chat.say(channelName, "/me Tô na área! KonCha");
 });
 
-loggr.init(`Listening to Twitch EventSub...`);
-eventHandler();
+initCommandHandler(chat);
 
-const wsPort = parseInt(PORT || '80');
-loggr.init(`Websocket server listening to port ${wsPort}...`);
-io.listen(wsPort);
+const apiClient = new ApiClient({ authProvider });
+const eventSub = new EventSubWsListener({ apiClient });
+eventSub.start();
 
-const setVolumeTimer = setInterval(async () => {
-  const data = await trpc.spotifyApp.setVolume.mutate(40);
-  if (!isNaN(data.volume)) {
-    clearInterval(setVolumeTimer);
-    loggr.info('Spotify playback volume set to 40%');
-  }
-}, 1000);
+initEventHandler(chat, eventSub);
+initChannelRewardsHandler(chat, eventSub);

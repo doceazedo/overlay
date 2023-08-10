@@ -11,6 +11,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@trpc/client": "^10.29.1"
+    "@trpc/client": "^10.34.0"
   }
 }

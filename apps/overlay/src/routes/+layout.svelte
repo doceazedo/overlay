@@ -1,6 +1,6 @@
 <script lang="ts">
-  import '../sass/minireset.sass';
-  import '../sass/global.sass';
+	import '$lib/scss/minireset.scss';
+	import '$lib/scss/global.scss';
 </script>
 
 <slot />

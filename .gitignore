@@ -39,3 +39,6 @@ build/
 
 # prisma
 *.db
+
+tokens/*.json
+data/*.json

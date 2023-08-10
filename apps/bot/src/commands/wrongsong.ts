@@ -1,28 +1,27 @@
-import { reply, replyError } from '../utils';
-import type { Command } from '.';
-import { virtualQueue } from './sr';
+import { createBotCommand } from "../commands";
+import { virtualQueue } from "../rewards/song-request";
 
-export const wrongsong: Command = {
-  aliases: [
-    'wrongsong',
-    'cancel',
-    'cancelar',
-    'errei',
-    'ws',
-    'remove',
-    'remover'
-  ],
-  exec: async (input, args, user) => {
-    const queuedSongs = virtualQueue.filter((item) => user['user-id'] === item.userID)
+const remover = createBotCommand(
+  ["wrongsong", "cancel", "cancelar", "errei", "ws", "remove", "remover"],
+  (ctx) => {
+    const queuedSongs = virtualQueue.filter(
+      (x) => x.userId === ctx.msg.userInfo.userId
+    );
     const lastQueuedSong = queuedSongs[queuedSongs.length - 1];
 
     if (!lastQueuedSong) {
-      replyError(user, 'você não tem músicas na fila ou o tempo para removê-la já passou 😬');
+      ctx.reply(
+        "Você não tem músicas na fila ou o tempo para removê-la já passou 😬"
+      );
       return;
     }
 
     const track = lastQueuedSong.track;
-    virtualQueue.splice(virtualQueue.indexOf(lastQueuedSong), 1)
-    reply(user, `a música ${track.artists[0].name} - ${track.name} foi removida 👌`);
-  },
-};
+    virtualQueue.splice(virtualQueue.indexOf(lastQueuedSong), 1);
+    ctx.reply(
+      `A música ${track.artists[0].name} - ${track.name} foi removida 👌`
+    );
+  }
+);
+
+export default remover;

@@ -1,10 +1,5 @@
-import { reply } from '../utils';
-import type { Command } from '.';
+import { createBotReply } from "../commands";
 
-export const ping: Command = {
-  aliases: ['ping', 'foo'],
-  exec: async (input, args, user) => {
-    const str = input == 'ping' ? 'pong! 🏓' : 'bar! 👽';
-    reply(user, str);
-  },
-};
+const ping = createBotReply(["ping"], "Pong! 🏓");
+
+export default ping;

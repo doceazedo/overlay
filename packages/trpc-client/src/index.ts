@@ -3,12 +3,12 @@ import type {
   AppRouter,
   RouterInput,
   RouterOutput,
-} from "../../../apps/server/src";
+} from "../../../apps/trpc-server/src";
 
 export const trpc = createTRPCProxyClient<AppRouter>({
   links: [
     httpBatchLink({
-      url: "http://localhost:2427",
+      url: `http://localhost:42071`,
     }),
   ],
 });

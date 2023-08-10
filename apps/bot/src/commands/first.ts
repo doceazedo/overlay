@@ -1,14 +1,31 @@
-import { send, sendError } from '../utils';
-import type { Command } from '.';
+import { createBotCommand } from "../commands";
+import { first } from "db/models/first";
 
-let firstUsername: string;
-
-export const first: Command = {
-  aliases: ['first'],
-  exec: async (input, args, user) => {
-    if (firstUsername) return sendError(`Tarde demais, @${firstUsername} chegou antes de você! 🏃`);
-
-    firstUsername = user['display-name'] || 'unknown';
-    send(`@${firstUsername} foi a primeira pessoa a chegar! 🏃🏁🎊`);
-  },
+export const dateHasPassed = (date: Date, hours = 1) => {
+  const now = Date.now();
+  const time = date.getTime();
+  const ttl = 1000 * 60 * 60 * hours;
+  return now - time > ttl;
 };
+
+const firstCmd = createBotCommand(["first"], async (ctx) => {
+  await first.read();
+  if (
+    first.data.first &&
+    !dateHasPassed(new Date(first.data.first.redeemedAt), 8)
+  ) {
+    return ctx.reply(
+      `Tarde demais, @${first.data.first.displayName} chegou antes de você! 🏃`
+    );
+  }
+  first.data.first = {
+    displayName: ctx.user,
+    redeemedAt: new Date().toISOString(),
+  };
+  const counter = first.data.ranking[ctx.msg.userInfo.userId] || 0;
+  first.data.ranking[ctx.msg.userInfo.userId] = counter + 1;
+  await first.write();
+  ctx.say(`@${ctx.user} foi a primeira pessoa a chegar! 🏃🏁🎊`);
+});
+
+export default firstCmd;
