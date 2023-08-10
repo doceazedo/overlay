@@ -37,7 +37,8 @@ export const createBotReply = (aliases: string[], message: string | string[]) =>
 
 const commandsDir = "./src/commands";
 const commandFiles = await fs.readdir(commandsDir);
-const commands = await Promise.all(
+
+export const commands = await Promise.all(
   commandFiles.map(async (file) => {
     const module = await import(`${commandsDir}/${file}`);
     return module.default as BotCommand;
