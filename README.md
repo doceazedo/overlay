@@ -47,6 +47,22 @@ The overlay widgets will be available at [localhost:42069](http://localhost:4206
 
 You can add these widgets as OBS browser sources. When doing that, you might need to add `body { background-color: rgba(0, 0, 0, 0) !important; }` to make sure OBS removes the background of the widget.
 
+## 🧑‍💻 Development
+
+You can start the development server with:
+
+```sh
+npm run dev
+```
+
+Please note that some apps might freak out with hot reloading. If you find any problems, refrain from using this command but for overlay development.
+
+If you want to create a new command, use the following command:
+
+```sh
+npm run cmd:new
+```
+
 ## 📝 Notes
 
 - This project is in **constant development** and I'm always open for new features ideas and pull requests! 🥳
