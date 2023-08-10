@@ -1,6 +1,7 @@
 import { socket } from "ws-client";
 import type { ChatClient } from "@twurple/chat";
 import type { EventSubWsListener } from "@twurple/eventsub-ws";
+import { lurkers } from "./stores/lurkers";
 
 const broadcasterId = `${process.env.PUBLIC_TWITCH_BROADCASTER_ID}`;
 const channelName = `${process.env.TWITCH_CHANNEL_NAME}`;
@@ -16,6 +17,12 @@ export const initEventHandler = (
       text,
       emoteOffsets: msg.emoteOffsets,
     });
+
+    // Handle lurking
+    if (text.startsWith("!")) return;
+    if (!lurkers.has(msg.userInfo.userId)) return;
+    lurkers.delete(msg.userInfo.userId);
+    chat.say(channel, `Oi, ${user}! Que bom te ver de volta! doceazHey`);
   });
 
   eventSub.onChannelFollow(broadcasterId, broadcasterId, (e) => {
