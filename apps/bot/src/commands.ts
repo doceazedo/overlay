@@ -1,5 +1,6 @@
 import { promises as fs } from "fs";
 import { ChatClient } from "@twurple/chat";
+import { replies, type RepliesData } from "db/models/replies";
 import type { TwitchPrivateMessage } from "@twurple/chat/lib/commands/TwitchPrivateMessage";
 
 type CommandContext = {
@@ -35,6 +36,21 @@ export const createBotReply = (aliases: string[], message: string | string[]) =>
     message.map((line) => say(line));
   });
 
+export const createBotDynamicReply = (
+  aliases: string[],
+  key: keyof RepliesData
+) =>
+  createBotCommand(aliases, async ({ reply, params, msg }) => {
+    await replies.read();
+    if (params.length && (msg.userInfo.isMod || msg.userInfo.isBroadcaster)) {
+      replies.data[key] = params.join(" ");
+      await replies.write();
+      return reply("Comando atualizado! SeemsGood");
+    }
+    const message = replies.data[key];
+    reply(message);
+  });
+
 const commandsDir = "./src/commands";
 const commandFiles = await fs.readdir(commandsDir);
 
@@ -62,6 +78,7 @@ export const initCommandHandler = (chat: ChatClient) => {
     if (cmd) {
       if (cmd.isModOnly && !msg.userInfo.isMod && !msg.userInfo.isBroadcaster)
         return ctx.reply("Somente mods podem usar esse comando! NotLikeThis");
+      console.log(text);
       cmd.handler(ctx);
     }
   });

@@ -1,7 +1,7 @@
 import { Low } from "lowdb";
 import { JSONFile } from "lowdb/node";
 
-type Data = {
+type FirstData = {
   first?: {
     displayName: string;
     redeemedAt: string;
@@ -11,5 +11,5 @@ type Data = {
   };
 };
 
-const adapter = new JSONFile<Data>("../../data/first.json");
-export const first = new Low<Data>(adapter, { ranking: {} });
+const adapter = new JSONFile<FirstData>("../../data/first.json");
+export const first = new Low<FirstData>(adapter, { ranking: {} });
